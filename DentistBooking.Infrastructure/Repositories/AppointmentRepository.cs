@@ -9,8 +9,6 @@ namespace DentistBooking.Infrastructure.Repositories
         {
         }
 
-        
-
         public IEnumerable<Appointment> GetAppointmentsByDentistId(int dentistId)
         {
             return DbSet.Include(a => a.Dentist)
