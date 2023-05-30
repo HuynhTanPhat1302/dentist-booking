@@ -1,0 +1,17 @@
+D:\learn-space\c#\DentistBooking\DentistBooking.Application\bin\Debug\net6.0\DentistBooking.Application.deps.json
+D:\learn-space\c#\DentistBooking\DentistBooking.Application\bin\Debug\net6.0\DentistBooking.Application.dll
+D:\learn-space\c#\DentistBooking\DentistBooking.Application\bin\Debug\net6.0\DentistBooking.Application.pdb
+D:\learn-space\c#\DentistBooking\DentistBooking.Application\bin\Debug\net6.0\DentistBooking.Domain.dll
+D:\learn-space\c#\DentistBooking\DentistBooking.Application\bin\Debug\net6.0\DentistBooking.Infrastructure.dll
+D:\learn-space\c#\DentistBooking\DentistBooking.Application\bin\Debug\net6.0\DentistBooking.Domain.pdb
+D:\learn-space\c#\DentistBooking\DentistBooking.Application\bin\Debug\net6.0\DentistBooking.Infrastructure.pdb
+D:\learn-space\c#\DentistBooking\DentistBooking.Application\obj\Debug\net6.0\DentistBooking.Application.csproj.AssemblyReference.cache
+D:\learn-space\c#\DentistBooking\DentistBooking.Application\obj\Debug\net6.0\DentistBooking.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\learn-space\c#\DentistBooking\DentistBooking.Application\obj\Debug\net6.0\DentistBooking.Application.AssemblyInfoInputs.cache
+D:\learn-space\c#\DentistBooking\DentistBooking.Application\obj\Debug\net6.0\DentistBooking.Application.AssemblyInfo.cs
+D:\learn-space\c#\DentistBooking\DentistBooking.Application\obj\Debug\net6.0\DentistBooking.Application.csproj.CoreCompileInputs.cache
+D:\learn-space\c#\DentistBooking\DentistBooking.Application\obj\Debug\net6.0\DentistBooking.Application.csproj.CopyComplete
+D:\learn-space\c#\DentistBooking\DentistBooking.Application\obj\Debug\net6.0\DentistBooking.Application.dll
+D:\learn-space\c#\DentistBooking\DentistBooking.Application\obj\Debug\net6.0\refint\DentistBooking.Application.dll
+D:\learn-space\c#\DentistBooking\DentistBooking.Application\obj\Debug\net6.0\DentistBooking.Application.pdb
+D:\learn-space\c#\DentistBooking\DentistBooking.Application\obj\Debug\net6.0\ref\DentistBooking.Application.dll
