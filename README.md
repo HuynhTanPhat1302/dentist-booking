@@ -42,11 +42,11 @@
     <a href="https://docs.google.com/document/d/1DrgEcelxwFESavcVqAjE0y2KyZUlj_qTWEWFqw8QkHc/edit"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
+    <a href="https://github.com/HuynhTanPhat1302/dentist-booking">View Demo</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
+    <a href="https://github.com/HuynhTanPhat1302/dentist-booking/issues">Report Bug</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a>
+    <a href="https://github.com/HuynhTanPhat1302/dentist-booking/issues">Request Feature</a>
   </p>
 </div>
 
