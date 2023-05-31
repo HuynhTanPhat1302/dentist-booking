@@ -1,11 +1,5 @@
-D:\learn-space\c#\DentistBooking\DentistBooking.API\obj\Debug\net6.0\DentistBooking.API.csproj.AssemblyReference.cache
-D:\learn-space\c#\DentistBooking\DentistBooking.API\obj\Debug\net6.0\DentistBooking.API.GeneratedMSBuildEditorConfig.editorconfig
-D:\learn-space\c#\DentistBooking\DentistBooking.API\obj\Debug\net6.0\DentistBooking.API.AssemblyInfoInputs.cache
-D:\learn-space\c#\DentistBooking\DentistBooking.API\obj\Debug\net6.0\DentistBooking.API.AssemblyInfo.cs
-D:\learn-space\c#\DentistBooking\DentistBooking.API\obj\Debug\net6.0\DentistBooking.API.csproj.CoreCompileInputs.cache
-D:\learn-space\c#\DentistBooking\DentistBooking.API\obj\Debug\net6.0\DentistBooking.API.MvcApplicationPartsAssemblyInfo.cs
-D:\learn-space\c#\DentistBooking\DentistBooking.API\obj\Debug\net6.0\DentistBooking.API.MvcApplicationPartsAssemblyInfo.cache
 D:\learn-space\c#\DentistBooking\DentistBooking.API\bin\Debug\net6.0\appsettings.Development.json
+D:\learn-space\c#\DentistBooking\DentistBooking.API\bin\Debug\net6.0\libman.json
 D:\learn-space\c#\DentistBooking\DentistBooking.API\bin\Debug\net6.0\DentistBooking.API.exe
 D:\learn-space\c#\DentistBooking\DentistBooking.API\bin\Debug\net6.0\appsettings.json
 D:\learn-space\c#\DentistBooking\DentistBooking.API\bin\Debug\net6.0\DentistBooking.API.deps.json
@@ -14,6 +8,7 @@ D:\learn-space\c#\DentistBooking\DentistBooking.API\bin\Debug\net6.0\DentistBook
 D:\learn-space\c#\DentistBooking\DentistBooking.API\bin\Debug\net6.0\DentistBooking.API.pdb
 D:\learn-space\c#\DentistBooking\DentistBooking.API\bin\Debug\net6.0\AutoMapper.dll
 D:\learn-space\c#\DentistBooking\DentistBooking.API\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+D:\learn-space\c#\DentistBooking\DentistBooking.API\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 D:\learn-space\c#\DentistBooking\DentistBooking.API\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
 D:\learn-space\c#\DentistBooking\DentistBooking.API\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
 D:\learn-space\c#\DentistBooking\DentistBooking.API\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
@@ -30,6 +25,7 @@ D:\learn-space\c#\DentistBooking\DentistBooking.API\bin\Debug\net6.0\Microsoft.I
 D:\learn-space\c#\DentistBooking\DentistBooking.API\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
 D:\learn-space\c#\DentistBooking\DentistBooking.API\bin\Debug\net6.0\Microsoft.OpenApi.dll
 D:\learn-space\c#\DentistBooking\DentistBooking.API\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+D:\learn-space\c#\DentistBooking\DentistBooking.API\bin\Debug\net6.0\Newtonsoft.Json.dll
 D:\learn-space\c#\DentistBooking\DentistBooking.API\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
 D:\learn-space\c#\DentistBooking\DentistBooking.API\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 D:\learn-space\c#\DentistBooking\DentistBooking.API\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -59,6 +55,13 @@ D:\learn-space\c#\DentistBooking\DentistBooking.API\bin\Debug\net6.0\DentistBook
 D:\learn-space\c#\DentistBooking\DentistBooking.API\bin\Debug\net6.0\DentistBooking.Application.pdb
 D:\learn-space\c#\DentistBooking\DentistBooking.API\bin\Debug\net6.0\DentistBooking.Domain.pdb
 D:\learn-space\c#\DentistBooking\DentistBooking.API\bin\Debug\net6.0\DentistBooking.Infrastructure.pdb
+D:\learn-space\c#\DentistBooking\DentistBooking.API\obj\Debug\net6.0\DentistBooking.API.csproj.AssemblyReference.cache
+D:\learn-space\c#\DentistBooking\DentistBooking.API\obj\Debug\net6.0\DentistBooking.API.GeneratedMSBuildEditorConfig.editorconfig
+D:\learn-space\c#\DentistBooking\DentistBooking.API\obj\Debug\net6.0\DentistBooking.API.AssemblyInfoInputs.cache
+D:\learn-space\c#\DentistBooking\DentistBooking.API\obj\Debug\net6.0\DentistBooking.API.AssemblyInfo.cs
+D:\learn-space\c#\DentistBooking\DentistBooking.API\obj\Debug\net6.0\DentistBooking.API.csproj.CoreCompileInputs.cache
+D:\learn-space\c#\DentistBooking\DentistBooking.API\obj\Debug\net6.0\DentistBooking.API.MvcApplicationPartsAssemblyInfo.cs
+D:\learn-space\c#\DentistBooking\DentistBooking.API\obj\Debug\net6.0\DentistBooking.API.MvcApplicationPartsAssemblyInfo.cache
 D:\learn-space\c#\DentistBooking\DentistBooking.API\obj\Debug\net6.0\staticwebassets\msbuild.DentistBooking.API.Microsoft.AspNetCore.StaticWebAssets.props
 D:\learn-space\c#\DentistBooking\DentistBooking.API\obj\Debug\net6.0\staticwebassets\msbuild.build.DentistBooking.API.props
 D:\learn-space\c#\DentistBooking\DentistBooking.API\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.DentistBooking.API.props
@@ -73,6 +76,3 @@ D:\learn-space\c#\DentistBooking\DentistBooking.API\obj\Debug\net6.0\refint\Dent
 D:\learn-space\c#\DentistBooking\DentistBooking.API\obj\Debug\net6.0\DentistBooking.API.pdb
 D:\learn-space\c#\DentistBooking\DentistBooking.API\obj\Debug\net6.0\DentistBooking.API.genruntimeconfig.cache
 D:\learn-space\c#\DentistBooking\DentistBooking.API\obj\Debug\net6.0\ref\DentistBooking.API.dll
-D:\learn-space\c#\DentistBooking\DentistBooking.API\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
-D:\learn-space\c#\DentistBooking\DentistBooking.API\bin\Debug\net6.0\Newtonsoft.Json.dll
-D:\learn-space\c#\DentistBooking\DentistBooking.API\bin\Debug\net6.0\libman.json

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DentistBooking.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -6,13 +8,16 @@ namespace DentistBooking.Controllers
 {
     [ApiController]
     [Route("api/login")]
+    [AllowAnonymous]
     public class AuthController : ControllerBase
     {
         private readonly HttpClient _httpClient;
+        private readonly IStaffService _staffService;
 
-        public AuthController(IHttpClientFactory httpClientFactory)
+        public AuthController(IHttpClientFactory httpClientFactory, IStaffService staffService)
         {
             _httpClient = httpClientFactory.CreateClient();
+            _staffService = staffService;
         }
 
         [HttpPost]

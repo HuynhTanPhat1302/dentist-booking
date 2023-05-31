@@ -2,8 +2,10 @@
 using DentistBooking.API.ApiModels.DentistBooking.API.ApiModels;
 using DentistBooking.Application.Interfaces;
 using DentistBooking.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace DentistBooking.API.Controllers
 {
@@ -66,3 +68,8 @@ namespace DentistBooking.API.Controllers
         }
     }
 }
+
+
+
+
+

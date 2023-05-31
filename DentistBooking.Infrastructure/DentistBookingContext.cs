@@ -16,7 +16,6 @@ namespace DentistBooking.Infrastructure
             : base(options)
         {
             _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-
         }
 
         public virtual DbSet<Appointment> Appointments { get; set; } = null!;
