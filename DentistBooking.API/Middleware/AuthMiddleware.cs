@@ -1,9 +1,14 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using DentistBooking.Helpers;
-
+using DentistBooking.Infrastructure.Repositories;
+using DentistBooking.Application.Interfaces;
+using DentistBooking.Application.Services;
+using Microsoft.AspNetCore.Authentication;
 
 namespace DentistBooking.Middleware
 {
@@ -16,14 +21,14 @@ namespace DentistBooking.Middleware
         {
             _next = next;
             _whitelistedPaths = new List<string>
-        {
-            "/api/login", // Whitelisted login endpoint
-            "/api/guest", // Whitelisted guest endpoint
-            // Add more whitelisted paths as needed
-        };
+            {
+                "/api/login", // Whitelisted login endpoint
+                "/api/guest", // Whitelisted guest endpoint
+                // Add more whitelisted paths as needed
+            };
         }
 
-        public async Task InvokeAsync(HttpContext context)
+        public async Task InvokeAsync(HttpContext context, IStaffService staffService)
         {
             var requestPath = context.Request.Path.Value;
 
@@ -44,43 +49,64 @@ namespace DentistBooking.Middleware
                 return;
             }
 
-
             var token = context.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
 
             var (email, role) = DecryptToken.DecryptAToken(token);
 
             if (email != null && role != null)
             {
-
-                //check in database dentist
-                if (true)
+                using (var scope = context.RequestServices.CreateScope())
                 {
+                    var scopedStaffService = scope.ServiceProvider.GetRequiredService<IStaffService>();
 
-                    // Return the decrypted email and role
+                    // Check in the database for staff
+                    switch (role)
+                    {
+                        case "Staff":
+                            // Check database
+                            var staff = scopedStaffService.GetStaffByEmail(email);
+                            if (staff != null)
+                            {
+                                // Grant staff permission to the user
+                                var claims = new List<Claim>
+                                {
+                                    new Claim(ClaimTypes.Email, email),
+                                    new Claim(ClaimTypes.Role, "Staff")
+                                };
 
+                                var identity = new ClaimsIdentity(claims, "Bearer");
+                                context.User = new ClaimsPrincipal(identity);
+                                context.Request.Headers["Authorization"] = "Bearer " + token; // Set the modified token in the request headers
+                                await context.SignInAsync("Bearer", context.User);
+                            }
+                            break;
+                        case "Patient":
+                            // Logic for retrieving staff information based on the patient's role
+                            // ...
+                            break;
+                        case "Dentist":
+                            // Logic for retrieving staff information based on the dentist's role
+                            // ...
+                            break;
+                        default:
+                            // Handle unknown or unsupported roles
+                            context.Response.StatusCode = 401; // Unauthorized
+                            break;
+                    }
                 }
-                else
-                {
-                    context.Response.StatusCode = 401; // Unauthorized
-                    return;
-                }
-
-
-
             }
             else
             {
                 context.Response.StatusCode = 401; // Unauthorized
                 return;
-
             }
+
             // Rest of the authentication logic...
 
             // Call the next middleware in the pipeline
             await _next(context);
         }
     }
-
 
     public class User
     {
