@@ -38,6 +38,11 @@ builder.Services.AddDbContext<DentistBookingContext>(options =>
 // Add the PatientRepository as a service
 builder.Services.AddScoped<PatientRepository>();
 builder.Services.AddScoped<IPatientService, PatientService>();
+builder.Services.AddScoped<AppointmentRepository>();
+builder.Services.AddScoped<MedicalRepository>();
+builder.Services.AddScoped<DentistAvailabilityRepository>();
+builder.Services.AddScoped<IDentistService,DentistService>();
+builder.Services.AddScoped<IStaffService, StaffService>();
 
 // Inject IConfiguration
 builder.Services.AddSingleton(builder.Configuration);
