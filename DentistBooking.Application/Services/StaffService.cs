@@ -80,18 +80,6 @@ namespace DentistBooking.Application.Services
                     }
                 }
             }
-           /* List<TimeSlot> timeSlotList = _dentistService.GetAvailableTimeSlots(denstisIsExisted, listAppointMent, appointment.Datetime.Value);
-            TimeSpan timeAppointed = appointment.Datetime.Value.TimeOfDay + TimeSpan.FromMinutes(appointment.Duration.Value);
-            TimeSlot timeCheck = new TimeSlot();
-            timeCheck.StartTime = appointment.Datetime.Value.TimeOfDay;
-            timeCheck.EndTime = timeAppointed;
-            foreach(var timeSlot in timeSlotList )
-            {
-                if (timeSlot == timeCheck)
-                {
-                    throw new Exception("Dentist is busy now");
-                }
-            }*/
             _appointmentRepository.Add(appointment);
             _appointmentRepository.SaveChanges();
             return appointment;
