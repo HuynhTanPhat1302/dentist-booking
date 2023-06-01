@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "HngNoT7JyMv/ZAp0iydNxrBdUJcW3JUvoaCI/4Uec6NNrjTdgCUqjLyGf8du6unv5S63haIEi/WPXUBeu6mkyg==",
+  "dgSpecHash": "EVCNeggr1IlOv8h/3oRyQACyImiwlllwrch/d2n+suTjkQIUFxyCeapHKPKzpYZwO8Lak+9nLqt1jBa0wkUQYA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Nguyen\\Source\\Repos\\dentist-booking\\DentistBooking.API\\DentistBooking.API.csproj",
+  "projectFilePath": "C:\\Users\\Nguyen\\source\\repos\\dentist-booking\\DentistBooking.API\\DentistBooking.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Nguyen\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\Nguyen\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Nguyen\\Source\\Repos\\dentist-booking\\DentistBooking.API\\DentistBooking.API.csproj": {}
+    "C:\\Users\\Nguyen\\source\\repos\\dentist-booking\\DentistBooking.API\\DentistBooking.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Nguyen\\Source\\Repos\\dentist-booking\\DentistBooking.API\\DentistBooking.API.csproj": {
+    "C:\\Users\\Nguyen\\source\\repos\\dentist-booking\\DentistBooking.API\\DentistBooking.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Nguyen\\Source\\Repos\\dentist-booking\\DentistBooking.API\\DentistBooking.API.csproj",
+        "projectUniqueName": "C:\\Users\\Nguyen\\source\\repos\\dentist-booking\\DentistBooking.API\\DentistBooking.API.csproj",
         "projectName": "DentistBooking.API",
-        "projectPath": "C:\\Users\\Nguyen\\Source\\Repos\\dentist-booking\\DentistBooking.API\\DentistBooking.API.csproj",
+        "projectPath": "C:\\Users\\Nguyen\\source\\repos\\dentist-booking\\DentistBooking.API\\DentistBooking.API.csproj",
         "packagesPath": "C:\\Users\\Nguyen\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Nguyen\\Source\\Repos\\dentist-booking\\DentistBooking.API\\obj\\",
         "projectStyle": "PackageReference",
@@ -32,14 +32,14 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\Nguyen\\Source\\Repos\\dentist-booking\\DentistBooking.Application\\DentistBooking.Application.csproj": {
-                "projectPath": "C:\\Users\\Nguyen\\Source\\Repos\\dentist-booking\\DentistBooking.Application\\DentistBooking.Application.csproj"
+              "C:\\Users\\Nguyen\\source\\repos\\dentist-booking\\DentistBooking.Application\\DentistBooking.Application.csproj": {
+                "projectPath": "C:\\Users\\Nguyen\\source\\repos\\dentist-booking\\DentistBooking.Application\\DentistBooking.Application.csproj"
               },
-              "C:\\Users\\Nguyen\\Source\\Repos\\dentist-booking\\DentistBooking.Domain\\DentistBooking.Domain.csproj": {
-                "projectPath": "C:\\Users\\Nguyen\\Source\\Repos\\dentist-booking\\DentistBooking.Domain\\DentistBooking.Domain.csproj"
+              "C:\\Users\\Nguyen\\source\\repos\\dentist-booking\\DentistBooking.Domain\\DentistBooking.Domain.csproj": {
+                "projectPath": "C:\\Users\\Nguyen\\source\\repos\\dentist-booking\\DentistBooking.Domain\\DentistBooking.Domain.csproj"
               },
-              "C:\\Users\\Nguyen\\Source\\Repos\\dentist-booking\\DentistBooking.Infrastructure\\DentistBooking.Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\Nguyen\\Source\\Repos\\dentist-booking\\DentistBooking.Infrastructure\\DentistBooking.Infrastructure.csproj"
+              "C:\\Users\\Nguyen\\source\\repos\\dentist-booking\\DentistBooking.Infrastructure\\DentistBooking.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\Nguyen\\source\\repos\\dentist-booking\\DentistBooking.Infrastructure\\DentistBooking.Infrastructure.csproj"
               }
             }
           }
@@ -128,14 +128,14 @@
         }
       }
     },
-    "C:\\Users\\Nguyen\\Source\\Repos\\dentist-booking\\DentistBooking.Application\\DentistBooking.Application.csproj": {
+    "C:\\Users\\Nguyen\\source\\repos\\dentist-booking\\DentistBooking.Application\\DentistBooking.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Nguyen\\Source\\Repos\\dentist-booking\\DentistBooking.Application\\DentistBooking.Application.csproj",
+        "projectUniqueName": "C:\\Users\\Nguyen\\source\\repos\\dentist-booking\\DentistBooking.Application\\DentistBooking.Application.csproj",
         "projectName": "DentistBooking.Application",
-        "projectPath": "C:\\Users\\Nguyen\\Source\\Repos\\dentist-booking\\DentistBooking.Application\\DentistBooking.Application.csproj",
+        "projectPath": "C:\\Users\\Nguyen\\source\\repos\\dentist-booking\\DentistBooking.Application\\DentistBooking.Application.csproj",
         "packagesPath": "C:\\Users\\Nguyen\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Nguyen\\Source\\Repos\\dentist-booking\\DentistBooking.Application\\obj\\",
+        "outputPath": "C:\\Users\\Nguyen\\source\\repos\\dentist-booking\\DentistBooking.Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -156,11 +156,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\Nguyen\\Source\\Repos\\dentist-booking\\DentistBooking.Domain\\DentistBooking.Domain.csproj": {
-                "projectPath": "C:\\Users\\Nguyen\\Source\\Repos\\dentist-booking\\DentistBooking.Domain\\DentistBooking.Domain.csproj"
+              "C:\\Users\\Nguyen\\source\\repos\\dentist-booking\\DentistBooking.Domain\\DentistBooking.Domain.csproj": {
+                "projectPath": "C:\\Users\\Nguyen\\source\\repos\\dentist-booking\\DentistBooking.Domain\\DentistBooking.Domain.csproj"
               },
-              "C:\\Users\\Nguyen\\Source\\Repos\\dentist-booking\\DentistBooking.Infrastructure\\DentistBooking.Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\Nguyen\\Source\\Repos\\dentist-booking\\DentistBooking.Infrastructure\\DentistBooking.Infrastructure.csproj"
+              "C:\\Users\\Nguyen\\source\\repos\\dentist-booking\\DentistBooking.Infrastructure\\DentistBooking.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\Nguyen\\source\\repos\\dentist-booking\\DentistBooking.Infrastructure\\DentistBooking.Infrastructure.csproj"
               }
             }
           }
@@ -204,12 +204,12 @@
         }
       }
     },
-    "C:\\Users\\Nguyen\\Source\\Repos\\dentist-booking\\DentistBooking.Domain\\DentistBooking.Domain.csproj": {
+    "C:\\Users\\Nguyen\\source\\repos\\dentist-booking\\DentistBooking.Domain\\DentistBooking.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Nguyen\\Source\\Repos\\dentist-booking\\DentistBooking.Domain\\DentistBooking.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\Nguyen\\source\\repos\\dentist-booking\\DentistBooking.Domain\\DentistBooking.Domain.csproj",
         "projectName": "DentistBooking.Domain",
-        "projectPath": "C:\\Users\\Nguyen\\Source\\Repos\\dentist-booking\\DentistBooking.Domain\\DentistBooking.Domain.csproj",
+        "projectPath": "C:\\Users\\Nguyen\\source\\repos\\dentist-booking\\DentistBooking.Domain\\DentistBooking.Domain.csproj",
         "packagesPath": "C:\\Users\\Nguyen\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Nguyen\\Source\\Repos\\dentist-booking\\DentistBooking.Domain\\obj\\",
         "projectStyle": "PackageReference",
@@ -263,12 +263,12 @@
         }
       }
     },
-    "C:\\Users\\Nguyen\\Source\\Repos\\dentist-booking\\DentistBooking.Infrastructure\\DentistBooking.Infrastructure.csproj": {
+    "C:\\Users\\Nguyen\\source\\repos\\dentist-booking\\DentistBooking.Infrastructure\\DentistBooking.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Nguyen\\Source\\Repos\\dentist-booking\\DentistBooking.Infrastructure\\DentistBooking.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\Nguyen\\source\\repos\\dentist-booking\\DentistBooking.Infrastructure\\DentistBooking.Infrastructure.csproj",
         "projectName": "DentistBooking.Infrastructure",
-        "projectPath": "C:\\Users\\Nguyen\\Source\\Repos\\dentist-booking\\DentistBooking.Infrastructure\\DentistBooking.Infrastructure.csproj",
+        "projectPath": "C:\\Users\\Nguyen\\source\\repos\\dentist-booking\\DentistBooking.Infrastructure\\DentistBooking.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\Nguyen\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Nguyen\\Source\\Repos\\dentist-booking\\DentistBooking.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
@@ -291,8 +291,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\Nguyen\\Source\\Repos\\dentist-booking\\DentistBooking.Domain\\DentistBooking.Domain.csproj": {
-                "projectPath": "C:\\Users\\Nguyen\\Source\\Repos\\dentist-booking\\DentistBooking.Domain\\DentistBooking.Domain.csproj"
+              "C:\\Users\\Nguyen\\source\\repos\\dentist-booking\\DentistBooking.Domain\\DentistBooking.Domain.csproj": {
+                "projectPath": "C:\\Users\\Nguyen\\source\\repos\\dentist-booking\\DentistBooking.Domain\\DentistBooking.Domain.csproj"
               }
             }
           }
