@@ -43,6 +43,9 @@ builder.Services.AddScoped<IPatientService, PatientService>();
 
 builder.Services.AddScoped<StaffRepository>();
 builder.Services.AddScoped<IStaffService, StaffService>();
+builder.Services.AddScoped<AppointmentRepository>();
+builder.Services.AddScoped<MedicalRepository>();
+builder.Services.AddScoped<DentistAvailabilityRepository>();
 
 // Inject IConfiguration
 builder.Services.AddSingleton(builder.Configuration);
