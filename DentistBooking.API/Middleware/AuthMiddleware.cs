@@ -23,7 +23,8 @@ namespace DentistBooking.Middleware
             _whitelistedPaths = new List<string>
             {
                 "/api/login", // Whitelisted login endpoint
-                "/api/guest", // Whitelisted guest endpoint
+                "/api/guest",
+                "/api/Staffs/view-medical-records/{id}"// Whitelisted guest endpoint
                 // Add more whitelisted paths as needed
             };
         }

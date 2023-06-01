@@ -17,15 +17,23 @@ namespace DentistBooking.Application.Services
         private readonly PatientRepository _patientRepository;
         private readonly MedicalRepository _medicalRepository;
         private readonly DentistAvailabilityRepository _dentistAvailabilityRepository;
+        private readonly DentistRepository _dentistRepository;
+        private readonly TreatmentRepository _treatmentRepository;
+        private readonly IllnessRepository _illnessRepository;
+
 
         public StaffService(StaffRepository StaffRepository, AppointmentRepository appointmentRepository, PatientRepository patientRepository
-            , MedicalRepository medicalRepository, DentistAvailabilityRepository dentistAvailabilityRepository)
+            , MedicalRepository medicalRepository, DentistAvailabilityRepository dentistAvailabilityRepository, DentistRepository dentistRepository
+            , TreatmentRepository treatmentRepository, IllnessRepository illnessRepository)
         {
             _StaffRepository = StaffRepository;
             _appointmentRepository = appointmentRepository;
             _patientRepository = patientRepository;
             _medicalRepository = medicalRepository;
             _dentistAvailabilityRepository = dentistAvailabilityRepository;
+            _dentistRepository = dentistRepository;
+            _treatmentRepository = treatmentRepository;
+            _illnessRepository = illnessRepository;
         }
 
         public IEnumerable<staff> GetAllStaffs()
@@ -65,7 +73,7 @@ namespace DentistBooking.Application.Services
             return _StaffRepository.GetStaffByEmail(email);
         }
 
-        public Patient CreateAccountOfPatient(Patient patient)
+        public Patient? CreateAccountOfPatient(Patient patient)
         {
             var emailIsExisted = _patientRepository.GetAll().Where(p => p.Email.Equals(patient.Email)).ToList();
             if (emailIsExisted == null)
@@ -77,7 +85,7 @@ namespace DentistBooking.Application.Services
             return patient;
         }
 
-        public Appointment CreateAnAppointment(Appointment appointment)
+        public Appointment? CreateAnAppointment(Appointment appointment)
         {
             var bookingTimeIsExisted = _appointmentRepository.GetAll().Where(a => a.Datetime == appointment.Datetime).ToList();
             if (bookingTimeIsExisted.Count > 0)
@@ -127,17 +135,23 @@ namespace DentistBooking.Application.Services
 
         public List<Patient> GetAllPatients()
         {
-            return _patientRepository.GetAll().ToList();
+            return _patientRepository.GetAllPatients();
         }
 
-        public List<MedicalRecord> GetMedicalRecords(int id)
+        public MedicalRecord? GetMedicalRecords(int id)
         {
-            return _medicalRepository.GetAll().Where(m => m.PatientId == id).ToList();
+            MedicalRecord  res =_medicalRepository.GetMedicalById(id);
+            return res;
         }
 
-        public Patient GetPatient(int id)
+        public List<MedicalRecord> GetMedicalRecordsOfPatient(int patientId)
         {
-            return _patientRepository.GetById(id);
+            return _medicalRepository.GetMedicalRecordByPatientId(patientId);
+        }
+
+        public Patient? GetPatient(int id)
+        {
+            return _patientRepository.FindById(id);
         }
     }
 }

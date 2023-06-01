@@ -13,7 +13,8 @@ namespace DentistBooking.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Policy = "StaffOnly")]
+    /*[Authorize(Policy = "StaffOnly")]*/
+    [AllowAnonymous]
     public class StaffsController : ControllerBase
     {
         private readonly IStaffService _staffService;
@@ -110,12 +111,31 @@ namespace DentistBooking.API.Controllers
             }
         }
 
-        [HttpGet("get-medical-records/{id}")]
+        [HttpGet("view-medical-records/{id}")]
         public IActionResult GetMedicalRecords(int id)
         {
             try
             {
                 var medicalRecords = _staffService.GetMedicalRecords(id);
+                var medicalRecordsDTO = _mapper.Map<MedicalRecordsApiModel>(medicalRecords);
+                if (medicalRecords == null)
+                {
+                    throw new Exception("Patient is not existed!");
+                }
+                return Ok(medicalRecordsDTO);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+
+        [HttpGet("view-medical-records-of-patient/{patientId}")]
+        public IActionResult GetMedicalRecordsOfPatient(int patientId)
+        {
+            try
+            {
+                var medicalRecords = _staffService.GetMedicalRecordsOfPatient(patientId);
                 var medicalRecordsDTO = _mapper.Map<List<MedicalRecordsApiModel>>(medicalRecords);
                 if (medicalRecords == null)
                 {

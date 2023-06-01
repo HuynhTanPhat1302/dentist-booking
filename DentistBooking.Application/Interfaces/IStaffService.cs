@@ -17,10 +17,11 @@ namespace DentistBooking.Application.Interfaces
 
         staff? GetStaffByEmail(string email);
 
-        Appointment CreateAnAppointment(Appointment appointment);
-        Patient CreateAccountOfPatient(Patient patient);
+        Appointment? CreateAnAppointment(Appointment appointment);
+        Patient? CreateAccountOfPatient(Patient patient);
         List<Patient> GetAllPatients();
-        Patient GetPatient(int id);
-        List<MedicalRecord> GetMedicalRecords(int id);
+        Patient? GetPatient(int id);
+        MedicalRecord? GetMedicalRecords(int id);
+        List<MedicalRecord> GetMedicalRecordsOfPatient(int patientId);
     }
 }

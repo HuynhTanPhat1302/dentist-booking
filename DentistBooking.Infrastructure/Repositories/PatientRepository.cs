@@ -20,6 +20,21 @@ namespace DentistBooking.Infrastructure.Repositories
                 .SingleOrDefault(p => p.Email == email);
         }
 
+        public Patient? FindById(int id)
+        {
+            return DbSet.Include(p => p.Appointments)
+                .Include(p => p.MedicalRecords)
+                .SingleOrDefault(p => p.PatientId == id);
+        }
+
+        public List<Patient> GetAllPatients()
+        {
+            return DbSet.Include(p => p.Appointments)
+                .Include(p => p.MedicalRecords).ToList();
+        }
+
+        
+
         // Add any additional custom methods or queries specific to the Patient entity here
     }
 }
