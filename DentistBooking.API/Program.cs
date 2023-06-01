@@ -40,18 +40,20 @@ builder.Services.AddDbContext<DentistBookingContext>(options =>
 // Add the PatientRepository as a service
 builder.Services.AddScoped<PatientRepository>();
 builder.Services.AddScoped<IPatientService, PatientService>();
-
+builder.Services.AddScoped<DentistRepository>();
 builder.Services.AddScoped<StaffRepository>();
 builder.Services.AddScoped<IStaffService, StaffService>();
 builder.Services.AddScoped<AppointmentRepository>();
 builder.Services.AddScoped<MedicalRepository>();
 builder.Services.AddScoped<DentistAvailabilityRepository>();
+builder.Services.AddScoped<TreatmentRepository>();
+builder.Services.AddScoped<IllnessRepository>();   
 
 // Inject IConfiguration
 builder.Services.AddSingleton(builder.Configuration);
 
 //Add authentication
-builder.Services.AddAuthentication("Bearer")
+/*builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters
@@ -62,10 +64,10 @@ builder.Services.AddAuthentication("Bearer")
             
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("QZAAIVO8Jm5v01EVn7VQkkNaxWhrrfPbysLOvCP2iJk="))
         };
-    });
+    });*/
 
 // Add authorization policies
-builder.Services.AddAuthorization(options =>
+/*builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("StaffOnly", policy =>
     {
@@ -74,7 +76,7 @@ builder.Services.AddAuthorization(options =>
 
 
     });
-});
+});*/
 
 // Add HttpContextAccessor
 builder.Services.AddHttpContextAccessor();
@@ -89,15 +91,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseMiddleware<AuthMiddleware>();
+/*app.UseMiddleware<AuthMiddleware>();*/
 
 app.UseHttpsRedirection();
 
 app.UseRouting();
 
-app.UseAuthentication();
+/*app.UseAuthentication();
 
-app.UseAuthorization();
+app.UseAuthorization();*/
 
 app.MapControllers();
 

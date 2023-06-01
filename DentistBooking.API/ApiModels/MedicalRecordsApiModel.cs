@@ -5,19 +5,16 @@ namespace DentistBooking.API.ApiModels
 {
     public class MedicalRecordsApiModel
     {
-
         [Required]
-        public int MedicalRecordId { get; set; }
+        public string PatientName { get; set; }
         [Required]
-        public int PatientId { get; set; }
-        [Required]
-        public int DentistId { get; set; }
+        public string DentistName { get; set; }
         [Required]
         public int? TeethNumber { get; set; }
         [Required]
-        public int IllnessID { get; set; }
+        public string IllnessName { get; set; }
         [Required]
-        public int TreatmentID { get; set; }
+        public string TreatmentName { get; set; }
         [Required]
         public string? Status { get; set; }
     }
