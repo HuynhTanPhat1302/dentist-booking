@@ -17,7 +17,7 @@ namespace DentistBooking.Infrastructure.Repositories
         {
             return DbSet.Include(p => p.Appointments)
                 .Include(p => p.MedicalRecords)
-                .SingleOrDefault(p => p.Email == email);
+                .SingleOrDefault(p => p.Email == email);    
         }
 
         // Add any additional custom methods or queries specific to the Patient entity here

@@ -23,31 +23,31 @@ namespace DentistBooking.Application.Services
             return _patientRepository.GetAll();
         }
 
-        public Patient GetPatientById(int id)
-        {
-            return _patientRepository.GetById(id);
-        }
-
-        public void CreatePatient(Patient patient)
-        {
-            _patientRepository.Add(patient);
-            _patientRepository.SaveChanges();
-        }
-
-        public void UpdatePatient(Patient patient)
-        {
-            _patientRepository.Update(patient);
-            _patientRepository.SaveChanges();
-        }
-
-        public void DeletePatient(int id)
-        {
-            var patient = _patientRepository.GetById(id);
-            if (patient != null)
+            public Patient GetPatientById(int id)
             {
-                _patientRepository.Delete(patient);
+                return _patientRepository.GetById(id);
+            }
+
+            public void CreatePatient(Patient patient)
+            {
+                _patientRepository.Add(patient);
                 _patientRepository.SaveChanges();
             }
-        }
+
+            public void UpdatePatient(Patient patient)
+            {
+                _patientRepository.Update(patient);
+                _patientRepository.SaveChanges();
+            }
+
+            public void DeletePatient(int id)
+            {
+                var patient = _patientRepository.GetById(id);
+                if (patient != null)
+                {
+                    _patientRepository.Delete(patient);
+                    _patientRepository.SaveChanges();
+                }
+            }
     }
 }
