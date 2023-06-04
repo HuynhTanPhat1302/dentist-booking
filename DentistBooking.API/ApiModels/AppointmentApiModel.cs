@@ -7,11 +7,11 @@ namespace DentistBooking.API.ApiModels
         [Required]
         public int AppointmentId { get; set; }
         [Required]
-        public int? PatientId { get; set; }
+        public string PatientName { get; set; }
         [Required]
-        public int? DentistId { get; set; }
+        public string DentistName { get; set; }
         [Required]
-        public int? StaffId { get; set; }
+        public string StaffName { get; set; }
         [Required]
         public DateTime? Datetime { get; set; }
         [Required]

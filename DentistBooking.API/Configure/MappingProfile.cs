@@ -22,7 +22,11 @@ public class MappingProfile : Profile
         CreateMap<MedicalRecordsApiModel, MedicalRecord>();
         CreateMap<Appointment, AppointmentApiModelRequest>();
         CreateMap<AppointmentApiModelRequest, Appointment>();
-        CreateMap<Appointment, AppointmentApiModel>();
+        CreateMap<Appointment, AppointmentApiModel>()
+            .ForMember(m => m.DentistName, opt => opt.MapFrom(src => src.Dentist.DentistName))
+            .ForMember(m => m.StaffName, opt => opt.MapFrom(src => src.Staff.StaffName))
+            .ForMember(m => m.PatientName, opt => opt.MapFrom(src => src.Patient.PatientName));
+        
         CreateMap<AppointmentApiModel, Appointment>();
         CreateMap<Patient, PatientApiModelRequest>();
         CreateMap<PatientApiModelRequest, Patient>();

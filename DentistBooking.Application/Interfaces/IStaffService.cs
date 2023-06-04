@@ -23,5 +23,7 @@ namespace DentistBooking.Application.Interfaces
         Patient? GetPatient(int id);
         MedicalRecord? GetMedicalRecords(int id);
         List<MedicalRecord> GetMedicalRecordsOfPatient(int patientId);
+        Appointment? GetAppointment(int id);
+        List<Appointment> GetAllAppointments();
     }
 }

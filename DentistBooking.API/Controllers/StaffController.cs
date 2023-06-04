@@ -78,15 +78,29 @@ namespace DentistBooking.API.Controllers
             {
                 var patients = _staffService.GetAllPatients();
                 var patientsDto = _mapper.Map<List<PatientApiModel>>(patients);
-                if (patients == null)
+                if (patients.Count == 0)
                 {
                     throw new Exception("The list is empty");
                 }
-                return Ok(patientsDto);
+                var response = new
+                {
+                    ContentType = "application/json",
+                    Success = true,
+                    Message = "Patients retrieved successfully",
+                    Data = patientsDto
+                };
+                return Ok(response);
             }
             catch (Exception ex)
             {
-                return NotFound(ex.Message);
+                var response = new
+                {
+                    ContentType = "application/json",
+                    Success = false,
+                    Message = "The list is empty",
+                    Error = ex.Message
+                };
+                return NotFound(response);
             }
 
 
@@ -103,11 +117,25 @@ namespace DentistBooking.API.Controllers
                 {
                     throw new Exception("Patient is not existed!");
                 }
-                return Ok(patientDTO);
+                var response = new
+                {
+                    ContentType = "application/json",
+                    Success = true,
+                    Message = "Patients retrieved successfully",
+                    Data = patientDTO
+                };
+                return Ok(response);
             }
             catch (Exception ex)
             {
-                return NotFound(ex.Message);
+                var response = new
+                {
+                    ContentType = "application/json",
+                    Success = false,
+                    Message = "Patient is not existed!!!",
+                    Error = ex.Message
+                };
+                return NotFound(response);
             }
         }
 
@@ -122,11 +150,25 @@ namespace DentistBooking.API.Controllers
                 {
                     throw new Exception("Patient is not existed!");
                 }
-                return Ok(medicalRecordsDTO);
+                var response = new
+                {
+                    ContentType = "application/json",
+                    Success = true,
+                    Message = "MedicalRecords retrieved successfully",
+                    Data = medicalRecordsDTO
+                };
+                return Ok(response);
             }
             catch (Exception ex)
             {
-                return NotFound(ex.Message);
+                var response = new
+                {
+                    ContentType = "application/json",
+                    Success = false,
+                    Message = "Medical Records is not existed!!!",
+                    Error = ex.Message
+                };
+                return NotFound(response);
             }
         }
 
@@ -137,15 +179,29 @@ namespace DentistBooking.API.Controllers
             {
                 var medicalRecords = _staffService.GetMedicalRecordsOfPatient(patientId);
                 var medicalRecordsDTO = _mapper.Map<List<MedicalRecordsApiModel>>(medicalRecords);
-                if (medicalRecords == null)
+                if (medicalRecords.Count == 0)
                 {
                     throw new Exception("Patient is not existed!");
                 }
-                return Ok(medicalRecordsDTO);
+                var response = new
+                {
+                    ContentType = "application/json",
+                    Success = true,
+                    Message = "MedicalRecords retrieved successfully",
+                    Data = medicalRecordsDTO
+                };
+                return Ok(response);
             }
             catch (Exception ex)
             {
-                return NotFound(ex.Message);
+                var response = new
+                {
+                    ContentType = "application/json",
+                    Success = false,
+                    Message = "Patient is not existed!!!",
+                    Error = ex.Message
+                };
+                return NotFound(response);
             }
         }
 
@@ -160,13 +216,51 @@ namespace DentistBooking.API.Controllers
                     throw new Exception("Booking time is existed");
                 }
                 var res = _mapper.Map<AppointmentApiModel>(appointmentResponse);
-                return Ok(res);
+                return CreatedAtAction(nameof(GetAnAppointment), new { id = res.AppointmentId }, res);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                var response = new
+                {
+                    ContentType = "application/json",
+                    Success = false,
+                    Message = "Create unsuccesfully",
+                    Error = ex.Message
+                };
+                return BadRequest(response);
             }
 
+        }
+
+        [HttpGet("view-an-appointment/{id}")]
+        public IActionResult GetAnAppointment(int id)
+        {
+            try
+            {
+                var appointment = _staffService.GetAppointment(id);
+                if (appointment == null)
+                {
+                    throw new Exception("Appointment is not existed!!!");
+                }
+                var response = new
+                {
+                    ContentType = "application/json",
+                    Success = true,
+                    Message = "Appointment retrieved successfully",
+                    Data = _mapper.Map<AppointmentApiModel>(appointment)
+                };
+                return Ok(response);
+            } catch (Exception ex)
+            {
+                var response = new
+                {
+                    ContentType = "application/json",
+                    Success = false,
+                    Message = "Appointment is not existed!!!",
+                    Error = ex.Message
+                };
+                return NotFound(response);
+            }
         }
 
         [HttpPost("create-an-patient-account")]
@@ -175,13 +269,51 @@ namespace DentistBooking.API.Controllers
             try
             {
                 var res = _staffService.CreateAccountOfPatient(_mapper.Map<Patient>(patientRequest));
-                return Ok(_mapper.Map<PatientApiModel>(res));
+                var patient = _mapper.Map<PatientApiModel>(res);
+                return CreatedAtAction(nameof(ViewPatientDetails), new { id = patient.PatientId}, patient);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                var response = new
+                {
+                    ContentType = "application/json",
+                    Success = false,
+                    Message = "Create unsuccesfully",
+                    Error = ex.Message
+                };
+                return BadRequest(response);
             }
+        }
 
+        [HttpGet("view-all-appointments")]
+        public IActionResult GetAllBookingAppointment()
+        {
+            try
+            {
+                var res = _staffService.GetAllAppointments();
+                if (res.Count == 0)
+                {
+                    throw new Exception("The list is empty!!!");
+                }
+                var response = new
+                {
+                    ContentType = "application/json",
+                    Success = true,
+                    Message = "Appointments retrieved successfully",
+                    Data = _mapper.Map<List<AppointmentApiModel>>(res)
+                };
+                return Ok(response);
+            }catch (Exception ex)
+            {
+                var response = new
+                {
+                    ContentType = "application/json",
+                    Success = false,
+                    Message = "The list is empty!!!",
+                    Error = ex.Message
+                };
+                return NotFound(response);
+            }
         }
     }
 }

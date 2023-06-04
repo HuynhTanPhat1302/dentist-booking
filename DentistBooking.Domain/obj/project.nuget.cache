@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "go4eFrJJ6yNd8o9N9ovh2C0cb4WHp8AmWfhRT/lFOcVLgYaOlnZzAZy0JyFYvS2igRgLIRwZbvfts1tNaNki0Q==",
+  "dgSpecHash": "y19OmzmZRm+YJTGOTOq3yRGZMIzL1jTKB3t/5IMKJ5wdc486D+YioRqEbGSaI5QOL2V1h4L5VSMvW0Y6cilWVA==",
   "success": true,
-  "projectFilePath": "D:\\FPT_Hoc\\SEM8\\PRN231\\DentistBookingApp\\DentistBooking.Domain\\DentistBooking.Domain.csproj",
+  "projectFilePath": "C:\\NguyenRepo\\DentistBooking.Domain\\DentistBooking.Domain.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
