@@ -28,7 +28,19 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.PatientName, opt => opt.MapFrom(src => src.Patient != null ? src.Patient.PatientName : null))
             .ForMember(dest => dest.DentistName, opt => opt.MapFrom(src => src.Dentist != null ? src.Dentist.DentistName : null))
             .ForMember(dest => dest.StaffName, opt => opt.MapFrom(src => src.Staff != null ? src.Staff.StaffName : null));
-           
+
+        CreateMap<Appointment, AppointmentApiModelRequest>();
+        CreateMap<AppointmentApiModelRequest, Appointment>();
+        CreateMap<Appointment, AppointmentApiModel>()
+            .ForMember(m => m.DentistName, opt => opt.MapFrom(src => src.Dentist.DentistName))
+            .ForMember(m => m.StaffName, opt => opt.MapFrom(src => src.Staff.StaffName))
+            .ForMember(m => m.PatientName, opt => opt.MapFrom(src => src.Patient.PatientName));
+
+        CreateMap<AppointmentApiModel, Appointment>();
+        CreateMap<Patient, PatientApiModelRequest>();
+        CreateMap<PatientApiModelRequest, Patient>();
+
+
 
 
 

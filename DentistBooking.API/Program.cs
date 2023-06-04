@@ -56,6 +56,14 @@ builder.Services.AddScoped<IMedicalRecordService, MedicalRecordService>();
 builder.Services.AddScoped<AppointmentRepository>();
 builder.Services.AddScoped<IAppointmentService, AppointmentService>();
 
+builder.Services.AddScoped<DentistRepository>();
+
+builder.Services.AddScoped<DentistAvailabilityRepository>();
+
+builder.Services.AddScoped<IllnessRepository>();
+
+
+
 // Inject IConfiguration
 builder.Services.AddSingleton(builder.Configuration);
 

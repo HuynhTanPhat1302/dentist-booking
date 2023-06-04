@@ -37,6 +37,23 @@ namespace DentistBooking.Infrastructure.Repositories
                 .ToList();
         }
 
+        public Appointment GetAppointmentsByStaffId(int appointmentId)
+        {
+            return DbSet.Include(a => a.Dentist)
+                .Include(a => a.Patient)
+                .Include(a => a.Staff)
+                .Where(a => a.AppointmentId == appointmentId).FirstOrDefault();
+        }
+
+        public List<Appointment> GetAllAppointments()
+        {
+            return DbSet.Include(a => a.Dentist)
+                .Include(a => a.Patient)
+                .Include(a => a.Staff)
+                .Include(a => a.AppointmentDetails)
+                .ToList();
+        }
+
 
 
         // Add any additional custom methods or queries specific to the Appointment entity here

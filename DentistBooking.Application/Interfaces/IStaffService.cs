@@ -16,5 +16,14 @@ namespace DentistBooking.Application.Interfaces
         void DeleteStaff(int id);
 
         staff? GetStaffByEmail(string email);
+
+        Appointment? CreateAnAppointment(Appointment appointment);
+        Patient? CreateAccountOfPatient(Patient patient);
+        List<Patient> GetAllPatients();
+        Patient? GetPatient(int id);
+        MedicalRecord? GetMedicalRecords(int id);
+        List<MedicalRecord> GetMedicalRecordsOfPatient(int patientId);
+        Appointment? GetAppointment(int id);
+        List<Appointment> GetAllAppointments();
     }
 }
