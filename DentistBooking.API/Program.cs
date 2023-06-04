@@ -44,34 +44,46 @@ builder.Services.AddScoped<IPatientService, PatientService>();
 builder.Services.AddScoped<StaffRepository>();
 builder.Services.AddScoped<IStaffService, StaffService>();
 
+builder.Services.AddScoped<ProposeAppointmentRepository>();
+builder.Services.AddScoped<IProposeAppointmentService, ProposeAppointmentService>();
+
+builder.Services.AddScoped<TreatmentRepository>();
+builder.Services.AddScoped<ITreatmentService, TreatmentService>();
+
+builder.Services.AddScoped<MedicalRecordRepository>();
+builder.Services.AddScoped<IMedicalRecordService, MedicalRecordService>();
+
+builder.Services.AddScoped<AppointmentRepository>();
+builder.Services.AddScoped<IAppointmentService, AppointmentService>();
+
 // Inject IConfiguration
 builder.Services.AddSingleton(builder.Configuration);
 
 //Add authentication
-builder.Services.AddAuthentication("Bearer")
-    .AddJwtBearer("Bearer", options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = false, // Disable issuer validation
-            ValidateAudience = false, // Disable audience validation
-            ValidateIssuerSigningKey = true, // Enable issuer signing key validation
-            
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("QZAAIVO8Jm5v01EVn7VQkkNaxWhrrfPbysLOvCP2iJk="))
-        };
-    });
+//builder.Services.AddAuthentication("Bearer")
+//    .AddJwtBearer("Bearer", options =>
+//    {
+//        options.TokenValidationParameters = new TokenValidationParameters
+//        {
+//            ValidateIssuer = false, // Disable issuer validation
+//            ValidateAudience = false, // Disable audience validation
+//            ValidateIssuerSigningKey = true, // Enable issuer signing key validation
+
+//            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("QZAAIVO8Jm5v01EVn7VQkkNaxWhrrfPbysLOvCP2iJk="))
+//        };
+//    });
 
 // Add authorization policies
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("StaffOnly", policy =>
-    {
-        policy.RequireRole("staff");
-        
+//builder.Services.AddAuthorization(options =>
+//{
+//    options.AddPolicy("StaffOnly", policy =>
+//    {
+//        policy.RequireRole("staff");
 
 
-    });
-});
+
+//    });
+//});
 
 // Add HttpContextAccessor
 builder.Services.AddHttpContextAccessor();
@@ -86,15 +98,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseMiddleware<AuthMiddleware>();
+//app.UseMiddleware<AuthMiddleware>();
 
 app.UseHttpsRedirection();
 
 app.UseRouting();
 
-app.UseAuthentication();
+//app.UseAuthentication();
 
-app.UseAuthorization();
+//app.UseAuthorization();
 
 app.MapControllers();
 

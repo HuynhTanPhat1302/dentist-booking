@@ -81,8 +81,7 @@ namespace DentistBooking.Middleware
                             }
                             break;
                         case "Patient":
-                            // Logic for retrieving staff information based on the patient's role
-                            // ...
+                            
                             break;
                         case "Dentist":
                             // Logic for retrieving staff information based on the dentist's role

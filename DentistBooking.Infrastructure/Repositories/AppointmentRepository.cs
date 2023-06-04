@@ -27,6 +27,18 @@ namespace DentistBooking.Infrastructure.Repositories
                 .ToList();
         }
 
+        public List<Appointment> GetAppointmentsByPatientEmail(string email)
+        {
+            return DbSet
+                .Include(a => a.Dentist)
+                .Include(a => a.Patient)
+                .Include(a => a.Staff)
+                .Where(a => a.Patient != null && a.Patient.Email == email)
+                .ToList();
+        }
+
+
+
         // Add any additional custom methods or queries specific to the Appointment entity here
     }
 }
