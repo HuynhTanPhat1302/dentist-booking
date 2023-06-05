@@ -62,36 +62,39 @@ builder.Services.AddScoped<DentistAvailabilityRepository>();
 
 builder.Services.AddScoped<IllnessRepository>();
 
+builder.Services.AddScoped<DentistRepository>();
+builder.Services.AddScoped<IDentistService, DentistService>();
+
 
 
 // Inject IConfiguration
 builder.Services.AddSingleton(builder.Configuration);
 
 //Add authentication
-//builder.Services.AddAuthentication("Bearer")
-//    .AddJwtBearer("Bearer", options =>
-//    {
-//        options.TokenValidationParameters = new TokenValidationParameters
-//        {
-//            ValidateIssuer = false, // Disable issuer validation
-//            ValidateAudience = false, // Disable audience validation
-//            ValidateIssuerSigningKey = true, // Enable issuer signing key validation
+builder.Services.AddAuthentication("Bearer")
+    .AddJwtBearer("Bearer", options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false, // Disable issuer validation
+            ValidateAudience = false, // Disable audience validation
+            ValidateIssuerSigningKey = true, // Enable issuer signing key validation
 
-//            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("QZAAIVO8Jm5v01EVn7VQkkNaxWhrrfPbysLOvCP2iJk="))
-//        };
-//    });
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("QZAAIVO8Jm5v01EVn7VQkkNaxWhrrfPbysLOvCP2iJk="))
+        };
+    });
 
 // Add authorization policies
-//builder.Services.AddAuthorization(options =>
-//{
-//    options.AddPolicy("StaffOnly", policy =>
-//    {
-//        policy.RequireRole("staff");
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("StaffOnly", policy =>
+    {
+        policy.RequireRole("staff");
 
 
 
-//    });
-//});
+    });
+});
 
 // Add HttpContextAccessor
 builder.Services.AddHttpContextAccessor();
@@ -106,15 +109,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//app.UseMiddleware<AuthMiddleware>();
+app.UseMiddleware<AuthMiddleware>();
 
 app.UseHttpsRedirection();
 
 app.UseRouting();
 
-//app.UseAuthentication();
+app.UseAuthentication();
 
-//app.UseAuthorization();
+app.UseAuthorization();
 
 app.MapControllers();
 
