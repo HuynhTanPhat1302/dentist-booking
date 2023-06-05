@@ -16,6 +16,9 @@ namespace DentistBooking.Application.Interfaces
         void DeleteAppointment(int id);
         List<Appointment> GetAppointmentsByPatientEmail(string email);
 
+        List<Appointment> GetAppointmentsByDentistEmail(string dentistEmail);
+
+
 
 
     }

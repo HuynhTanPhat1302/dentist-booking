@@ -54,5 +54,10 @@ namespace DentistBooking.Application.Services
         {
             return _appointmentRepository.GetAppointmentsByPatientEmail(email);
         }
+
+        public List<Appointment> GetAppointmentsByDentistEmail(string dentistEmail)
+        {
+            return _appointmentRepository.GetAppointmentsByDentistEmail(dentistEmail);
+        }
     }
 }

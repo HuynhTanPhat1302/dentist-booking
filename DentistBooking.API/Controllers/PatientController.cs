@@ -14,7 +14,7 @@ namespace DentistBooking.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PatientsController : ControllerBase
+    public class PatientController : ControllerBase
     {
         private readonly IPatientService _patientService;
         private readonly IProposeAppointmentService _proposeAppointmentService;
@@ -23,7 +23,7 @@ namespace DentistBooking.API.Controllers
         private readonly IAppointmentService _appointmentService;
         private readonly IMapper _mapper;
 
-        public PatientsController(IPatientService patientService, IMapper mapper, 
+        public PatientController(IPatientService patientService, IMapper mapper, 
             IProposeAppointmentService proposeAppointmentService, ITreatmentService treatmentService
             , IMedicalRecordService medicalRecordService, IAppointmentService appointmentService)
         {
@@ -36,13 +36,13 @@ namespace DentistBooking.API.Controllers
         }
 
         //get all patients
-        [HttpGet("GetPatients")]
+        //[HttpGet("GetPatients")]
 
-        public IActionResult GetAllPatients()
-        {
-            var patients = _patientService.GetAllPatients();
-            return Ok(patients);
-        }
+        //public IActionResult GetAllPatients()
+        //{
+        //    var patients = _patientService.GetAllPatients();
+        //    return Ok(patients);
+        //}
 
         //get all treatments and its price
         //[HttpGet("GetTreatments")]
@@ -54,25 +54,25 @@ namespace DentistBooking.API.Controllers
         //}
 
         //get patient by id
-        [HttpGet("GetPatientByID/{id}")]
-        public IActionResult GetPatientById(int id)
-        {
-            var patient = _patientService.GetPatientById(id);
-            if (patient == null)
-            {
-                return NotFound();
-            }
-            return Ok(patient);
-        }
+        //[HttpGet("GetPatientByID/{id}")]
+        //public IActionResult GetPatientById(int id)
+        //{
+        //    var patient = _patientService.GetPatientById(id);
+        //    if (patient == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return Ok(patient);
+        //}
 
         //create new patient
-        [HttpPost("CreatePatient")]
-        public IActionResult CreatePatient(PatientApiModel patientApiModel)
-        {
-            var patient = _mapper.Map<Patient>(patientApiModel);
-            _patientService.CreatePatient(patient);
-            return CreatedAtAction(nameof(GetPatientById), new { id = patient.PatientId }, patient);
-        }
+        //[HttpPost("CreatePatient")]
+        //public IActionResult CreatePatient(PatientApiModel patientApiModel)
+        //{
+        //    var patient = _mapper.Map<Patient>(patientApiModel);
+        //    _patientService.CreatePatient(patient);
+        //    return CreatedAtAction(nameof(GetPatientById), new { id = patient.PatientId }, patient);
+        //}
 
         [HttpGet("GetProposeAppointmentById/{id}")]
         public IActionResult GetProposeAppointmentById(int id)
@@ -118,7 +118,6 @@ namespace DentistBooking.API.Controllers
 
             if (appointments == null)
             {
-
                 return NotFound();
             }
 

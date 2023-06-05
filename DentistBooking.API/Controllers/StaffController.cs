@@ -15,61 +15,61 @@ namespace DentistBooking.API.Controllers
     [ApiController]
     /*[Authorize(Policy = "StaffOnly")]*/
     [AllowAnonymous]
-    public class StaffsController : ControllerBase
+    public class StaffController : ControllerBase
     {
         private readonly IStaffService _staffService;
         private readonly IMapper _mapper;
 
-        public StaffsController(IStaffService staffService, IMapper mapper)
+        public StaffController(IStaffService staffService, IMapper mapper)
         {
             _staffService = staffService;
             _mapper = mapper;
         }
 
         [HttpGet]
-        public IActionResult GetAllStaffs()
-        {
-            var staffs = _staffService.GetAllStaffs();
-            return Ok(staffs);
-        }
+        //public IActionResult GetAllStaffs()
+        //{
+        //    var staffs = _staffService.GetAllStaffs();
+        //    return Ok(staffs);
+        //}
 
-        [HttpGet("{id}")]
-        public IActionResult GetStaffById(int id)
-        {
-            var staff = _staffService.GetStaffById(id);
-            if (staff == null)
-            {
-                return NotFound();
-            }
-            return Ok(staff);
-        }
+        //[HttpGet("{id}")]
+        //public IActionResult GetStaffById(int id)
+        //{
+        //    var staff = _staffService.GetStaffById(id);
+        //    if (staff == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return Ok(staff);
+        //}
 
-        [HttpPost]
-        public IActionResult CreateStaff(StaffApiModel staffApiModel)
-        {
-            var staff = _mapper.Map<staff>(staffApiModel);
-            _staffService.CreateStaff(staff);
-            return CreatedAtAction(nameof(GetStaffById), new { id = staff.StaffId }, staff);
-        }
+        //[HttpPost]
+        //public IActionResult CreateStaff(StaffApiModel staffApiModel)
+        //{
+        //    var staff = _mapper.Map<staff>(staffApiModel);
+        //    _staffService.CreateStaff(staff);
+        //    return CreatedAtAction(nameof(GetStaffById), new { id = staff.StaffId }, staff);
+        //}
 
 
-        [HttpPut("{id}")]
-        public IActionResult UpdateStaff(int id, staff staff)
-        {
-            if (id != staff.StaffId)
-            {
-                return BadRequest();
-            }
-            _staffService.UpdateStaff(staff);
-            return NoContent();
-        }
+        //[HttpPut("{id}")]
+        //public IActionResult UpdateStaff(int id, staff staff)
+        //{
+        //    if (id != staff.StaffId)
+        //    {
+        //        return BadRequest();
+        //    }
+        //    _staffService.UpdateStaff(staff);
+        //    return NoContent();
+        //}
 
-        [HttpDelete("{id}")]
-        public IActionResult DeleteStaff(int id)
-        {
-            _staffService.DeleteStaff(id);
-            return NoContent();
-        }
+        //[HttpDelete("{id}")]
+        //public IActionResult DeleteStaff(int id)
+        //{
+        //    _staffService.DeleteStaff(id);
+        //    return NoContent();
+        //}
 
         [HttpGet("view-all-patients")]
         public IActionResult ViewAllPatients()
