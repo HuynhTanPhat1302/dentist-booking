@@ -13,11 +13,13 @@ namespace DentistBooking.Controllers
     {
         private readonly HttpClient _httpClient;
         private readonly IStaffService _staffService;
+        private readonly IPatientService _patientService;
 
-        public AuthController(IHttpClientFactory httpClientFactory, IStaffService staffService)
+        public AuthController(IHttpClientFactory httpClientFactory, IStaffService staffService, IPatientService patientService)
         {
             _httpClient = httpClientFactory.CreateClient();
             _staffService = staffService;
+            _patientService = patientService;
         }
 
         [HttpPost]

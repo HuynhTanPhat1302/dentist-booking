@@ -28,7 +28,7 @@ namespace DentistBooking.Middleware
             };
         }
 
-        public async Task InvokeAsync(HttpContext context, IStaffService staffService)
+        public async Task InvokeAsync(HttpContext context, IStaffService staffService, IPatientService patientService)
         {
             var requestPath = context.Request.Path.Value;
 
@@ -58,6 +58,9 @@ namespace DentistBooking.Middleware
                 using (var scope = context.RequestServices.CreateScope())
                 {
                     var scopedStaffService = scope.ServiceProvider.GetRequiredService<IStaffService>();
+                    var scopedPatientService = scope.ServiceProvider.GetRequiredService<IPatientService>();
+                    var scopedDentistService = scope.ServiceProvider.GetRequiredService<IDentistService>();
+
 
                     // Check in the database for staff
                     switch (role)
@@ -81,11 +84,39 @@ namespace DentistBooking.Middleware
                             }
                             break;
                         case "Patient":
-                            
+                            var patient = scopedPatientService.GetPatientByEmail(email);
+                            if (patient != null)
+                            {
+                                // Grant staff permission to the user
+                                var claims = new List<Claim>
+                                {
+                                    new Claim(ClaimTypes.Email, email),
+                                    new Claim(ClaimTypes.Role, "Patient")
+                                };
+
+                                var identity = new ClaimsIdentity(claims, "Bearer");
+                                context.User = new ClaimsPrincipal(identity);
+                                context.Request.Headers["Authorization"] = "Bearer " + token; // Set the modified token in the request headers
+                                await context.SignInAsync("Bearer", context.User);
+                            }
+
                             break;
                         case "Dentist":
-                            // Logic for retrieving staff information based on the dentist's role
-                            // ...
+                            var dentist = scopedDentistService.GetDentistByEmail(email);
+                            if (dentist != null)
+                            {
+                                // Grant staff permission to the user
+                                var claims = new List<Claim>
+                                {
+                                    new Claim(ClaimTypes.Email, email),
+                                    new Claim(ClaimTypes.Role, "Dentist")
+                                };
+
+                                var identity = new ClaimsIdentity(claims, "Bearer");
+                                context.User = new ClaimsPrincipal(identity);
+                                context.Request.Headers["Authorization"] = "Bearer " + token; // Set the modified token in the request headers
+                                await context.SignInAsync("Bearer", context.User);
+                            }
                             break;
                         default:
                             // Handle unknown or unsupported roles

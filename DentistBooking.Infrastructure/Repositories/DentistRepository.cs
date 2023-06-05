@@ -12,5 +12,10 @@ namespace DentistBooking.Infrastructure.Repositories
         public DentistRepository(DentistBookingContext context) : base(context)
         {
         }
+
+        public Dentist? GetDentistByEmail(string email)
+        {
+            return DbSet.FirstOrDefault(s => s.Email == email);
+        }
     }
 }

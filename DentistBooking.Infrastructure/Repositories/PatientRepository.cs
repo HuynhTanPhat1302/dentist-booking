@@ -33,6 +33,10 @@ namespace DentistBooking.Infrastructure.Repositories
                 .Include(p => p.MedicalRecords).ToList();
         }
 
+        public Patient? GetPatientfByEmail(string email)
+        {
+            return DbSet.FirstOrDefault(s => s.Email == email);
+        }
         // Add any additional custom methods or queries specific to the Patient entity here
     }
 }

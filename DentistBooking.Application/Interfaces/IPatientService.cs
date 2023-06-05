@@ -15,6 +15,8 @@ namespace DentistBooking.Application.Interfaces
         void UpdatePatient(Patient patient);
         void DeletePatient(int id);
 
+        Patient? GetPatientByEmail(string email);
+
 
     }
 }

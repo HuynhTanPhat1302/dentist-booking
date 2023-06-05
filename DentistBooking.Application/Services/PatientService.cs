@@ -49,5 +49,11 @@ namespace DentistBooking.Application.Services
                 _patientRepository.SaveChanges();
             }
         }
+
+        public Patient? GetPatientByEmail(string email)
+        {
+            return _patientRepository.GetPatientfByEmail(email);
+
+        }
     }
 }
