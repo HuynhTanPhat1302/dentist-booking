@@ -264,7 +264,7 @@ namespace DentistBooking.API.Controllers
         }
 
         [HttpPost("create-an-patient-account")]
-        public IActionResult CreateAccountOfPatient([FromBody] PatientApiModelRequest patientRequest)
+        public IActionResult CreateAccountOfPatient([FromBody] PatientApiRequestModel patientRequest)
         {
             try
             {
