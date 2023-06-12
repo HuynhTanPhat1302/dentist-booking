@@ -17,6 +17,10 @@ namespace DentistBooking.Application.Interfaces
 
         Patient? GetPatientByEmail(string email);
 
+        Task<List<Patient>> GetPatientsAsync(int pageSize, int pageNumber);
+
+        Task<List<Patient>> SearchPatientsAsync(int pageSize, int pageNumber, string searchQuery);
+
 
     }
 }

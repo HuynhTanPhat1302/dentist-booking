@@ -55,5 +55,63 @@ namespace DentistBooking.Application.Services
             return _patientRepository.GetPatientfByEmail(email);
 
         }
+
+        //public async Task<List<Patient>> SearchPatientsAsync(int pageSize, int pageNumber, string searchQuery = "")
+        //{
+        //    var patients = await _patientRepository.SearchPatientsAsync(searchQuery);
+
+        //    var pagedPatients = patients
+        //        .Skip((pageNumber - 1) * pageSize)
+        //        .Take(pageSize)
+        //        .ToList();
+
+        //    return pagedPatients;
+        //}
+
+        //public async Task<List<Patient>> SearchPatientsAsync(int pageSize, int pageNumber, string searchQuery = "")
+        //{
+        //    List<Patient> patients;
+
+        //    if (string.IsNullOrEmpty(searchQuery))
+        //    {
+        //        patients = await _patientRepository.GetAllPatientsAsync();
+        //    }
+        //    else
+        //    {
+        //        patients = await _patientRepository.SearchPatientsAsync(searchQuery);
+        //    }
+
+        //    var pagedPatients = patients
+        //        .Skip((pageNumber - 1) * pageSize)
+        //        .Take(pageSize)
+        //        .ToList();
+
+        //    return pagedPatients;
+        //}
+        public async Task<List<Patient>> GetPatientsAsync(int pageSize, int pageNumber)
+        {
+            var patients = await _patientRepository.GetPatientsAsync();
+
+            var pagedPatients = patients
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return pagedPatients;
+        }
+
+        public async Task<List<Patient>> SearchPatientsAsync(int pageSize, int pageNumber, string searchQuery)
+        {
+            var patients = await _patientRepository.SearchPatientsAsync(searchQuery);
+
+            var pagedPatients = patients
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return pagedPatients;
+        }
+
+
     }
 }

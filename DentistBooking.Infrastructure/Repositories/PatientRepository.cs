@@ -13,6 +13,42 @@ namespace DentistBooking.Infrastructure.Repositories
         {
         }
 
+        //tanphat - async method - search patient with searchQuery
+        public async Task<List<Patient>> SearchPatientsAsync(string searchQuery)
+        {
+            IQueryable<Patient> query = DbSet.Include(p => p.MedicalRecords).Include(p => p.Appointments);
+
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                query = query.Where(p => p.PatientName != null && p.PatientName.Contains(searchQuery));
+            }
+
+            var patients = await query.OrderBy(p => p.PatientName).ToListAsync();
+
+            return patients;
+        }
+
+
+        //tanphat - get all patients
+        public async Task<List<Patient>> GetPatientsAsync()
+        {
+            var patients = await DbSet
+                .Include(p => p.MedicalRecords)
+                .Include(p => p.Appointments)
+                .OrderBy(p => p.PatientName)
+                .ToListAsync();
+
+            return patients;
+        }
+
+        //tanphat - get all patients
+        public List<Patient> GetAllPatients()
+        {
+            return DbSet.Include(p => p.Appointments)
+                .Include(p => p.MedicalRecords)
+                .ToList();
+        }
+
         public Patient? GetByEmail(string email)
         {
             return DbSet.Include(p => p.Appointments)
@@ -27,11 +63,7 @@ namespace DentistBooking.Infrastructure.Repositories
                 .SingleOrDefault(p => p.PatientId == id);
         }
 
-        public List<Patient> GetAllPatients()
-        {
-            return DbSet.Include(p => p.Appointments)
-                .Include(p => p.MedicalRecords).ToList();
-        }
+        
 
         public Patient? GetPatientfByEmail(string email)
         {

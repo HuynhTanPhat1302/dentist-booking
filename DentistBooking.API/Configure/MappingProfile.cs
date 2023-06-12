@@ -37,8 +37,8 @@ public class MappingProfile : Profile
             .ForMember(m => m.PatientName, opt => opt.MapFrom(src => src.Patient.PatientName));
 
         CreateMap<AppointmentApiModel, Appointment>();
-        CreateMap<Patient, PatientApiModelRequest>();
-        CreateMap<PatientApiModelRequest, Patient>();
+        CreateMap<Patient, PatientApiRequestModel>();
+        CreateMap<PatientApiRequestModel, Patient>();
 
 
 
