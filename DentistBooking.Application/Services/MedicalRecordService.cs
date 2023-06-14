@@ -55,6 +55,16 @@ namespace DentistBooking.Application.Services
             return _medicalRecordRepository.GetMedicalRecordByPatientEmail(email);
         }
 
-        
+        public MedicalRecord? GetMedicalRecords(int id)
+        {
+            return _medicalRecordRepository.GetMedicalById(id);
+        }
+
+        public List<MedicalRecord> GetMedicalRecordsOfPatient(int patientId)
+        {
+            return _medicalRecordRepository.GetMedicalRecordByPatientId(patientId);
+        }
+
+
     }
 }

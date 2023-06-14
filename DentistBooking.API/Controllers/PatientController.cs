@@ -13,16 +13,18 @@ namespace DentistBooking.API.Controllers
     public class PatientController : ControllerBase
     {
         private readonly IPatientService _patientService;
+        private readonly IMedicalRecordService _medicalRecordService;
         private readonly IMapper _mapper;
 
-        public PatientController(IPatientService patientService, IMapper mapper)
+        public PatientController(IPatientService patientService,IMedicalRecordService medicalRecordService , IMapper mapper)
         {
             _patientService = patientService;
+            _medicalRecordService = medicalRecordService;
             _mapper = mapper;
         }
 
         //get patient by id
-        [HttpGet]
+        /*[HttpGet]
         [Route("{id}")]
         public IActionResult GetPatientById(int id)
         {
@@ -32,6 +34,42 @@ namespace DentistBooking.API.Controllers
                 return NotFound();
             }
             return Ok(patient);
+        }*/
+
+
+        //get patient by id
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult ViewPatientDetails(int id)
+        {
+            try
+            {
+                var patient = _patientService.GetPatientById(id);
+                var patientDTO = _mapper.Map<PatientApiModel>(patient);
+                if (patient == null)
+                {
+                    throw new Exception("Patient is not existed!");
+                }
+                var response = new
+                {
+                    ContentType = "application/json",
+                    Success = true,
+                    Message = "Patients retrieved successfully",
+                    Data = patientDTO
+                };
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                var response = new
+                {
+                    ContentType = "application/json",
+                    Success = false,
+                    Message = "Patient is not existed!!!",
+                    Error = ex.Message
+                };
+                return NotFound(response);
+            }
         }
 
         //[HttpGet]
@@ -82,14 +120,35 @@ namespace DentistBooking.API.Controllers
             return patientApiRequestModels;
         }
 
-        [HttpPost]
+        /*[HttpPost]
         public IActionResult CreatePatient(PatientApiRequestModel patientApiRequestModel)
         {
             var patient = _mapper.Map<Patient>(patientApiRequestModel);
             _patientService.CreatePatient(patient);
             return CreatedAtAction(nameof(GetPatientById), new { id = patient.PatientId }, patient);
-        }
+        }*/
 
+        [HttpPost]
+        public IActionResult CreateAccountOfPatient([FromBody] PatientApiRequestModel patientRequest)
+        {
+            try
+            {
+                var res = _patientService.CreateAccountOfPatient(_mapper.Map<Patient>(patientRequest));
+                var patient = _mapper.Map<PatientApiModel>(res);
+                return CreatedAtAction(nameof(ViewPatientDetails), new { id = patient.PatientId }, patient);
+            }
+            catch (Exception ex)
+            {
+                var response = new
+                {
+                    ContentType = "application/json",
+                    Success = false,
+                    Message = "Create unsuccesfully",
+                    Error = ex.Message
+                };
+                return BadRequest(response);
+            }
+        }
 
         //[HttpPut("{id}")]
         //public IActionResult UpdatePatient(int id, staff staff)
@@ -213,6 +272,73 @@ namespace DentistBooking.API.Controllers
         //    _patientService.DeletePatient(id);
         //    return NoContent();
         //}
+
+        //ViewAllPatient
+        [HttpGet]
+        public IActionResult ViewAllPatients()
+        {
+            try
+            {
+                var patients = _patientService.GetAllPatients().ToList();
+                var patientsDto = _mapper.Map<List<PatientApiModel>>(patients);
+                if (patients.Count == 0)
+                {
+                    throw new Exception("The list is empty");
+                }
+                var response = new
+                {
+                    ContentType = "application/json",
+                    Success = true,
+                    Message = "Patients retrieved successfully",
+                    Data = patientsDto
+                };
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                var response = new
+                {
+                    ContentType = "application/json",
+                    Success = false,
+                    Message = "The list is empty",
+                    Error = ex.Message
+                };
+                return NotFound(response);
+            }
+        }
+
+        [HttpGet("/api/MedicalRecord/{patientId}")]
+        public IActionResult GetMedicalRecordsOfPatient(int patientId)
+        {
+            try
+            {
+                var medicalRecords = _medicalRecordService.GetMedicalRecordsOfPatient(patientId);
+                var medicalRecordsDTO = _mapper.Map<List<MedicalRecordApiRequestModel>>(medicalRecords);
+                if (medicalRecords.Count == 0)
+                {
+                    throw new Exception("Patient is not existed!");
+                }
+                var response = new
+                {
+                    ContentType = "application/json",
+                    Success = true,
+                    Message = "MedicalRecords retrieved successfully",
+                    Data = medicalRecordsDTO
+                };
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                var response = new
+                {
+                    ContentType = "application/json",
+                    Success = false,
+                    Message = "Patient is not existed!!!",
+                    Error = ex.Message
+                };
+                return NotFound(response);
+            }
+        }
     }
 }
 

@@ -21,6 +21,6 @@ namespace DentistBooking.Application.Interfaces
 
         Task<List<Patient>> SearchPatientsAsync(int pageSize, int pageNumber, string searchQuery);
 
-
+        Patient? CreateAccountOfPatient(Patient patient);
     }
 }

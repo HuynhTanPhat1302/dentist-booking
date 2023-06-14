@@ -10,3 +10,15 @@ D:\learn-space\c#\DentistBooking\DentistBooking.Domain\obj\Debug\net6.0\DentistB
 D:\learn-space\c#\DentistBooking\DentistBooking.Domain\obj\Debug\net6.0\refint\DentistBooking.Domain.dll
 D:\learn-space\c#\DentistBooking\DentistBooking.Domain\obj\Debug\net6.0\DentistBooking.Domain.pdb
 D:\learn-space\c#\DentistBooking\DentistBooking.Domain\obj\Debug\net6.0\ref\DentistBooking.Domain.dll
+D:\NGUYENPRN231\DentistBooking.Domain\bin\Debug\net6.0\DentistBooking.Domain.deps.json
+D:\NGUYENPRN231\DentistBooking.Domain\bin\Debug\net6.0\DentistBooking.Domain.dll
+D:\NGUYENPRN231\DentistBooking.Domain\bin\Debug\net6.0\DentistBooking.Domain.pdb
+D:\NGUYENPRN231\DentistBooking.Domain\obj\Debug\net6.0\DentistBooking.Domain.csproj.AssemblyReference.cache
+D:\NGUYENPRN231\DentistBooking.Domain\obj\Debug\net6.0\DentistBooking.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\NGUYENPRN231\DentistBooking.Domain\obj\Debug\net6.0\DentistBooking.Domain.AssemblyInfoInputs.cache
+D:\NGUYENPRN231\DentistBooking.Domain\obj\Debug\net6.0\DentistBooking.Domain.AssemblyInfo.cs
+D:\NGUYENPRN231\DentistBooking.Domain\obj\Debug\net6.0\DentistBooking.Domain.csproj.CoreCompileInputs.cache
+D:\NGUYENPRN231\DentistBooking.Domain\obj\Debug\net6.0\DentistBooking.Domain.dll
+D:\NGUYENPRN231\DentistBooking.Domain\obj\Debug\net6.0\refint\DentistBooking.Domain.dll
+D:\NGUYENPRN231\DentistBooking.Domain\obj\Debug\net6.0\DentistBooking.Domain.pdb
+D:\NGUYENPRN231\DentistBooking.Domain\obj\Debug\net6.0\ref\DentistBooking.Domain.dll

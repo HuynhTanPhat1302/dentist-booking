@@ -10,7 +10,8 @@ namespace DentistBooking.Application.Interfaces
     public interface IAppointmentService
     {
         IEnumerable<Appointment> GetAllAppointments();
-        Appointment GetAppointmentById(int id);
+        Appointment? GetAppointmentById(int id);
+        Appointment? GetAppointmentByStaffId(int id);
         void CreateAppointment(Appointment appointment);
         void UpdateAppointment(Appointment appointment);
         void DeleteAppointment(int id);
@@ -18,7 +19,7 @@ namespace DentistBooking.Application.Interfaces
 
         List<Appointment> GetAppointmentsByDentistEmail(string dentistEmail);
 
-
+        Appointment? CreateAnAppointment(Appointment appointment);
 
 
     }

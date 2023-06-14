@@ -26,7 +26,7 @@ namespace DentistBooking.API.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
+        //[HttpGet]
         //public IActionResult GetAllStaffs()
         //{
         //    var staffs = _staffService.GetAllStaffs();
@@ -71,7 +71,7 @@ namespace DentistBooking.API.Controllers
         //    return NoContent();
         //}
 
-        [HttpGet("view-all-patients")]
+        /*[HttpGet("view-all-patients")]
         public IActionResult ViewAllPatients()
         {
             try
@@ -104,9 +104,9 @@ namespace DentistBooking.API.Controllers
             }
 
 
-        }
+        }*/
 
-        [HttpGet("view-patient-details/{id}")]
+        /*[HttpGet("view-patient-details/{id}")]
         public IActionResult ViewPatientDetails(int id)
         {
             try
@@ -137,9 +137,9 @@ namespace DentistBooking.API.Controllers
                 };
                 return NotFound(response);
             }
-        }
+        }*/
 
-        [HttpGet("view-medical-records/{id}")]
+        /*[HttpGet("view-medical-records/{id}")]
         public IActionResult GetMedicalRecords(int id)
         {
             try
@@ -203,9 +203,9 @@ namespace DentistBooking.API.Controllers
                 };
                 return NotFound(response);
             }
-        }
+        }*/
 
-        [HttpPost("create-an-appointment")]
+        /*[HttpPost("create-an-appointment")]
         public IActionResult CreateAnAppointment([FromBody] AppointmentApiModelRequest appointment)
         {
             try
@@ -261,9 +261,9 @@ namespace DentistBooking.API.Controllers
                 };
                 return NotFound(response);
             }
-        }
+        }*/
 
-        [HttpPost("create-an-patient-account")]
+        /*[HttpPost("create-an-patient-account")]
         public IActionResult CreateAccountOfPatient([FromBody] PatientApiRequestModel patientRequest)
         {
             try
@@ -283,9 +283,9 @@ namespace DentistBooking.API.Controllers
                 };
                 return BadRequest(response);
             }
-        }
+        }*/
 
-        [HttpGet("view-all-appointments")]
+        /*[HttpGet("view-all-appointments")]
         public IActionResult GetAllBookingAppointment()
         {
             try
@@ -314,6 +314,6 @@ namespace DentistBooking.API.Controllers
                 };
                 return NotFound(response);
             }
-        }
+        }*/
     }
 }

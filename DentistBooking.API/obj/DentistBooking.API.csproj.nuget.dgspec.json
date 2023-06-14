@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\learn-space\\c#\\DentistBooking\\DentistBooking.API\\DentistBooking.API.csproj": {}
+    "D:\\NGUYENPRN231\\DentistBooking.API\\DentistBooking.API.csproj": {}
   },
   "projects": {
-    "D:\\learn-space\\c#\\DentistBooking\\DentistBooking.API\\DentistBooking.API.csproj": {
+    "D:\\NGUYENPRN231\\DentistBooking.API\\DentistBooking.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\learn-space\\c#\\DentistBooking\\DentistBooking.API\\DentistBooking.API.csproj",
+        "projectUniqueName": "D:\\NGUYENPRN231\\DentistBooking.API\\DentistBooking.API.csproj",
         "projectName": "DentistBooking.API",
-        "projectPath": "D:\\learn-space\\c#\\DentistBooking\\DentistBooking.API\\DentistBooking.API.csproj",
-        "packagesPath": "C:\\Users\\BongU\\.nuget\\packages\\",
-        "outputPath": "D:\\learn-space\\c#\\DentistBooking\\DentistBooking.API\\obj\\",
+        "projectPath": "D:\\NGUYENPRN231\\DentistBooking.API\\DentistBooking.API.csproj",
+        "packagesPath": "C:\\Users\\buikh\\.nuget\\packages\\",
+        "outputPath": "D:\\NGUYENPRN231\\DentistBooking.API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\BongU\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\buikh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -29,8 +29,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\learn-space\\c#\\DentistBooking\\DentistBooking.Application\\DentistBooking.Application.csproj": {
-                "projectPath": "D:\\learn-space\\c#\\DentistBooking\\DentistBooking.Application\\DentistBooking.Application.csproj"
+              "D:\\NGUYENPRN231\\DentistBooking.Application\\DentistBooking.Application.csproj": {
+                "projectPath": "D:\\NGUYENPRN231\\DentistBooking.Application\\DentistBooking.Application.csproj"
               }
             }
           }
@@ -53,6 +53,16 @@
               "target": "Package",
               "version": "[6.0.16, )"
             },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.16, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.16, )"
+            },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
               "version": "[6.0.1, )"
@@ -69,13 +79,17 @@
               "target": "Package",
               "version": "[6.0.0, )"
             },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[6.0.13, )"
+            },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.3, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[6.2.3, )"
+              "version": "[6.3.0, )"
             },
             "System.Security.Cryptography.Cng": {
               "target": "Package",
@@ -105,17 +119,17 @@
         }
       }
     },
-    "D:\\learn-space\\c#\\DentistBooking\\DentistBooking.Application\\DentistBooking.Application.csproj": {
+    "D:\\NGUYENPRN231\\DentistBooking.Application\\DentistBooking.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\learn-space\\c#\\DentistBooking\\DentistBooking.Application\\DentistBooking.Application.csproj",
+        "projectUniqueName": "D:\\NGUYENPRN231\\DentistBooking.Application\\DentistBooking.Application.csproj",
         "projectName": "DentistBooking.Application",
-        "projectPath": "D:\\learn-space\\c#\\DentistBooking\\DentistBooking.Application\\DentistBooking.Application.csproj",
-        "packagesPath": "C:\\Users\\BongU\\.nuget\\packages\\",
-        "outputPath": "D:\\learn-space\\c#\\DentistBooking\\DentistBooking.Application\\obj\\",
+        "projectPath": "D:\\NGUYENPRN231\\DentistBooking.Application\\DentistBooking.Application.csproj",
+        "packagesPath": "C:\\Users\\buikh\\.nuget\\packages\\",
+        "outputPath": "D:\\NGUYENPRN231\\DentistBooking.Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\BongU\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\buikh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -129,11 +143,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\learn-space\\c#\\DentistBooking\\DentistBooking.Domain\\DentistBooking.Domain.csproj": {
-                "projectPath": "D:\\learn-space\\c#\\DentistBooking\\DentistBooking.Domain\\DentistBooking.Domain.csproj"
+              "D:\\NGUYENPRN231\\DentistBooking.Domain\\DentistBooking.Domain.csproj": {
+                "projectPath": "D:\\NGUYENPRN231\\DentistBooking.Domain\\DentistBooking.Domain.csproj"
               },
-              "D:\\learn-space\\c#\\DentistBooking\\DentistBooking.Infrastructure\\DentistBooking.Infrastructure.csproj": {
-                "projectPath": "D:\\learn-space\\c#\\DentistBooking\\DentistBooking.Infrastructure\\DentistBooking.Infrastructure.csproj"
+              "D:\\NGUYENPRN231\\DentistBooking.Infrastructure\\DentistBooking.Infrastructure.csproj": {
+                "projectPath": "D:\\NGUYENPRN231\\DentistBooking.Infrastructure\\DentistBooking.Infrastructure.csproj"
               }
             }
           }
@@ -177,17 +191,17 @@
         }
       }
     },
-    "D:\\learn-space\\c#\\DentistBooking\\DentistBooking.Domain\\DentistBooking.Domain.csproj": {
+    "D:\\NGUYENPRN231\\DentistBooking.Domain\\DentistBooking.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\learn-space\\c#\\DentistBooking\\DentistBooking.Domain\\DentistBooking.Domain.csproj",
+        "projectUniqueName": "D:\\NGUYENPRN231\\DentistBooking.Domain\\DentistBooking.Domain.csproj",
         "projectName": "DentistBooking.Domain",
-        "projectPath": "D:\\learn-space\\c#\\DentistBooking\\DentistBooking.Domain\\DentistBooking.Domain.csproj",
-        "packagesPath": "C:\\Users\\BongU\\.nuget\\packages\\",
-        "outputPath": "D:\\learn-space\\c#\\DentistBooking\\DentistBooking.Domain\\obj\\",
+        "projectPath": "D:\\NGUYENPRN231\\DentistBooking.Domain\\DentistBooking.Domain.csproj",
+        "packagesPath": "C:\\Users\\buikh\\.nuget\\packages\\",
+        "outputPath": "D:\\NGUYENPRN231\\DentistBooking.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\BongU\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\buikh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -232,17 +246,17 @@
         }
       }
     },
-    "D:\\learn-space\\c#\\DentistBooking\\DentistBooking.Infrastructure\\DentistBooking.Infrastructure.csproj": {
+    "D:\\NGUYENPRN231\\DentistBooking.Infrastructure\\DentistBooking.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\learn-space\\c#\\DentistBooking\\DentistBooking.Infrastructure\\DentistBooking.Infrastructure.csproj",
+        "projectUniqueName": "D:\\NGUYENPRN231\\DentistBooking.Infrastructure\\DentistBooking.Infrastructure.csproj",
         "projectName": "DentistBooking.Infrastructure",
-        "projectPath": "D:\\learn-space\\c#\\DentistBooking\\DentistBooking.Infrastructure\\DentistBooking.Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\BongU\\.nuget\\packages\\",
-        "outputPath": "D:\\learn-space\\c#\\DentistBooking\\DentistBooking.Infrastructure\\obj\\",
+        "projectPath": "D:\\NGUYENPRN231\\DentistBooking.Infrastructure\\DentistBooking.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\buikh\\.nuget\\packages\\",
+        "outputPath": "D:\\NGUYENPRN231\\DentistBooking.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\BongU\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\buikh\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -256,8 +270,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\learn-space\\c#\\DentistBooking\\DentistBooking.Domain\\DentistBooking.Domain.csproj": {
-                "projectPath": "D:\\learn-space\\c#\\DentistBooking\\DentistBooking.Domain\\DentistBooking.Domain.csproj"
+              "D:\\NGUYENPRN231\\DentistBooking.Domain\\DentistBooking.Domain.csproj": {
+                "projectPath": "D:\\NGUYENPRN231\\DentistBooking.Domain\\DentistBooking.Domain.csproj"
               }
             }
           }

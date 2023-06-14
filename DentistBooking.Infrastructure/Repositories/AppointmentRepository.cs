@@ -18,6 +18,14 @@ namespace DentistBooking.Infrastructure.Repositories
                 .ToList();
         }
 
+        public Appointment? GetAppointmentsById(int id)
+        {
+            return DbSet.Include(a => a.Dentist)
+                .Include(a => a.Patient)
+                .Include(a => a.Staff)
+                .FirstOrDefault(a => a.AppointmentId == id);
+        }
+
         public IEnumerable<Appointment> GetAppointmentsByPatientId(int patientId)
         {
             return DbSet.Include(a => a.Dentist)
@@ -47,7 +55,7 @@ namespace DentistBooking.Infrastructure.Repositories
                 .ToList();
         }
 
-        public Appointment GetAppointmentsByStaffId(int appointmentId)
+        public Appointment? GetAppointmentsByStaffId(int appointmentId)
         {
             return DbSet.Include(a => a.Dentist)
                 .Include(a => a.Patient)

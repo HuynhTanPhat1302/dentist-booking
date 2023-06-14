@@ -73,7 +73,7 @@ namespace DentistBooking.Application.Services
             return _StaffRepository.GetStaffByEmail(email);
         }
 
-        public Patient? CreateAccountOfPatient(Patient patient)
+       /* public Patient? CreateAccountOfPatient(Patient patient)
         {
             var emailIsExisted = _patientRepository.GetAll().Where(p => p.Email.Equals(patient.Email)).FirstOrDefault();
             if (emailIsExisted != null)
@@ -89,9 +89,9 @@ namespace DentistBooking.Application.Services
             _patientRepository.Add(patient);
             _patientRepository.SaveChanges();
             return patient;
-        }
+        }*/
 
-        public Appointment? CreateAnAppointment(Appointment appointment)
+        /*public Appointment? CreateAnAppointment(Appointment appointment)
         {
             //Check all appointments need to book before 24 hours.
             DateTime currentDateTime = DateTime.Now;
@@ -188,16 +188,16 @@ namespace DentistBooking.Application.Services
             _appointmentRepository.Add(appointment);
             _appointmentRepository.SaveChanges();
             return appointment;
-        }
+        }*/
 
 
 
-        public List<Patient> GetAllPatients()
+        /*public List<Patient> GetAllPatients()
         {
             return _patientRepository.GetAllPatients();
-        }
+        }*/
 
-        public MedicalRecord? GetMedicalRecords(int id)
+        /*public MedicalRecord? GetMedicalRecords(int id)
         {
             MedicalRecord res = _medicalRecordRepository.GetMedicalById(id);
             return res;
@@ -206,14 +206,14 @@ namespace DentistBooking.Application.Services
         public List<MedicalRecord> GetMedicalRecordsOfPatient(int patientId)
         {
             return _medicalRecordRepository.GetMedicalRecordByPatientId(patientId);
-        }
+        }*/
 
-        public Patient? GetPatient(int id)
+        /*public Patient? GetPatient(int id)
         {
             return _patientRepository.FindById(id);
-        }
+        }*/
 
-        public Appointment? GetAppointment(int id)
+        /*public Appointment? GetAppointment(int id)
         {
             return _appointmentRepository.GetAppointmentsByStaffId(id);
         }
@@ -221,6 +221,6 @@ namespace DentistBooking.Application.Services
         public List<Appointment> GetAllAppointments()
         {
             return _appointmentRepository.GetAllAppointments();
-        }
+        }*/
     }
 }

@@ -12,10 +12,12 @@ namespace DentistBooking.Application.Services
     public class PatientService : IPatientService
     {
         private readonly PatientRepository _patientRepository;
+        
 
         public PatientService(PatientRepository patientRepository)
         {
             _patientRepository = patientRepository;
+
         }
 
         public IEnumerable<Patient> GetAllPatients()
@@ -112,6 +114,24 @@ namespace DentistBooking.Application.Services
             return pagedPatients;
         }
 
+        public Patient? CreateAccountOfPatient(Patient patient)
+        {
+            var emailIsExisted = _patientRepository.GetAll().Where(p => p.Email.Equals(patient.Email)).FirstOrDefault();
+            if (emailIsExisted != null)
+            {
+                throw new Exception("Email is existed");
+            }
 
+            var patientCodeIsExisted = _patientRepository.GetAll().Where(p => p.PatientCode.Equals(patient.PatientCode)).FirstOrDefault();
+            if (patientCodeIsExisted != null)
+            {
+                throw new Exception("Patient code is existed");
+            }
+            _patientRepository.Add(patient);
+            _patientRepository.SaveChanges();
+            return patient;
+        }
+
+       
     }
 }
