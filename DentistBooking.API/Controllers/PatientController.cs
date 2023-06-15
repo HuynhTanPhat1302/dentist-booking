@@ -13,13 +13,11 @@ namespace DentistBooking.API.Controllers
     public class PatientController : ControllerBase
     {
         private readonly IPatientService _patientService;
-        private readonly IMedicalRecordService _medicalRecordService;
         private readonly IMapper _mapper;
 
-        public PatientController(IPatientService patientService,IMedicalRecordService medicalRecordService , IMapper mapper)
+        public PatientController(IPatientService patientService, IMapper mapper)
         {
             _patientService = patientService;
-            _medicalRecordService = medicalRecordService;
             _mapper = mapper;
         }
 
@@ -301,39 +299,6 @@ namespace DentistBooking.API.Controllers
                     ContentType = "application/json",
                     Success = false,
                     Message = "The list is empty",
-                    Error = ex.Message
-                };
-                return NotFound(response);
-            }
-        }
-
-        [HttpGet("/api/MedicalRecord/{patientId}")]
-        public IActionResult GetMedicalRecordsOfPatient(int patientId)
-        {
-            try
-            {
-                var medicalRecords = _medicalRecordService.GetMedicalRecordsOfPatient(patientId);
-                var medicalRecordsDTO = _mapper.Map<List<MedicalRecordApiRequestModel>>(medicalRecords);
-                if (medicalRecords.Count == 0)
-                {
-                    throw new Exception("Patient is not existed!");
-                }
-                var response = new
-                {
-                    ContentType = "application/json",
-                    Success = true,
-                    Message = "MedicalRecords retrieved successfully",
-                    Data = medicalRecordsDTO
-                };
-                return Ok(response);
-            }
-            catch (Exception ex)
-            {
-                var response = new
-                {
-                    ContentType = "application/json",
-                    Success = false,
-                    Message = "Patient is not existed!!!",
                     Error = ex.Message
                 };
                 return NotFound(response);

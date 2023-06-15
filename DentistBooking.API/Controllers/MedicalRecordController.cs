@@ -84,6 +84,37 @@ namespace DentistBooking.API.Controllers
             }
         }
 
-        
+        [HttpGet("/api/MedicalRecord-Of-Patient/{patientId}")]
+        public IActionResult GetMedicalRecordsOfPatient(int patientId)
+        {
+            try
+            {
+                var medicalRecords = _medicalRecordService.GetMedicalRecordsOfPatient(patientId);
+                var medicalRecordsDTO = _mapper.Map<List<MedicalRecordApiRequestModel>>(medicalRecords);
+                if (medicalRecords.Count == 0)
+                {
+                    throw new Exception("Patient is not existed!");
+                }
+                var response = new
+                {
+                    ContentType = "application/json",
+                    Success = true,
+                    Message = "MedicalRecords retrieved successfully",
+                    Data = medicalRecordsDTO
+                };
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                var response = new
+                {
+                    ContentType = "application/json",
+                    Success = false,
+                    Message = "Patient is not existed!!!",
+                    Error = ex.Message
+                };
+                return NotFound(response);
+            }
+        }
     }
 }
