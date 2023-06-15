@@ -15,7 +15,8 @@ namespace DentistBooking.Application.Interfaces
         void UpdateMedicalRecord(MedicalRecord medicalRecord);
         void DeleteMedicalRecord(int id);
         List<MedicalRecord> GetMedicalRecordsByPatientEmail(string email);
-
+        MedicalRecord? GetMedicalRecords(int id);
+        List<MedicalRecord> GetMedicalRecordsOfPatient(int patientId);
 
     }
 }
