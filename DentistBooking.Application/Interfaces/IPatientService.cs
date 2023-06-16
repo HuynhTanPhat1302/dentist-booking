@@ -12,7 +12,7 @@ namespace DentistBooking.Application.Interfaces
         IEnumerable<Patient> GetAllPatients();
         Patient GetPatientById(int id);
         void CreatePatient(Patient patient);
-        void UpdatePatient(Patient patient);
+        Patient UpdatePatient(int id, Patient patient);
         void DeletePatient(int id);
 
         Patient? GetPatientByEmail(string email);

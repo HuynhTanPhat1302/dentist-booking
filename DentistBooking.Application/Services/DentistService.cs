@@ -68,6 +68,10 @@ namespace DentistBooking.Application.Services
                 _dentistRepository.Delete(dentist);
                 _dentistRepository.SaveChanges();
             }
+            else
+            {
+                throw new Exception("Dentist is not existed");
+            }
         }
 
         public Dentist? GetDentistByEmail(string email)

@@ -63,6 +63,12 @@ namespace DentistBooking.Infrastructure.Repositories
                 .SingleOrDefault(p => p.PatientId == id);
         }
 
+        public Patient? GetPatientByPatientCode(string patientCode)
+        {
+            return DbSet.Include(p => p.Appointments)
+                .Include(p => p.MedicalRecords)
+                .SingleOrDefault(p => p.PatientCode.Equals(patientCode));
+        }
         
 
         public Patient? GetPatientfByEmail(string email)

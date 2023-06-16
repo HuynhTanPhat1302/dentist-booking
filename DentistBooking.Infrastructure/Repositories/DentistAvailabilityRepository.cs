@@ -12,5 +12,33 @@ namespace DentistBooking.Infrastructure.Repositories
         public DentistAvailabilityRepository(DentistBookingContext context) : base(context)
         {
         }
+        public async Task<List<DentistAvailability>> SearchdentistAvailabilitiesAsync(string searchQuery)
+        {
+            IQueryable<DentistAvailability> query = DbSet.Include(p => p.Dentist);
+
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                query = query.Where(p => p.Dentist.DentistName != null && p.Dentist.DentistName.Contains(searchQuery));
+            }
+
+            var dentistAvailabilities = await query.OrderBy(p => p.Dentist.DentistName).ToListAsync();
+
+            return dentistAvailabilities;
+        }
+
+        public DentistAvailability? GetById(int id)
+        {
+            return DbSet.Include(d => d.Dentist).SingleOrDefault(d => d.AvailabilityId == id);
+        }
+
+        public async Task<List<DentistAvailability>> GetdentistAvailabilitiesAsync()
+        {
+            var dentistAvailabilities = await DbSet
+                .Include(p => p.Dentist)
+                .OrderBy(p => p.Dentist.DentistName)
+                .ToListAsync();
+
+            return dentistAvailabilities;
+        }
     }
 }

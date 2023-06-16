@@ -79,12 +79,12 @@ namespace DentistBooking.API.Controllers
             }
         }
 
-        [HttpPut("{dentistAccountId}")]
-        public IActionResult UpdateDentistAccount([FromBody] DentistAccountApiModel dentistAccount, int dentistAccountId)
+        [HttpPut("{id}")]
+        public IActionResult UpdateDentistAccount([FromBody] DentistAccountApiModel dentistAccount, int id)
         {
             try
             {
-                var dentist = _dentistService.UpdateDentist(dentistAccountId, _mapper.Map<Dentist>(dentistAccount));
+                var dentist = _dentistService.UpdateDentist(id, _mapper.Map<Dentist>(dentistAccount));
                 var res = _mapper.Map<DentistApiModel>(dentist);
                 var response = new
                 {
@@ -102,6 +102,34 @@ namespace DentistBooking.API.Controllers
                     ContentType = "application/json",
                     Success = false,
                     Message = "Create unsuccesfully",
+                    Error = ex.Message
+                };
+
+                return BadRequest(response);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteDentistAccount(int id)
+        {
+            try
+            {
+                _dentistService.DeleteDentist(id);
+                var response = new
+                {
+                    ContentType = "application/json",
+                    Success = true,
+                    Message = "Delete successfully"
+                };
+                return Ok(response);
+            }
+            catch(Exception ex)
+            {
+                var response = new
+                {
+                    ContentType = "application/json",
+                    Success = false,
+                    Message = "Delete unsuccesfully",
                     Error = ex.Message
                 };
 
