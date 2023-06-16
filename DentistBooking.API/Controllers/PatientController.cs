@@ -55,7 +55,6 @@ namespace DentistBooking.API.Controllers
             }
         }
 
-
         //search-patient (paging, sort alphabalet)
         [HttpGet]
         [Route("search")]

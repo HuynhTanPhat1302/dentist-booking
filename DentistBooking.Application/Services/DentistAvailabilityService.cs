@@ -20,7 +20,7 @@ namespace DentistBooking.Application.Services
         }
         public DentistAvailability CreateDentistAvailabilitys(DentistAvailability dentistAvailability)
         {
-            var dentistIsExisted = _dentistRepository.GetById((int)dentistAvailability.DentistId) != null;
+            var dentistIsExisted = _dentistRepository.GetById((int)dentistAvailability.DentistId) == null;
             if(dentistIsExisted)
             {
                 throw new Exception("Dentist is not existed");

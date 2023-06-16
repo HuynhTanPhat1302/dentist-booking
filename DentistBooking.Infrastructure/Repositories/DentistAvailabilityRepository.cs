@@ -25,7 +25,7 @@ namespace DentistBooking.Infrastructure.Repositories
 
             return dentistAvailabilities;
         }
-
+        
         public DentistAvailability? GetById(int id)
         {
             return DbSet.Include(d => d.Dentist).SingleOrDefault(d => d.AvailabilityId == id);

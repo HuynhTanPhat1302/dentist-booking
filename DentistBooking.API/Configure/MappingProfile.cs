@@ -46,7 +46,9 @@ public class MappingProfile : Profile
         CreateMap<DentistApiModel, Dentist>();
         CreateMap<Dentist, DentistApiModel>();
 
-        CreateMap<DentistAvailabilityRequestModel, DentistAvailability>();
+        CreateMap<DentistAvailabilityRequestModel, DentistAvailability>()
+            .ForMember(m => m.StartTime, opt => opt.MapFrom(src => TimeSpan.Parse(src.StartTime)))
+            .ForMember(m => m.EndTime, opt => opt.MapFrom(src => TimeSpan.Parse(src.EndTime)));
         CreateMap<DentistAvailability, DentistAvailabilityRequestModel>();
 
         CreateMap<DentistAvailabilityModel, DentistAvailability>();
