@@ -118,6 +118,23 @@ namespace DentistBooking.API.Controllers
                 return NotFound(response);
             }
         }
+
+        [HttpGet("/{email}")]
+        public IActionResult GetAppointmentsByDentisttEmail(string email)
+        {
+            var appointments = _appointmentService.GetAppointmentsByDentistEmail(email);
+
+            if (appointments == null)
+            {
+
+                return NotFound();
+            }
+
+            var appointmentApiRequestModel = _mapper.Map<List<AppointmentApiRequestModel>>(appointments);
+
+
+            return Ok(appointmentApiRequestModel);
+        }
         /*// GET api/<AppointmentConmtroller>/5
         [HttpGet("{id}")]
         public string Get(int id)
