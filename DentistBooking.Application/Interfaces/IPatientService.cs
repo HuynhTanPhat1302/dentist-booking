@@ -21,6 +21,15 @@ namespace DentistBooking.Application.Interfaces
 
         Task<List<Patient>> SearchPatientsAsync(int pageSize, int pageNumber, string searchQuery);
 
+        Task<bool> IsEmailUnique(string email);
+
+        Task DeletePatientAsync(string email);
+
+        Task<Patient?> GetPatientByEmailAsync(string email);
+
+
+        
+
 
     }
 }

@@ -34,17 +34,17 @@ namespace DentistBooking.API.Controllers
             return Ok(patient);
         }
 
-        //[HttpGet]
-        //[Route("{email}")]
-        //public IActionResult GetPatientByEmail(string email)
-        //{
-        //    var patient = _patientService.GetPatientByEmail(email);
-        //    if (patient == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return Ok(patient);
-        //}
+        [HttpGet]
+        [Route("get-patient-by-email/{email}")]
+        public IActionResult GetPatientByEmail(string email)
+        {
+            var patient = _patientService.GetPatientByEmail(email);
+            if (patient == null)
+            {
+                return NotFound();
+            }
+            return Ok(patient);
+        }
 
         //search-patient (paging, sort alphabalet)
         [HttpGet]
@@ -85,10 +85,94 @@ namespace DentistBooking.API.Controllers
         [HttpPost]
         public IActionResult CreatePatient(PatientApiRequestModel patientApiRequestModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var patient = _mapper.Map<Patient>(patientApiRequestModel);
-            _patientService.CreatePatient(patient);
+
+            try
+            {
+                _patientService.CreatePatient(patient);
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that occur during patient creation
+                return StatusCode(500, ex);
+            }
+
             return CreatedAtAction(nameof(GetPatientById), new { id = patient.PatientId }, patient);
         }
+
+        [HttpPut("{email}")]
+        public IActionResult UpdatePatient(string email, [FromBody] PatientApiRequestModel patientApiRequestModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var patient = _patientService.GetPatientByEmail(email);
+            if (patient == null)
+            {
+                return NotFound();
+            }
+
+            // Use AutoMapper to map the properties from patientApiRequestModel to patient
+            _mapper.Map(patientApiRequestModel, patient);
+
+            try
+            {
+                _patientService.UpdatePatient(patient);
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that occur during patient update
+                return StatusCode(500, ex);
+            }
+
+            return NoContent();
+        }
+
+        [HttpDelete("{email}")]
+        public async Task<IActionResult> DeletePatient(string email)
+        {
+            var patient = await _patientService.GetPatientByEmailAsync(email);
+            if (patient == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                if (patient.Email != null)
+                {
+                    await _patientService.DeletePatientAsync(patient.Email);
+                }
+                else
+                {
+                    return BadRequest("The Patient have no email");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that occur during patient deletion
+                return StatusCode(500, ex);
+            }
+
+            return NoContent();
+        }
+
+
+
+
+
+
+
+
+
+
 
 
         //[HttpPut("{id}")]
@@ -196,16 +280,7 @@ namespace DentistBooking.API.Controllers
 
 
 
-        //[HttpPut("UpdatePatient/{id}")]
-        //public IActionResult UpdatePatient(int id, Patient patient)
-        //{
-        //    if (id != patient.PatientId)
-        //    {
-        //        return BadRequest();
-        //    }
-        //    _patientService.UpdatePatient(patient);
-        //    return NoContent();
-        //}
+
 
         //[HttpDelete("DeletePatient/{id}")]
         //public IActionResult DeletePatient(int id)

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace DentistBooking.Application.Services
 {
@@ -50,9 +51,26 @@ namespace DentistBooking.Application.Services
             }
         }
 
+        public async Task DeletePatientAsync(string email)
+        {
+            var patient = await _patientRepository.GetPatientByEmailAsync(email);
+            if (patient != null)
+            {
+                _patientRepository.Delete(patient);
+                _patientRepository.SaveChanges();
+            }
+        }
+
+
         public Patient? GetPatientByEmail(string email)
         {
             return _patientRepository.GetPatientfByEmail(email);
+
+        }
+
+        public async Task<Patient?> GetPatientByEmailAsync(string email)
+        {
+            return await _patientRepository.GetPatientByEmailAsync(email);
 
         }
 
@@ -111,6 +129,21 @@ namespace DentistBooking.Application.Services
 
             return pagedPatients;
         }
+
+        //check duplicated email
+        public async Task<bool> IsEmailUnique(string email)
+        {
+            bool isUnique = false;
+
+            if (!string.IsNullOrEmpty(email))
+            {
+                isUnique = await _patientRepository.IsEmailUnique(email);
+            }
+
+            return isUnique;
+        }
+
+
 
 
     }
