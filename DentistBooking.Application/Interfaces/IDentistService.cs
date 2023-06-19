@@ -11,8 +11,8 @@ namespace DentistBooking.Application.Interfaces
     {
         IEnumerable<Dentist> GetAllDentists();
         Dentist GetDentistById(int id);
-        void CreateDentist(Dentist dentist);
-        void UpdateDentist(Dentist dentist);
+        Dentist CreateDentist(Dentist dentist);
+        Dentist UpdateDentist(int id, Dentist dentist);
         void DeleteDentist(int id);
         Dentist? GetDentistByEmail(string email);
 

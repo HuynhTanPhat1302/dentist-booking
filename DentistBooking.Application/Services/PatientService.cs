@@ -36,10 +36,34 @@ namespace DentistBooking.Application.Services
             _patientRepository.SaveChanges();
         }
 
-        public void UpdatePatient(Patient patient)
+        public Patient UpdatePatient(int id, Patient patient)
         {
+            var existedPatient = _patientRepository.GetById(id);
+            if (existedPatient == null)
+            {
+                throw new Exception("patient is not existed");
+            }
+
+            var patientEmailIsExisted = _patientRepository.GetByEmail(existedPatient.Email);
+            if (patientEmailIsExisted != null)
+            {
+                throw new Exception("Patient email is existed");
+            }
+
+            var paitentCodeIsExisted = _patientRepository.GetPatientByPatientCode(patient.PatientCode);
+            if(paitentCodeIsExisted != null)
+            {
+                throw new Exception("Patient code is already existed");
+            }
+            existedPatient.Email = patient.Email;
+            existedPatient.PatientCode = patient.PatientCode;
+            existedPatient.PhoneNumber = patient.PhoneNumber;
+            existedPatient.DateOfBirth = patient.DateOfBirth;
+            existedPatient.PatientName = patient.PatientName;
+            existedPatient.Address = patient.Address;
             _patientRepository.Update(patient);
             _patientRepository.SaveChanges();
+            return existedPatient;
         }
 
         public void DeletePatient(int id)

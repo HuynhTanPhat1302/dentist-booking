@@ -28,16 +28,36 @@ namespace DentistBooking.Application.Services
             return _dentistRepository.GetById(id);
         }
 
-        public void CreateDentist(Dentist dentist)
+        public Dentist CreateDentist(Dentist dentist)
         {
+            var email = _dentistRepository.GetDentistByEmail(dentist.Email);
+            if (email != null)
+            {
+                throw new Exception("Dentist Email is existed!");
+            }
             _dentistRepository.Add(dentist);
             _dentistRepository.SaveChanges();
+            return dentist;
         }
 
-        public void UpdateDentist(Dentist dentist)
+        public Dentist UpdateDentist(int id, Dentist dentist)
         {
-            _dentistRepository.Update(dentist);
+            var existedDentist = _dentistRepository.GetById(id);
+            if(existedDentist == null) 
+            {
+                throw new Exception("Dentist is not existed");
+            }
+            var emailIsExisted = _dentistRepository.GetDentistByEmail(dentist.Email) != null;
+            if (emailIsExisted)
+            {
+                throw new Exception("Email is existed");
+            }
+            existedDentist.DentistName = dentist.DentistName;
+            existedDentist.Email = dentist.Email;
+            existedDentist.PhoneNumber= dentist.PhoneNumber;
+            _dentistRepository.Update(existedDentist);
             _dentistRepository.SaveChanges();
+            return existedDentist;
         }
 
         public void DeleteDentist(int id)
@@ -48,12 +68,17 @@ namespace DentistBooking.Application.Services
                 _dentistRepository.Delete(dentist);
                 _dentistRepository.SaveChanges();
             }
+            else
+            {
+                throw new Exception("Dentist is not existed");
+            }
         }
 
         public Dentist? GetDentistByEmail(string email)
         {
             return _dentistRepository.GetDentistByEmail(email);
-
         }
+
+
     }
 }
