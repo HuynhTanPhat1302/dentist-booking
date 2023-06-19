@@ -1,4 +1,4 @@
-﻿using System.Text;
+﻿ using System.Text;
 using AutoMapper;
 using DentistBooking.API.ApiModels;
 using DentistBooking.API.ApiModels.DentistBooking.API.ApiModels;

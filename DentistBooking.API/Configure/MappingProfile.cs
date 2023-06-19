@@ -43,6 +43,12 @@ public class MappingProfile : Profile
         CreateMap<Patient, RegisterRequestModel>();
         CreateMap<RegisterRequestModel, Patient>();
 
+        CreateMap<Illness, IllnessRespondModel>();
+        CreateMap<IllnessRespondModel, Illness>();
+
+        CreateMap<MedicalRecord, MedicalRecordRespondModel>();
+        CreateMap<MedicalRecordRespondModel, MedicalRecord>();
+
 
 
 

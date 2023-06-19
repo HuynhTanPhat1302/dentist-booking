@@ -57,7 +57,6 @@ namespace DentistBooking.Application.Services
             }
             catch (Exception ex)
             {
-                // Handle any exceptions that occurred during the database operation
                 throw new Exception(ex.ToString());
 
             }

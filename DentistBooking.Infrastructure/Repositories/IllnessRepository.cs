@@ -19,7 +19,7 @@ namespace DentistBooking.Infrastructure.Repositories
         {
             try
             {
-                List<Illness> illnesses = await DbSet.ToListAsync();
+                List<Illness> illnesses = await DbSet.Include(i => i.MedicalRecords).ToListAsync();
                 return illnesses;
             }
             catch (Exception ex)
@@ -33,7 +33,7 @@ namespace DentistBooking.Infrastructure.Repositories
         {
             try
             {
-                IQueryable<Illness> query = DbSet;
+                IQueryable<Illness> query = DbSet.Include(i => i.MedicalRecords);
 
                 if (!string.IsNullOrEmpty(searchQuery))
                 {

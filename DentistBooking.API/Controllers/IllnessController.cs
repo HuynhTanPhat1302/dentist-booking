@@ -41,7 +41,7 @@ namespace DentistBooking.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetIllnesses(int pageSize = 10, int pageNumber = 1)
+        public async Task<IActionResult> GetIllnesses(int pageSize = 10, int pageNumber = 1)
         {
             if (pageSize <= 0)
             {
@@ -73,15 +73,16 @@ namespace DentistBooking.API.Controllers
                 };
                 return BadRequest(response);
             }
-
-            var illnesses = _illnessService.GetIllnessesAsync(pageSize, pageNumber);
-
+        
+            var illnesses = await _illnessService.GetIllnessesAsync(pageSize, pageNumber);
             if (illnesses == null)
             {
                 return NotFound();
             }
+            var illnessesRespondModel = _mapper.Map<List<IllnessRespondModel>>(illnesses);
 
-            return Ok(illnesses);
+
+            return Ok(illnessesRespondModel);
         }
 
     //     [HttpGet]
