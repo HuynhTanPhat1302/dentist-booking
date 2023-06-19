@@ -28,6 +28,23 @@ namespace DentistBooking.Application.Services
             return _proposeAppointmentRepository.GetById(id);
         }
 
+        public async Task<List<ProposeAppointment>> SearchProposeAppointmentsAsync(int pageSize, int pageNumber, string searchQuery)
+        {
+            var proposeAppointments = await _proposeAppointmentRepository.SearchProposeAppointmentsAsync(searchQuery);
+
+            var pagedProposeAppointments = proposeAppointments
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return pagedProposeAppointments;
+        }
+
+        public async Task<ProposeAppointment?> GetProposeAppointmentByNameAsync(string name)
+        {
+            return await _proposeAppointmentRepository.GetProposeAppointmentByNameAsync(name);
+        }
+
         public void CreateProposeAppointment(ProposeAppointment proposeAppointment)
         {
             _proposeAppointmentRepository.Add(proposeAppointment);

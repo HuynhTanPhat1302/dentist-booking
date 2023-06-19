@@ -27,6 +27,9 @@ namespace DentistBooking.Application.Interfaces
 
         Task<Patient?> GetPatientByEmailAsync(string email);
 
+        Task<bool> IsPatientCodeUnique(string patientCode);
+
+
 
         
 

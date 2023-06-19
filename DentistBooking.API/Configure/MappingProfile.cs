@@ -40,6 +40,9 @@ public class MappingProfile : Profile
         CreateMap<Patient, PatientApiRequestModel>();
         CreateMap<PatientApiRequestModel, Patient>();
 
+        CreateMap<Patient, RegisterRequestModel>();
+        CreateMap<RegisterRequestModel, Patient>();
+
 
 
 

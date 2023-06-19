@@ -26,7 +26,18 @@ namespace DentistBooking.Application.Services
 
         public Patient GetPatientById(int id)
         {
-            return _patientRepository.GetById(id);
+            try
+            {
+                if (id <= 0 || id > int.MaxValue)
+                {
+                    throw new Exception("The iD is out of bound");
+                }
+                return _patientRepository.GetById(id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         public void CreatePatient(Patient patient)
@@ -142,6 +153,20 @@ namespace DentistBooking.Application.Services
 
             return isUnique;
         }
+
+        public async Task<bool> IsPatientCodeUnique(string patientCode)
+        {
+            bool isUnique = false;
+
+            if (!string.IsNullOrEmpty(patientCode))
+            {
+                isUnique = await _patientRepository.IsEmailPatientCode(patientCode);
+            }
+
+            return isUnique;
+        }
+
+
 
 
 

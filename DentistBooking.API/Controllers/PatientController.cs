@@ -1,10 +1,12 @@
-﻿using AutoMapper;
+﻿using System.Text;
+using AutoMapper;
 using DentistBooking.API.ApiModels;
 using DentistBooking.API.ApiModels.DentistBooking.API.ApiModels;
 using DentistBooking.Application.Interfaces;
 using DentistBooking.Application.Services;
 using DentistBooking.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace DentistBooking.API.Controllers
 {
@@ -26,6 +28,10 @@ namespace DentistBooking.API.Controllers
         [Route("{id}")]
         public IActionResult GetPatientById(int id)
         {
+            if (id <= 0 || id > int.MaxValue)
+            {
+                return BadRequest();
+            }
             var patient = _patientService.GetPatientById(id);
             if (patient == null)
             {
@@ -38,6 +44,10 @@ namespace DentistBooking.API.Controllers
         [Route("get-patient-by-email/{email}")]
         public IActionResult GetPatientByEmail(string email)
         {
+            if (email.Length <= 4 || email.Length >= 255)
+            {
+                return BadRequest();
+            }
             var patient = _patientService.GetPatientByEmail(email);
             if (patient == null)
             {
@@ -55,17 +65,48 @@ namespace DentistBooking.API.Controllers
 
             if (pageSize <= 0)
             {
-                return BadRequest("Page size must be greater than zero.");
+                var response = new
+                {
+                    Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                    Title = "One or more validation errors occurred.",
+                    Status = 400,
+                    Errors = new Dictionary<string, List<string>>
+    {
+        { "pageSize", new List<string> { "Page size must be greater than zero." } }
+    }
+                };
+
+                return BadRequest(response);
             }
 
             if (pageNumber <= 0)
             {
-                return BadRequest("Page number must be greater than zero.");
+                var response = new
+                {
+                    Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                    Title = "One or more validation errors occurred.",
+                    Status = 400,
+                    Errors = new Dictionary<string, List<string>>
+    {
+        { "pageNumber", new List<string> { "Page number must be greater than zero." } }
+    }
+                };
+                return BadRequest(response);
             }
 
             if (string.IsNullOrEmpty(searchQuery))
             {
-                return BadRequest("seachQuery must not be null or empty.");
+                var response = new
+                {
+                    Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                    Title = "One or more validation errors occurred.",
+                    Status = 400,
+                    Errors = new Dictionary<string, List<string>>
+    {
+        { "searchQuery", new List<string> { "seachQuery must not be null or empty." } }
+    }
+                };
+                return BadRequest(response);
             }
 
             List<Patient> patients;
@@ -83,27 +124,61 @@ namespace DentistBooking.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreatePatient(PatientApiRequestModel patientApiRequestModel)
+        public IActionResult CreatePatient(RegisterRequestModel registerRequestModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var patient = _mapper.Map<Patient>(patientApiRequestModel);
+            var patient = _mapper.Map<Patient>(registerRequestModel);
 
-            try
+
+
+            // Make an HTTP request to the other project's API endpoint
+            using (var httpClient = new HttpClient())
             {
-                _patientService.CreatePatient(patient);
-            }
-            catch (Exception ex)
-            {
-                // Handle any exceptions that occur during patient creation
-                return StatusCode(500, ex);
+                var createAccountUrl = "https://localhost:7214/api/auth/create-account";
+
+                // Create an instance of the RegisterRequestModel based on the patient data
+                var source1Model = new
+                {
+                    Email = registerRequestModel.Email,
+                    Password = registerRequestModel.Password,
+                    RoleID = registerRequestModel.RoleID
+                    // Set other properties as needed
+                };
+
+                // Serialize the RegisterRequestModel to JSON
+                var jsonContent = new StringContent(JsonConvert.SerializeObject(registerRequestModel), Encoding.UTF8, "application/json");
+
+                // Send the POST request to the other project's API endpoint
+                var response = httpClient.PostAsync(createAccountUrl, jsonContent).Result;
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    // Handle any errors from the other project's API
+                    return StatusCode((int)response.StatusCode, response.Content.ReadAsStringAsync().Result);
+                }
+                else
+                {
+                    try
+                    {
+                        _patientService.CreatePatient(patient);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle any exceptions that occur during patient creation
+                        return StatusCode(500, ex);
+                    }
+
+                    return CreatedAtAction(nameof(GetPatientById), new { id = patient.PatientId }, patient);
+                }
             }
 
-            return CreatedAtAction(nameof(GetPatientById), new { id = patient.PatientId }, patient);
+
         }
+
 
         [HttpPut("{email}")]
         public IActionResult UpdatePatient(string email, [FromBody] PatientApiRequestModel patientApiRequestModel)
@@ -117,6 +192,35 @@ namespace DentistBooking.API.Controllers
             if (patient == null)
             {
                 return NotFound();
+            }
+
+            // Check if the email is being updated
+            if (!string.Equals(patientApiRequestModel.Email, email, StringComparison.OrdinalIgnoreCase))
+            {
+                // Make an HTTP request to update the account in the authentication source
+                using (var httpClient = new HttpClient())
+                {
+                    var updateAccountUrl = $"https://localhost:7214/api/auth/update-account/{email}";
+
+                    // Create an instance of the RegisterRequestModel based on the patient data
+                    var updateAccountModel = new
+                    {
+                        Email = patientApiRequestModel.Email,
+                        // Include other properties needed for account update
+                    };
+
+                    // Serialize the update model to JSON
+                    var jsonContent = new StringContent(JsonConvert.SerializeObject(updateAccountModel), Encoding.UTF8, "application/json");
+
+                    // Send the PUT request to the authentication source's API endpoint
+                    var response = httpClient.PutAsync(updateAccountUrl, jsonContent).Result;
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        // Handle any errors from the authentication source's API
+                        return StatusCode((int)response.StatusCode, response.Content.ReadAsStringAsync().Result);
+                    }
+                }
             }
 
             // Use AutoMapper to map the properties from patientApiRequestModel to patient

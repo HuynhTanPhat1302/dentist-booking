@@ -15,6 +15,12 @@ namespace DentistBooking.Application.Interfaces
         void UpdateProposeAppointment(ProposeAppointment ProposeAppointment);
         void DeleteProposeAppointment(int id);
 
+        Task<ProposeAppointment?> GetProposeAppointmentByNameAsync(string name);
+
+        Task<List<ProposeAppointment>> SearchProposeAppointmentsAsync(int pageSize, int pageNumber, string searchQuery);
+
+
+
         
     }
 }

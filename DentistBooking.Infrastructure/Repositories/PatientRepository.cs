@@ -83,6 +83,15 @@ namespace DentistBooking.Infrastructure.Repositories
             bool isUnique = !await DbSet.AnyAsync(p => p.Email == email);
             return isUnique;
         }
+
+        public async Task<bool> IsEmailPatientCode(string patientCode)
+        {
+            // Check if there is any patient with the provided email in the database
+            bool isUnique = !await DbSet.AnyAsync(p => p.PatientCode == patientCode);
+            return isUnique;
+        }
         // Add any additional custom methods or queries specific to the Patient entity here
+
+
     }
 }

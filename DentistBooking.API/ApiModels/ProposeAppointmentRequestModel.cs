@@ -23,8 +23,8 @@ namespace DentistBooking.API.ApiModels
         [RegularExpression(@"^\d{10}$")]
         public string? PhoneNumber { get; set; }
 
-            [Required]
-            [StringLength(int.MaxValue)]
-            public string? Note { get; set; }
-        }
+
+        [StringLength(int.MaxValue)]
+        public string? Note { get; set; }
+    }
 }
