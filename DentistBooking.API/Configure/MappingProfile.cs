@@ -42,6 +42,15 @@ public class MappingProfile : Profile
 
         CreateMap<DentistAccountApiModel, Dentist>();
         CreateMap<Dentist, DentistAccountApiModel>();
+        CreateMap<Patient, RegisterRequestModel>();
+        CreateMap<RegisterRequestModel, Patient>();
+
+        CreateMap<Illness, IllnessRespondModel>();
+        CreateMap<IllnessRespondModel, Illness>();
+
+        CreateMap<MedicalRecord, MedicalRecordRespondModel>();
+        CreateMap<MedicalRecordRespondModel, MedicalRecord>();
+
 
         CreateMap<DentistApiModel, Dentist>();
         CreateMap<Dentist, DentistApiModel>();

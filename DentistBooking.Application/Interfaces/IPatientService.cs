@@ -11,7 +11,11 @@ namespace DentistBooking.Application.Interfaces
     {
         IEnumerable<Patient> GetAllPatients();
         Patient GetPatientById(int id);
+        
         void CreatePatient(Patient patient);
+
+         void UpdatePatient(Patient patient);
+
         Patient UpdatePatient(int id, Patient patient);
         void DeletePatient(int id);
 
@@ -22,5 +26,18 @@ namespace DentistBooking.Application.Interfaces
         Task<List<Patient>> SearchPatientsAsync(int pageSize, int pageNumber, string searchQuery);
 
         Patient? CreateAccountOfPatient(Patient patient);
+        Task<bool> IsEmailUnique(string email);
+
+        Task DeletePatientAsync(string email);
+
+        Task<Patient?> GetPatientByEmailAsync(string email);
+
+        Task<bool> IsPatientCodeUnique(string patientCode);
+
+
+
+        
+
+
     }
 }

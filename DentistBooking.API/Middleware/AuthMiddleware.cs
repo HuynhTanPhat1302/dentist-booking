@@ -24,7 +24,6 @@ namespace DentistBooking.Middleware
             {
                 "/api/login", // Whitelisted login endpoint
                 "/api/guest", // Whitelisted guest endpoint
-                // Add more whitelisted paths as needed
             };
         }
 
@@ -33,7 +32,7 @@ namespace DentistBooking.Middleware
             var requestPath = context.Request.Path.Value;
 
             // Check if the request path is in the whitelist
-            if (_whitelistedPaths.Contains(requestPath))
+            if (requestPath != null && _whitelistedPaths.Contains(requestPath))
             {
                 // Pass the request to the next middleware without performing authentication
                 await _next(context);
@@ -140,7 +139,7 @@ namespace DentistBooking.Middleware
 
     public class User
     {
-        public string Email { get; set; }
-        public string Role { get; set; }
+        public string? Email { get; set; }
+        public string? Role { get; set; }
     }
 }

@@ -1,10 +1,12 @@
-﻿using AutoMapper;
+﻿ using System.Text;
+using AutoMapper;
 using DentistBooking.API.ApiModels;
 using DentistBooking.API.ApiModels.DentistBooking.API.ApiModels;
 using DentistBooking.Application.Interfaces;
 using DentistBooking.Application.Services;
 using DentistBooking.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace DentistBooking.API.Controllers
 {
@@ -20,39 +22,84 @@ namespace DentistBooking.API.Controllers
             _patientService = patientService;
             _mapper = mapper;
         }
-        //get patient by id
+
         [HttpGet]
         [Route("{id}")]
-        public IActionResult ViewPatientDetails(int id)
+        public IActionResult GetPatientById(int id)
         {
-            try
+            if (id <= 0 || id > int.MaxValue)
             {
-                var patient = _patientService.GetPatientById(id);
-                var patientDTO = _mapper.Map<PatientApiModel>(patient);
-                if (patient == null)
-                {
-                    throw new Exception("Patient is not existed!");
-                }
-                var response = new
-                {
-                    ContentType = "application/json",
-                    Success = true,
-                    Message = "Patients retrieved successfully",
-                    Data = patientDTO
-                };
-                return Ok(response);
+                return BadRequest();
             }
-            catch (Exception ex)
+            var patient = _patientService.GetPatientById(id);
+            if (patient == null)
             {
-                var response = new
-                {
-                    ContentType = "application/json",
-                    Success = false,
-                    Message = "Patient is not existed!!!",
-                    Error = ex.Message
-                };
-                return NotFound(response);
+                return NotFound();
             }
+            return Ok(patient);
+        }
+
+        //get patient by id
+        // [HttpGet]
+        // [Route("{id}")]
+        // public IActionResult ViewPatientDetails(int id)
+        // {
+        //     if (id <= 0 || id > int.MaxValue)
+        //     {
+        //         return BadRequest();
+        //     }
+        //     var patient = _patientService.GetPatientById(id);
+        //     if (patient == null)
+        //     try
+        //     {
+        //         var patient = _patientService.GetPatientById(id);
+        //         var patientDTO = _mapper.Map<PatientApiModel>(patient);
+        //         if (patient == null)
+        //         {
+        //             throw new Exception("Patient is not existed!");
+        //         }
+        //         var response = new
+        //         {
+        //             ContentType = "application/json",
+        //             Success = true,
+        //             Message = "Patients retrieved successfully",
+        //             Data = patientDTO
+        //         };
+        //         return Ok(response);
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         var response = new
+        //         {
+        //             ContentType = "application/json",
+        //             Success = false,
+        //             Message = "Patient is not existed!!!",
+        //             Error = ex.Message
+        //         };
+        //         return NotFound(response);
+        //     }
+        // }
+
+
+        //
+        
+
+        
+
+        [HttpGet]
+        [Route("get-patient-by-email/{email}")]
+        public IActionResult GetPatientByEmail(string email)
+        {
+            if (email.Length <= 4 || email.Length >= 255)
+            {
+                return BadRequest();
+            }
+            var patient = _patientService.GetPatientByEmail(email);
+            if (patient == null)
+            {
+                return NotFound();
+            }
+            return Ok(patient);
         }
 
         //search-patient (paging, sort alphabalet)
@@ -64,17 +111,48 @@ namespace DentistBooking.API.Controllers
 
             if (pageSize <= 0)
             {
-                return BadRequest("Page size must be greater than zero.");
+                var response = new
+                {
+                    Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                    Title = "One or more validation errors occurred.",
+                    Status = 400,
+                    Errors = new Dictionary<string, List<string>>
+    {
+        { "pageSize", new List<string> { "Page size must be greater than zero." } }
+    }
+                };
+
+                return BadRequest(response);
             }
 
             if (pageNumber <= 0)
             {
-                return BadRequest("Page number must be greater than zero.");
+                var response = new
+                {
+                    Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                    Title = "One or more validation errors occurred.",
+                    Status = 400,
+                    Errors = new Dictionary<string, List<string>>
+    {
+        { "pageNumber", new List<string> { "Page number must be greater than zero." } }
+    }
+                };
+                return BadRequest(response);
             }
 
             if (string.IsNullOrEmpty(searchQuery))
             {
-                return BadRequest("seachQuery must not be null or empty.");
+                var response = new
+                {
+                    Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                    Title = "One or more validation errors occurred.",
+                    Status = 400,
+                    Errors = new Dictionary<string, List<string>>
+    {
+        { "searchQuery", new List<string> { "seachQuery must not be null or empty." } }
+    }
+                };
+                return BadRequest(response);
             }
 
             List<Patient> patients;
@@ -93,88 +171,274 @@ namespace DentistBooking.API.Controllers
 
 
         [HttpPost]
-        public IActionResult CreateAccountOfPatient([FromBody] PatientApiRequestModel patientRequest)
+        public IActionResult CreatePatient(RegisterRequestModel registerRequestModel)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                var res = _patientService.CreateAccountOfPatient(_mapper.Map<Patient>(patientRequest));
-                var patient = _mapper.Map<PatientApiModel>(res);
-                return CreatedAtAction(nameof(ViewPatientDetails), new { id = patient.PatientId }, patient);
+                return BadRequest(ModelState);
             }
-            catch (Exception ex)
+
+            var patient = _mapper.Map<Patient>(registerRequestModel);
+
+
+
+            // Make an HTTP request to the other project's API endpoint
+            using (var httpClient = new HttpClient())
             {
-                var response = new
+                var createAccountUrl = "https://localhost:7214/api/auth/create-account";
+
+                // Create an instance of the RegisterRequestModel based on the patient data
+                var source1Model = new
                 {
-                    ContentType = "application/json",
-                    Success = false,
-                    Message = "Create unsuccesfully",
-                    Error = ex.Message
+                    Email = registerRequestModel.Email,
+                    Password = registerRequestModel.Password,
+                    RoleID = registerRequestModel.RoleID
+                    // Set other properties as needed
                 };
-                return BadRequest(response);
-            }
-        }
-        //ViewAllPatient
-        [HttpGet]
-        public IActionResult ViewAllPatients()
-        {
-            try
-            {
-                var patients = _patientService.GetAllPatients().ToList();
-                var patientsDto = _mapper.Map<List<PatientApiModel>>(patients);
-                if (patients.Count == 0)
+
+                // Serialize the RegisterRequestModel to JSON
+                var jsonContent = new StringContent(JsonConvert.SerializeObject(registerRequestModel), Encoding.UTF8, "application/json");
+
+                // Send the POST request to the other project's API endpoint
+                var response = httpClient.PostAsync(createAccountUrl, jsonContent).Result;
+
+                if (!response.IsSuccessStatusCode)
                 {
-                    throw new Exception("The list is empty");
+                    // Handle any errors from the other project's API
+                    return StatusCode((int)response.StatusCode, response.Content.ReadAsStringAsync().Result);
                 }
-                var response = new
+                else
                 {
-                    ContentType = "application/json",
-                    Success = true,
-                    Message = "Patients retrieved successfully",
-                    Data = patientsDto
-                };
-                return Ok(response);
+                    try
+                    {
+                        _patientService.CreatePatient(patient);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle any exceptions that occur during patient creation
+                        return StatusCode(500, ex);
+                    }
+
+                    return CreatedAtAction(nameof(GetPatientById), new { id = patient.PatientId }, patient);
+                }
             }
-            catch (Exception ex)
-            {
-                var response = new
-                {
-                    ContentType = "application/json",
-                    Success = false,
-                    Message = "The list is empty",
-                    Error = ex.Message
-                };
-                return NotFound(response);
-            }
+
+
         }
 
-        [HttpPut("{id}")]
-        public IActionResult UpdatePatientInfor(int id, PatientApiRequestModel patient)
+
+        [HttpPut("{email}")]
+        public IActionResult UpdatePatient(string email, [FromBody] PatientApiRequestModel patientApiRequestModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var patient = _patientService.GetPatientByEmail(email);
+            if (patient == null)
+            {
+                return NotFound();
+            }
+
+            // Check if the email is being updated
+            if (!string.Equals(patientApiRequestModel.Email, email, StringComparison.OrdinalIgnoreCase))
+            {
+                // Make an HTTP request to update the account in the authentication source
+                using (var httpClient = new HttpClient())
+                {
+                    var updateAccountUrl = $"https://localhost:7214/api/auth/update-account/{email}";
+
+                    // Create an instance of the RegisterRequestModel based on the patient data
+                    var updateAccountModel = new
+                    {
+                        Email = patientApiRequestModel.Email,
+                        // Include other properties needed for account update
+                    };
+
+                    // Serialize the update model to JSON
+                    var jsonContent = new StringContent(JsonConvert.SerializeObject(updateAccountModel), Encoding.UTF8, "application/json");
+
+                    // Send the PUT request to the authentication source's API endpoint
+                    var response = httpClient.PutAsync(updateAccountUrl, jsonContent).Result;
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        // Handle any errors from the authentication source's API
+                        return StatusCode((int)response.StatusCode, response.Content.ReadAsStringAsync().Result);
+                    }
+                }
+            }
+
+            // Use AutoMapper to map the properties from patientApiRequestModel to patient
+            _mapper.Map(patientApiRequestModel, patient);
+
             try
             {
-                var patientRes = _patientService.UpdatePatient(id, _mapper.Map<Patient>(patient));
-                var res = _mapper.Map<PatientApiModel>(patientRes);
-                var response = new
-                {
-                    ContentType = "application/json",
-                    Success = true,
-                    Message = "Patients updated",
-                    Data = res
-                };
-                return Ok(response);
+                _patientService.UpdatePatient(patient);
             }
             catch (Exception ex)
             {
-                var response = new
-                {
-                    ContentType = "application/json",
-                    Success = false,
-                    Message = "Patients is not updated",
-                    Error = ex.Message
-                };
-                return NotFound(response);
+                // Handle any exceptions that occur during patient update
+                return StatusCode(500, ex);
             }
+
+            return NoContent();
         }
+
+        [HttpDelete("{email}")]
+        public async Task<IActionResult> DeletePatient(string email)
+        {
+            var patient = await _patientService.GetPatientByEmailAsync(email);
+            if (patient == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                if (patient.Email != null)
+                {
+                    await _patientService.DeletePatientAsync(patient.Email);
+                }
+                else
+                {
+                    return BadRequest("The Patient have no email");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that occur during patient deletion
+                return StatusCode(500, ex);
+            }
+
+            return NoContent();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        //[HttpPut("{id}")]
+        //public IActionResult UpdatePatient(int id, staff staff)
+        //{
+        //    if (id != staff.StaffId)
+        //    {
+        //        return BadRequest();
+        //    }
+        //    _staffService.UpdateStaff(staff);
+        //    return NoContent();
+        //}
+
+        //[HttpDelete("{id}")]
+        //public IActionResult DeleteStaff(int id)
+        //{
+        //    _staffService.DeleteStaff(id);
+        //    return NoContent();
+        //}
+
+
+
+        //get all patients
+        //[HttpGet("GetPatients")]
+
+        //public IActionResult GetAllPatients()
+        //{
+        //    var patients = _patientService.GetAllPatients();
+        //    return Ok(patients);
+        //}
+
+        //get all treatments and its price
+        //[HttpGet("GetTreatments")]
+        //public IActionResult GetAllTreatments()
+        //{
+        //    var treatments = _treatmentService.GetAllTreatments();
+        //    var treatmentApiRequestModel = _mapper.Map<List<TreatmentApiRequestModel>>(treatments);
+        //    return Ok(treatmentApiRequestModel);
+        //}
+
+
+
+        //create new patient
+        //[HttpPost("CreatePatient")]
+        //public IActionResult CreatePatient(PatientApiModel patientApiModel)
+        //{
+        //    var patient = _mapper.Map<Patient>(patientApiModel);
+        //    _patientService.CreatePatient(patient);
+        //    return CreatedAtAction(nameof(GetPatientById), new { id = patient.PatientId }, patient);
+        //}
+
+        //[HttpGet("GetProposeAppointmentById/{id}")]
+        //public IActionResult GetProposeAppointmentById(int id)
+        //{
+        //    var proposeAppointment = _proposeAppointmentService.GetProposeAppointmentById(id);
+        //    if (proposeAppointment == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return Ok(proposeAppointment);
+        //}
+
+        //[HttpPost("CreateProposeAppointment")]
+        //public IActionResult CreateProposeAppointment(ProposeAppointmentRequestModel proposeAppointmentRequestModel)
+        //{
+        //    var proposeAppointment = _mapper.Map<ProposeAppointment>(proposeAppointmentRequestModel);
+        //    _proposeAppointmentService.CreateProposeAppointment(proposeAppointment);
+
+        //    return CreatedAtAction(nameof(GetProposeAppointmentById), new { id = proposeAppointment.ProposeAppointmentId }, proposeAppointment);
+        //}
+
+        //[HttpGet("GetMedicalRecordByPatientEmail/{email}")]
+        //public IActionResult GetMedicalRecordByEmail(string email)
+        //{
+        //        var medicalRecords = _medicalRecordService.GetMedicalRecordsByPatientEmail(email);
+
+        //        if (medicalRecords == null)
+        //        {
+
+        //            return NotFound();
+        //        }
+
+        //        var medicalRecordApiRequestModels = _mapper.Map<List<MedicalRecordApiRequestModel>>(medicalRecords);
+
+
+        //        return Ok(medicalRecordApiRequestModels);
+        //}
+
+        //[HttpGet("GetAppointmentsByPatientEmail/{email}")]
+        //public IActionResult GetAppointmentsByPatientEmail(string email)
+        //{
+        //    var appointments = _appointmentService.GetAppointmentsByPatientEmail(email);
+
+        //    if (appointments == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var appointmentApiRequestModel = _mapper.Map<List<AppointmentApiRequestModel>>(appointments);
+
+
+        //    return Ok(appointmentApiRequestModel);
+        //}
+
+
+
+
+
+
+        //[HttpDelete("DeletePatient/{id}")]
+        //public IActionResult DeletePatient(int id)
+        //{
+        //    _patientService.DeletePatient(id);
+        //    return NoContent();
+        //}
     }
 }
 

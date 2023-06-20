@@ -43,9 +43,8 @@ namespace DentistBooking.Helpers
                 var emailClaim = claimsPrincipal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email);
                 var roleClaim = claimsPrincipal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
 
-                var email = emailClaim?.Value;
-                var role = roleClaim?.Value;
-
+                var email = emailClaim?.Value ?? string.Empty; // Assign an empty string if emailClaim is null
+                var role = roleClaim?.Value ?? string.Empty; // Assign an empty string if roleClaim is null
 
                 return (email, role);
             }
@@ -53,10 +52,9 @@ namespace DentistBooking.Helpers
             {
                 // Handle any exceptions that occur during token decryption/validation
                 // Log or return an error response as needed
-                return (null, null);
+                throw new Exception(ex.ToString());
+                //return (null, null);
             }
-
-
         }
     }
 }

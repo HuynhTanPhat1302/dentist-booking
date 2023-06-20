@@ -1,15 +1,28 @@
-﻿
+
 using System.ComponentModel.DataAnnotations;
 using DentistBooking.API.Validation;
 
 namespace DentistBooking.API.ApiModels
 {
-    public class PatientApiRequestModel
+    public class RegisterRequestModel
     {
+        public RegisterRequestModel()
+        {
+            CreatedAt = DateTime.Now;
+        }
+
         [Required]
         [EmailAddress]
         [UniquePatientEmail]
         public string? Email { get; set; }
+
+        [Required]
+        public string? Password { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+
+        [Required]
+        public int RoleID { get; set; }
 
         [Required]
         [MinLength(5)]
@@ -26,6 +39,7 @@ namespace DentistBooking.API.ApiModels
 
         [Required]
         [MinLength(6)]
+        [UniquePatientCode]
         [RegularExpression("^P\\d{6}$")]
         public string? PatientCode { get; set; }
         

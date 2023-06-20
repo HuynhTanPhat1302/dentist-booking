@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace DentistBooking.Application.Services
 {
@@ -27,12 +28,29 @@ namespace DentistBooking.Application.Services
 
         public Patient GetPatientById(int id)
         {
-            return _patientRepository.GetById(id);
+            try
+            {
+                if (id <= 0 || id > int.MaxValue)
+                {
+                    throw new Exception("The iD is out of bound");
+                }
+                return _patientRepository.GetById(id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         public void CreatePatient(Patient patient)
         {
             _patientRepository.Add(patient);
+            _patientRepository.SaveChanges();
+        }
+
+        public void UpdatePatient(Patient patient)
+        {
+            _patientRepository.Update(patient);
             _patientRepository.SaveChanges();
         }
 
@@ -76,44 +94,30 @@ namespace DentistBooking.Application.Services
             }
         }
 
+        public async Task DeletePatientAsync(string email)
+        {
+            var patient = await _patientRepository.GetPatientByEmailAsync(email);
+            if (patient != null)
+            {
+                _patientRepository.Delete(patient);
+                _patientRepository.SaveChanges();
+            }
+        }
+
+
         public Patient? GetPatientByEmail(string email)
         {
             return _patientRepository.GetPatientfByEmail(email);
 
         }
 
-        //public async Task<List<Patient>> SearchPatientsAsync(int pageSize, int pageNumber, string searchQuery = "")
-        //{
-        //    var patients = await _patientRepository.SearchPatientsAsync(searchQuery);
+        public async Task<Patient?> GetPatientByEmailAsync(string email)
+        {
+            return await _patientRepository.GetPatientByEmailAsync(email);
 
-        //    var pagedPatients = patients
-        //        .Skip((pageNumber - 1) * pageSize)
-        //        .Take(pageSize)
-        //        .ToList();
+        }
 
-        //    return pagedPatients;
-        //}
-
-        //public async Task<List<Patient>> SearchPatientsAsync(int pageSize, int pageNumber, string searchQuery = "")
-        //{
-        //    List<Patient> patients;
-
-        //    if (string.IsNullOrEmpty(searchQuery))
-        //    {
-        //        patients = await _patientRepository.GetAllPatientsAsync();
-        //    }
-        //    else
-        //    {
-        //        patients = await _patientRepository.SearchPatientsAsync(searchQuery);
-        //    }
-
-        //    var pagedPatients = patients
-        //        .Skip((pageNumber - 1) * pageSize)
-        //        .Take(pageSize)
-        //        .ToList();
-
-        //    return pagedPatients;
-        //}
+        
         public async Task<List<Patient>> GetPatientsAsync(int pageSize, int pageNumber)
         {
             var patients = await _patientRepository.GetPatientsAsync();
@@ -145,7 +149,6 @@ namespace DentistBooking.Application.Services
             {
                 throw new Exception("Email is existed");
             }
-
             var patientCodeIsExisted = _patientRepository.GetAll().Where(p => p.PatientCode.Equals(patient.PatientCode)).FirstOrDefault();
             if (patientCodeIsExisted != null)
             {
@@ -154,6 +157,31 @@ namespace DentistBooking.Application.Services
             _patientRepository.Add(patient);
             _patientRepository.SaveChanges();
             return patient;
+        }
+
+        //check duplicated email
+        public async Task<bool> IsEmailUnique(string email)
+        {
+            bool isUnique = false;
+
+            if (!string.IsNullOrEmpty(email))
+            {
+                isUnique = await _patientRepository.IsEmailUnique(email);
+            }
+
+            return isUnique;
+        }
+
+        public async Task<bool> IsPatientCodeUnique(string patientCode)
+        {
+            bool isUnique = false;
+
+            if (!string.IsNullOrEmpty(patientCode))
+            {
+                isUnique = await _patientRepository.IsEmailPatientCode(patientCode);
+            }
+
+            return isUnique;
         }
 
        
