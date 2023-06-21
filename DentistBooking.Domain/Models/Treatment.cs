@@ -13,8 +13,7 @@ namespace DentistBooking.Infrastructure
         public int TreatmentId { get; set; }
         public string? TreatmentName { get; set; }
         public decimal? Price { get; set; }
-        public double? EstimatedTime { get; set; }
-
+        public double? EstimatedTime { get; set; } //hours
         public virtual ICollection<MedicalRecord> MedicalRecords { get; set; }
     }
 }
