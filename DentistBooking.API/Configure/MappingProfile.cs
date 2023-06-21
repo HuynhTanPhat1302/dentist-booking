@@ -13,8 +13,16 @@ public class MappingProfile : Profile
         CreateMap<StaffApiModel, staff>();
         CreateMap<ProposeAppointment, ProposeAppointmentRequestModel>();
         CreateMap<ProposeAppointmentRequestModel, ProposeAppointment>();
+
         CreateMap<Treatment, TreatmentApiRequestModel>();
         CreateMap<TreatmentApiRequestModel, Treatment>();
+
+        CreateMap<Treatment, TreatmentRequestModel>();
+        CreateMap<TreatmentRequestModel, Treatment>();
+
+        CreateMap<Treatment, TreatmentRespondModel>();
+        CreateMap<TreatmentRespondModel, Treatment>();
+
         CreateMap<MedicalRecord, MedicalRecordApiRequestModel>();
         CreateMap<MedicalRecordApiRequestModel, MedicalRecord>();
         CreateMap<MedicalRecord, MedicalRecordApiRequestModel>()
