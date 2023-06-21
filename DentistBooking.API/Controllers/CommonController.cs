@@ -29,13 +29,7 @@ namespace DentistBooking.API.Controllers
         }
 
         //get all treatments and its price
-        [HttpGet("GetTreatments")]
-        public IActionResult GetAllTreatments()
-        {
-            var treatments = _treatmentService.GetAllTreatments();
-            var treatmentApiRequestModel = _mapper.Map<List<TreatmentApiRequestModel>>(treatments);
-            return Ok(treatmentApiRequestModel);
-        }
+        
 
         [HttpGet("GetProposeAppointmentById/{id}")]
         public IActionResult GetProposeAppointmentById(int id)
