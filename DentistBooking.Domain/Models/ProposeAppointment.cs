@@ -20,6 +20,10 @@ namespace DentistBooking.Infrastructure
 
         public ProposeAppointmentStatus Status { get; set; }
 
+        public Patient? Patient { get; set; }
+
+        public int? PatientId { get; set; }
+
         public ProposeAppointment()
         {
             Status = ProposeAppointmentStatus.NotSeen; // Set the default value to NotSeen
