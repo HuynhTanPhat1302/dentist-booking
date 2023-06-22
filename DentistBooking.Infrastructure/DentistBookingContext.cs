@@ -10,7 +10,7 @@ namespace DentistBooking.Infrastructure
     {
         private readonly IConfiguration? _configuration;
 
-        
+
 
         public DentistBookingContext(DbContextOptions<DentistBookingContext> options, IConfiguration configuration)
             : base(options)
@@ -207,6 +207,12 @@ namespace DentistBooking.Infrastructure
                 entity.Property(e => e.PhoneNumber).HasMaxLength(20);
 
                 entity.Property(e => e.Status).HasMaxLength(20);
+
+                entity.HasOne(e => e.Patient)
+    .WithMany()
+    .HasForeignKey(e => e.PatientId)
+    .OnDelete(DeleteBehavior.Cascade);
+
             });
 
             modelBuilder.Entity<Treatment>(entity =>
