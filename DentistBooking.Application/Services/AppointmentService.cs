@@ -32,6 +32,76 @@ namespace DentistBooking.Application.Services
             return _appointmentRepository.GetAllAppointments();
         }
 
+        public async Task<List<Appointment>> GetAllAppointmentsAsync()
+        {
+            try
+            {
+                var appointments = await _appointmentRepository.GetAppointmentsAsync();
+
+                
+
+                return appointments;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+
+            }
+        }
+
+        public async Task<List<Appointment>> GetAppointmentsAsync(int pageSize, int pageNumber)
+        {
+            try
+            {
+                var appointments = await _appointmentRepository.GetAppointmentsAsync();
+
+                var pagedAppointments = appointments
+                    .Skip((pageNumber - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToList();
+
+                return pagedAppointments;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+
+            }
+        }
+
+        public async Task<List<Appointment>> GetAppointmentsByDentistIdAsync(int dentistId, int pageSize, int pageNumber)
+        {
+            try
+            {
+                var appointments = await GetAppointmentsAsync(pageSize, pageNumber);
+                var appointmentsByDentist = appointments.Where(a => a.StaffId == dentistId).ToList();
+
+                return appointmentsByDentist;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+
+            }
+        }
+
+        public async Task<List<Appointment>> GetAppointmentsByPatientIdAsync(int patientId, int pageSize, int pageNumber)
+        {
+            try
+            {
+                var appointments = await GetAppointmentsAsync(pageSize, pageNumber);
+                var appointmentsByPatient = appointments.Where(a => a.PatientId == patientId).ToList();
+
+                return appointmentsByPatient;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+
+            }
+        }
+
+
         public Appointment? GetAppointmentById(int id)
         {
             return _appointmentRepository.GetAppointmentsById(id);
@@ -44,25 +114,50 @@ namespace DentistBooking.Application.Services
 
         public void CreateAppointment(Appointment appointment)
         {
-            _appointmentRepository.Add(appointment);
-            _appointmentRepository.SaveChanges();
+            try
+            {
+                _appointmentRepository.Add(appointment);
+                _appointmentRepository.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+
+            }
+
         }
 
         public void UpdateAppointment(Appointment appointment)
         {
-            _appointmentRepository.Update(appointment);
-            _appointmentRepository.SaveChanges();
+            try
+            {
+                _appointmentRepository.Update(appointment);
+                _appointmentRepository.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+
+            }
         }
 
         public void DeleteAppointment(int id)
         {
-            var appointment = _appointmentRepository.GetById(id);
-            if (appointment != null)
+            try
             {
-                _appointmentRepository.Delete(appointment);
-                _appointmentRepository.SaveChanges();
+                var appointment = _appointmentRepository.GetById(id);
+                if (appointment != null)
+                {
+                    _appointmentRepository.Delete(appointment);
+                    _appointmentRepository.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
             }
         }
+
 
         public List<Appointment> GetAppointmentsByPatientEmail(string email)
         {
@@ -73,7 +168,7 @@ namespace DentistBooking.Application.Services
         {
             return _appointmentRepository.GetAppointmentsByDentistEmail(dentistEmail);
         }
-        
+
         public Appointment? CreateAnAppointment(Appointment appointment)
         {
             //Check all appointments need to book before 24 hours.

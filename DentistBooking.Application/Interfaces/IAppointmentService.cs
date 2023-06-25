@@ -11,6 +11,18 @@ namespace DentistBooking.Application.Interfaces
     {
         IEnumerable<Appointment> GetAllAppointments();
         Appointment? GetAppointmentById(int id);
+
+        Task<List<Appointment>> GetAllAppointmentsAsync();
+
+        Task<List<Appointment>> GetAppointmentsAsync(int pageSize, int pageNumber);
+
+        Task<List<Appointment>> GetAppointmentsByDentistIdAsync(int dentistId, int pageSize, int pageNumber);
+
+        Task<List<Appointment>> GetAppointmentsByPatientIdAsync(int patientId, int pageSize, int pageNumber);
+
+
+
+
         Appointment? GetAppointmentByStaffId(int id);
         void CreateAppointment(Appointment appointment);
         void UpdateAppointment(Appointment appointment);

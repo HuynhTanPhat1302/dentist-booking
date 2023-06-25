@@ -9,6 +9,84 @@ namespace DentistBooking.Infrastructure.Repositories
         {
         }
 
+        public async Task<List<Appointment>> GetAppointmentsAsync()
+        {
+            try
+            {
+                List<Appointment> appointments = await DbSet.Include(a => a.Staff)
+                .Include(a => a.Patient)
+                .Include(a => a.Staff)
+                .Include(a => a.AppointmentDetails)
+                .ToListAsync();
+                return appointments;
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that occurred during the database operation
+                throw new Exception(ex.ToString());
+            }
+        }
+
+        public async Task<Appointment?> GetAppointmentByIdAsync(int id)
+        {
+            try
+            {
+                var appointment = await DbSet
+                    .Include(a => a.Staff)
+                    .Include(a => a.Patient)
+                    .Include(a => a.AppointmentDetails)
+                    .FirstOrDefaultAsync(a => a.AppointmentId == id);
+
+                return appointment;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+
+        public async Task<List<Appointment>> GetAppointmentsByDentistIdAsync(int dentistId)
+        {
+            try
+            {
+                List<Appointment> appointments = await DbSet
+                    .Include(a => a.Patient)
+                    .Include(a => a.Staff)
+                    .Include(a => a.AppointmentDetails)
+                    .Where(a => a.StaffId == dentistId)
+                    .ToListAsync();
+
+                return appointments;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+
+            }
+        }
+
+        public async Task<List<Appointment>> GetAppointmentsByPatientIdAsync(int patientId)
+        {
+            try
+            {
+                List<Appointment> appointments = await DbSet
+                    .Include(a => a.Patient)
+                    .Include(a => a.Staff)
+                    .Include(a => a.AppointmentDetails)
+                    .Where(a => a.PatientId == patientId)
+                    .ToListAsync();
+
+                return appointments;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+
+            }
+        }
+
+
+
         public IEnumerable<Appointment> GetAppointmentsByDentistId(int dentistId)
         {
             return DbSet.Include(a => a.Dentist)
