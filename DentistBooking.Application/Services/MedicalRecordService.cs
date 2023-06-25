@@ -23,10 +23,25 @@ namespace DentistBooking.Application.Services
             return _medicalRecordRepository.GetAll();
         }
 
-        public MedicalRecord GetMedicalRecordById(int id)
-        {
-            return _medicalRecordRepository.GetById(id);
+        public async Task<IEnumerable<MedicalRecord>> GetMedicalRecordsAsync(int pageSize, int pageNumber) {
+             try
+            {
+                var medicalRecords = await _medicalRecordRepository.GetMedicalRecordsAsync();
+
+                var pagedMedicalRecords = medicalRecords
+                    .Skip((pageNumber - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToList();
+
+                return pagedMedicalRecords;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+
+            }
         }
+        
 
         public void CreateMedicalRecord(MedicalRecord medicalRecord)
         {
@@ -55,9 +70,9 @@ namespace DentistBooking.Application.Services
             return _medicalRecordRepository.GetMedicalRecordByPatientEmail(email);
         }
 
-        public MedicalRecord? GetMedicalRecords(int id)
+        public MedicalRecord? GetMedicalRecordById(int id)
         {
-            return _medicalRecordRepository.GetMedicalById(id);
+            return _medicalRecordRepository.GetMedicalRecordById(id);
         }
 
         public List<MedicalRecord> GetMedicalRecordsOfPatient(int patientId)
