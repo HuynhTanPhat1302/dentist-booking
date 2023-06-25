@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace DentistBooking.Infrastructure
 {
@@ -8,6 +11,7 @@ namespace DentistBooking.Infrastructure
         public MedicalRecord()
         {
             AppointmentDetails = new HashSet<AppointmentDetail>();
+            Status = MedicalRecordStatus.Finished;
         }
 
         public int MedicalRecordId { get; set; }
@@ -16,12 +20,22 @@ namespace DentistBooking.Infrastructure
         public int? TeethNumber { get; set; }
         public int? IllnessId { get; set; }
         public int? TreatmentId { get; set; }
-        public string? Status { get; set; }
+
+        [Column(TypeName = "nvarchar(20)")]
+        [EnumDataType(typeof(ProposeAppointmentStatus))]
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public MedicalRecordStatus Status { get; set; }
 
         public virtual Dentist? Dentist { get; set; }
         public virtual Illness? Illness { get; set; }
         public virtual Patient? Patient { get; set; }
         public virtual Treatment? Treatment { get; set; }
         public virtual ICollection<AppointmentDetail> AppointmentDetails { get; set; }
+    }
+
+    public enum MedicalRecordStatus
+    {
+        Finished,
+        ReExamination
     }
 }

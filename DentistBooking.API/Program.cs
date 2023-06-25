@@ -1,4 +1,5 @@
-﻿using DentistBooking.Application.Interfaces;
+﻿using System.Text.Json.Serialization;
+using DentistBooking.Application.Interfaces;
 using DentistBooking.Application.Services;
 using DentistBooking.Infrastructure;
 using DentistBooking.Infrastructure.Repositories;
@@ -21,6 +22,17 @@ builder.Services.AddHttpClient();
 
 // Configure AutoMapper
 builder.Services.AddAutoMapper(typeof(Program));
+
+//Configure Json
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+
+    // options.JsonSerializerOptions.MaxDepth = 32;
+    //options.JsonSerializerOptions.Converters.Add(new MaxDepthJsonConverter(2));
+    
+});
+
 
 // Configure your services here
 // For example, you can register your DbContext and other services

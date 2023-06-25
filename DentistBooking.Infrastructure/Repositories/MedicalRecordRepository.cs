@@ -9,6 +9,25 @@ namespace DentistBooking.Infrastructure.Repositories
         {
         }
 
+        public async Task<IEnumerable<MedicalRecord>> GetMedicalRecordsAsync()
+        {
+            try
+            {
+                return await DbSet
+                    .Include(mr => mr.Dentist)
+                    .Include(mr => mr.Illness)
+                    .Include(mr => mr.Patient)
+                    .Include(mr => mr.Treatment)
+                    .Include(mr => mr.AppointmentDetails)
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+
+
         public List<MedicalRecord> GetMedicalRecordByPatientEmail(string email)
         {
             var medicalRecord = DbSet
@@ -25,7 +44,7 @@ namespace DentistBooking.Infrastructure.Repositories
 
 
 
-        public MedicalRecord? GetMedicalById(int id)
+        public MedicalRecord? GetMedicalRecordById(int id)
         {
             var medicalRecord = DbSet
             .Include(mr => mr.Dentist)

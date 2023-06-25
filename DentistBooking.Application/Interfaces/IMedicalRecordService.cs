@@ -10,12 +10,14 @@ namespace DentistBooking.Application.Interfaces
     public interface IMedicalRecordService
     {
         IEnumerable<MedicalRecord> GetAllMedicalRecords();
-        MedicalRecord GetMedicalRecordById(int id);
+
+        Task<IEnumerable<MedicalRecord>> GetMedicalRecordsAsync(int pageSize, int pageNumber);
+        
         void CreateMedicalRecord(MedicalRecord medicalRecord);
         void UpdateMedicalRecord(MedicalRecord medicalRecord);
         void DeleteMedicalRecord(int id);
         List<MedicalRecord> GetMedicalRecordsByPatientEmail(string email);
-        MedicalRecord? GetMedicalRecords(int id);
+        MedicalRecord? GetMedicalRecordById(int id);
         List<MedicalRecord> GetMedicalRecordsOfPatient(int patientId);
 
     }

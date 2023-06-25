@@ -9,6 +9,10 @@ public class MappingProfile : Profile
     {
         CreateMap<Patient, PatientApiModel>();
         CreateMap<PatientApiModel, Patient>();
+
+        CreateMap<Patient, PatientRespondModel>();
+        CreateMap<PatientRespondModel, Patient>();
+
         CreateMap<staff, StaffApiModel>();
         CreateMap<StaffApiModel, staff>();
 
@@ -35,6 +39,13 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.DentistName, opt => opt.MapFrom(src => src.Dentist != null ? src.Dentist.DentistName : null))
             .ForMember(dest => dest.IllnessName, opt => opt.MapFrom(src => src.Illness != null ? src.Illness.IllnessName : null))
             .ForMember(dest => dest.TreatmentName, opt => opt.MapFrom(src => src.Treatment != null ? src.Treatment.TreatmentName : null));
+
+        CreateMap<MedicalRecord, MedicalRecordCreatedModel>();
+        CreateMap<MedicalRecordCreatedModel, MedicalRecord>();
+
+        CreateMap<MedicalRecord, MedicalRecordUpdatedModel>();
+        CreateMap<MedicalRecordUpdatedModel, MedicalRecord>();
+
         CreateMap<Appointment, AppointmentApiRequestModel>();
         CreateMap<AppointmentApiRequestModel, Appointment>();
         CreateMap<Appointment, AppointmentApiRequestModel>()
@@ -64,12 +75,22 @@ public class MappingProfile : Profile
         CreateMap<Illness, IllnessRequestModel>();
         CreateMap<IllnessRequestModel, Illness>();
 
-        CreateMap<MedicalRecord, MedicalRecordRespondModel>();
-        CreateMap<MedicalRecordRespondModel, MedicalRecord>();
+        CreateMap<MedicalRecord, NestedMedicalRecordRespondModel>()
+            .ForMember(dest => dest.Dentist, opt => opt.MapFrom(src => src.Dentist))
+            .ForMember(dest => dest.Illness, opt => opt.MapFrom(src => src.Illness))
+            .ForMember(dest => dest.Patient, opt => opt.MapFrom(src => src.Patient))
+            .ForMember(dest => dest.Treatment, opt => opt.MapFrom(src => src.Treatment))
+            .ForMember(dest => dest.AppointmentDetails, opt => opt.MapFrom(src => src.AppointmentDetails));
+
+        CreateMap<NestedMedicalRecordRespondModel, MedicalRecord>();
 
 
         CreateMap<DentistApiModel, Dentist>();
         CreateMap<Dentist, DentistApiModel>();
+
+        CreateMap<Dentist, DentistRepondModel>();
+        CreateMap<DentistRepondModel, Dentist>();
+
 
         CreateMap<DentistAvailabilityRequestModel, DentistAvailability>()
             .ForMember(m => m.StartTime, opt => opt.MapFrom(src => TimeSpan.Parse(src.StartTime)))
@@ -78,5 +99,9 @@ public class MappingProfile : Profile
 
         CreateMap<DentistAvailabilityModel, DentistAvailability>();
         CreateMap<DentistAvailability, DentistAvailabilityModel>();
+
+        CreateMap<AppointmentDetail, AppointmentDetailRespondModel>();
+        CreateMap<AppointmentDetailRespondModel, AppointmentDetail>();
+
     }
 }

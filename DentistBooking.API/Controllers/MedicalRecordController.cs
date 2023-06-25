@@ -1,13 +1,15 @@
 ﻿using AutoMapper;
 using DentistBooking.API.ApiModels;
+using DentistBooking.API.ApiModels.DentistBooking.API.ApiModels;
 using DentistBooking.Application.Interfaces;
+using DentistBooking.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace DentistBooking.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/medical-records")]
     [ApiController]
     public class MedicalRecordController : ControllerBase
     {
@@ -19,70 +21,71 @@ namespace DentistBooking.API.Controllers
             _medicalRecordService = medicalRecordService;
             _mapper = mapper;
         }
-        /*// GET: api/<MedicalRecordController>
+
         [HttpGet]
-        public IEnumerable<string> Get()
+        [Route("{id}")]
+        public IActionResult GetMedicalRecordById(int id)
         {
-            return new string[] { "value1", "value2" };
-        }
+            var medicalRecord = _medicalRecordService.GetMedicalRecordById(id);
 
-        // GET api/<MedicalRecordController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<MedicalRecordController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<MedicalRecordController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<MedicalRecordController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }*/
-
-        [HttpGet("{id}")]
-        public IActionResult GetMedicalRecords(int id)
-        {
-            try
+            if (medicalRecord == null)
             {
-                var medicalRecords = _medicalRecordService.GetMedicalRecords(id);
-                var medicalRecordsDTO = _mapper.Map<MedicalRecordApiRequestModel>(medicalRecords);
-                if (medicalRecords == null)
-                {
-                    throw new Exception("Patient is not existed!");
-                }
-                var response = new
-                {
-                    ContentType = "application/json",
-                    Success = true,
-                    Message = "MedicalRecords retrieved successfully",
-                    Data = medicalRecordsDTO
-                };
-                return Ok(response);
+                return NotFound();
             }
-            catch (Exception ex)
+
+            // You can map the MedicalRecord object to a MedicalRecordRespondModel using AutoMapper if needed
+            var medicalRecordRespondModel = _mapper.Map<NestedMedicalRecordRespondModel>(medicalRecord);
+
+            return Ok(medicalRecordRespondModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetMedicalRecords(int pageSize = 10, int pageNumber = 1)
+        {
+            if (pageSize <= 0)
             {
                 var response = new
                 {
-                    ContentType = "application/json",
-                    Success = false,
-                    Message = "Medical Records is not existed!!!",
-                    Error = ex.Message
+                    Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                    Title = "One or more validation errors occurred.",
+                    Status = 400,
+                    Errors = new Dictionary<string, List<string>>
+    {
+        { "pageSize", new List<string> { "Page size must be greater than zero." } }
+    }
                 };
-                return NotFound(response);
+
+                return BadRequest(response);
             }
+
+            if (pageNumber <= 0)
+            {
+                var response = new
+                {
+                    Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                    Title = "One or more validation errors occurred.",
+                    Status = 400,
+                    Errors = new Dictionary<string, List<string>>
+    {
+        { "pageNumber", new List<string> { "Page number must be greater than zero." } }
+    }
+                };
+                return BadRequest(response);
+            }
+
+            var medicalRecords = await _medicalRecordService.GetMedicalRecordsAsync(pageSize, pageNumber);
+            if (medicalRecords == null)
+            {
+                return NotFound();
+            }
+            var medicalRecordRespondModels = _mapper.Map<IEnumerable<NestedMedicalRecordRespondModel>>(medicalRecords);
+
+
+            return Ok(medicalRecordRespondModels);
         }
+
+
+        
 
         [HttpGet("/api/MedicalRecord-Of-Patient/{patientId}")]
         public IActionResult GetMedicalRecordsOfPatient(int patientId)
@@ -116,5 +119,96 @@ namespace DentistBooking.API.Controllers
                 return NotFound(response);
             }
         }
+
+        
+        // HTTP POST - Create a new illness
+        [HttpPost]
+        public IActionResult CreateMedicalRecord(MedicalRecordCreatedModel medicalRecordCreatedModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var medicalRecord = _mapper.Map<MedicalRecord>(medicalRecordCreatedModel);
+
+            try
+            {
+                _medicalRecordService.CreateMedicalRecord(medicalRecord);
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that occur during medicalRecord creation
+                return StatusCode(500, ex);
+            }
+
+            var createdMedicalRecord = _medicalRecordService.GetMedicalRecordById(medicalRecord.MedicalRecordId);
+            var medicalRecordRespondModel = _mapper.Map<NestedMedicalRecordRespondModel>(createdMedicalRecord);
+
+
+            return CreatedAtAction(nameof(GetMedicalRecordById), new { id = medicalRecord.MedicalRecordId }, medicalRecordRespondModel);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateMedicalRecord(int id, [FromBody] MedicalRecordUpdatedModel medicalRecordUpdatedModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var medicalRecord = _medicalRecordService.GetMedicalRecordById(id);
+            if (medicalRecord == null)
+            {
+                return NotFound();
+            }
+
+            // Use AutoMapper to map the properties from medicalRecordApiRequestModel to medicalRecord
+            _mapper.Map(medicalRecordUpdatedModel, medicalRecord);
+
+            try
+            {
+                _medicalRecordService.UpdateMedicalRecord(medicalRecord);
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that occur during medicalRecord update
+                return StatusCode(500, ex);
+            }
+
+            // Retrieve the updated propose appointment from the service
+            var updatedMedicalRecord = _medicalRecordService.GetMedicalRecordById(id);
+
+            //mapper
+            var medicalRecordRespondModel = _mapper.Map<NestedMedicalRecordRespondModel>(updatedMedicalRecord);
+
+            // Return the updated propose appointment in the response
+            return Ok(medicalRecordRespondModel);
+        }
+
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteMedicalRecord(int id)
+        {
+            var medicalRecord = _medicalRecordService.GetMedicalRecordById(id);
+            if (medicalRecord == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                _medicalRecordService.DeleteMedicalRecord(id);
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that occur during medicalRecord deletion
+                return StatusCode(500, ex);
+            }
+
+            return NoContent();
+        }
+
+
     }
 }
