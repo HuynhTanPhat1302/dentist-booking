@@ -32,25 +32,14 @@ namespace DentistBooking.API.Controllers
             {
                 return NotFound();
             }
-            return Ok(proposeAppointment);
-        }
-
-        [HttpGet]
-        [Route("get-propose-appointment-by-name/{name}")]
-        public IActionResult GetProposeAppointmentByName(string name)
-        {
-            var proposeAppointment = _proposeAppointmentService.GetProposeAppointmentByNameAsync(name);
-            if (proposeAppointment == null)
-            {
-                return NotFound();
-            }
-            return Ok(proposeAppointment);
+            var proposeAppointmentRespondModel = _mapper.Map<ProposeAppointmentRespondModel>(proposeAppointment);
+            return Ok(proposeAppointmentRespondModel);
         }
 
         //search-proposeAppointment (paging, sort alphabalet)
         [HttpGet]
         [Route("search")]
-        public async Task<ActionResult<List<ProposeAppointmentRequestModel>>> SearchProposeAppointments(int pageSize, int pageNumber, string searchQuery)
+        public async Task<ActionResult<List<ProposeAppointmentRequestModel>>> SearchProposeAppointments(string searchQuery, int pageSize = 10, int pageNumber = 1)
         {
             // Validation parameter
 
@@ -95,69 +84,73 @@ namespace DentistBooking.API.Controllers
                 return StatusCode(500, ex);
             }
 
+            var createdProposeAppointment = _proposeAppointmentService.GetProposeAppointmentById(proposeAppointment.ProposeAppointmentId);
+            var proposeAppointmentRespondModel = _mapper.Map<ProposeAppointmentRespondModel>(createdProposeAppointment);
 
 
-            return CreatedAtAction(nameof(GetProposeAppointmentById), new { id = proposeAppointment.ProposeAppointmentId }, proposeAppointment);
+            return CreatedAtAction(nameof(GetProposeAppointmentById), new { id = proposeAppointment.ProposeAppointmentId }, proposeAppointmentRespondModel);
         }
 
-        // [HttpPut("{email}")]
-        // public IActionResult UpdateProposeAppointment(string email, [FromBody] ProposeAppointmentApiRequestModel proposeAppointmentApiRequestModel)
-        // {
-        //     if (!ModelState.IsValid)
-        //     {
-        //         return BadRequest(ModelState);
-        //     }
+        [HttpPut("{id}")]
+        public IActionResult UpdateProposeAppointment(int id, [FromBody] ProposeAppointmentRequestModel proposeAppointmentRequestModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        //     var proposeAppointment = _proposeAppointmentService.GetProposeAppointmentByEmail(email);
-        //     if (proposeAppointment == null)
-        //     {
-        //         return NotFound();
-        //     }
+            var proposeAppointment = _proposeAppointmentService.GetProposeAppointmentById(id);
+            if (proposeAppointment == null)
+            {
+                return NotFound();
+            }
 
-        //     // Use AutoMapper to map the properties from proposeAppointmentApiRequestModel to proposeAppointment
-        //     _mapper.Map(proposeAppointmentApiRequestModel, proposeAppointment);
+            // Use AutoMapper to map the properties from proposeAppointmentApiRequestModel to proposeAppointment
+            _mapper.Map(proposeAppointmentRequestModel, proposeAppointment);
 
-        //     try
-        //     {
-        //         _proposeAppointmentService.UpdateProposeAppointment(proposeAppointment);
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         // Handle any exceptions that occur during proposeAppointment update
-        //         return StatusCode(500, ex);
-        //     }
+            try
+            {
+                _proposeAppointmentService.UpdateProposeAppointment(proposeAppointment);
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that occur during proposeAppointment update
+                return StatusCode(500, ex);
+            }
 
-        //     return NoContent();
-        // }
+            // Retrieve the updated propose appointment from the service
+            var updatedProposeAppointment = _proposeAppointmentService.GetProposeAppointmentById(id);
 
-        // [HttpDelete("{email}")]
-        // public async Task<IActionResult> DeleteProposeAppointment(string email)
-        // {
-        //     var proposeAppointment = await _proposeAppointmentService.GetProposeAppointmentByEmailAsync(email);
-        //     if (proposeAppointment == null)
-        //     {
-        //         return NotFound();
-        //     }
+            //mapper
+            var proposeAppointmentRespondModel = _mapper.Map<ProposeAppointmentRespondModel>(updatedProposeAppointment);
 
-        //     try
-        //     {
-        //         if (proposeAppointment.Email != null)
-        //         {
-        //             await _proposeAppointmentService.DeleteProposeAppointmentAsync(proposeAppointment.Email);
-        //         }
-        //         else
-        //         {
-        //             return BadRequest("The ProposeAppointment have no email");
-        //         }
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         // Handle any exceptions that occur during proposeAppointment deletion
-        //         return StatusCode(500, ex);
-        //     }
+            // Return the updated propose appointment in the response
+            return Ok(proposeAppointmentRespondModel);
+        }
 
-        //     return NoContent();
-        // }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteProposeAppointment(int id)
+        {
+            var proposeAppointment = _proposeAppointmentService.GetProposeAppointmentById(id);
+            if (proposeAppointment == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                _proposeAppointmentService.DeleteProposeAppointment(id);
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that occur during proposeAppointment deletion
+                return StatusCode(500, ex);
+            }
+
+            return NoContent();
+        }
+
     }
 
 }
