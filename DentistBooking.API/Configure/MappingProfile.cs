@@ -16,6 +16,9 @@ public class MappingProfile : Profile
         CreateMap<staff, StaffApiModel>();
         CreateMap<StaffApiModel, staff>();
 
+        CreateMap<staff, StaffRespondModel>();
+        CreateMap<StaffRespondModel, staff>();
+
         CreateMap<ProposeAppointment, ProposeAppointmentRequestModel>();
         CreateMap<ProposeAppointmentRequestModel, ProposeAppointment>();
 
@@ -61,6 +64,17 @@ public class MappingProfile : Profile
             .ForMember(m => m.PatientName, opt => opt.MapFrom(src => src.Patient.PatientName));
 
         CreateMap<AppointmentApiModel, Appointment>();
+
+        CreateMap<AppointmentRespondModel, Appointment>();
+        CreateMap<Appointment, AppointmentRespondModel>();
+
+        CreateMap<AppointmentCreateModel, Appointment>();
+        CreateMap<Appointment, AppointmentCreateModel>();
+
+        CreateMap<AppointmentUpdateModel, Appointment>();
+        CreateMap<Appointment, AppointmentUpdateModel>();
+
+
         CreateMap<Patient, PatientApiRequestModel>();
         CreateMap<PatientApiRequestModel, Patient>();
 
