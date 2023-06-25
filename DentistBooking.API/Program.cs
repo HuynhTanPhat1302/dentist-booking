@@ -60,6 +60,9 @@ builder.Services.AddScoped<IMedicalRecordService, MedicalRecordService>();
 builder.Services.AddScoped<AppointmentRepository>();
 builder.Services.AddScoped<IAppointmentService, AppointmentService>();
 
+builder.Services.AddScoped<AppointmentDetailRepository>();
+builder.Services.AddScoped<IAppointmentDetailService, AppointmentDetailService>();
+
 builder.Services.AddScoped<DentistRepository>();
 
 builder.Services.AddScoped<DentistAvailabilityRepository>();

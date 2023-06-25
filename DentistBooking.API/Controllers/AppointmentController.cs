@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DentistBooking.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/appointments")]
     [ApiController]
     public class AppointmentController : ControllerBase
     {

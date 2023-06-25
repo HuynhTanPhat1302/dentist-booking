@@ -117,5 +117,8 @@ public class MappingProfile : Profile
         CreateMap<AppointmentDetail, AppointmentDetailRespondModel>();
         CreateMap<AppointmentDetailRespondModel, AppointmentDetail>();
 
+        CreateMap<AppointmentDetail, AppointmentDetailCreateModel>();
+        CreateMap<AppointmentDetailCreateModel, AppointmentDetail>();
+
     }
 }
