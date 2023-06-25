@@ -11,8 +11,13 @@ public class MappingProfile : Profile
         CreateMap<PatientApiModel, Patient>();
         CreateMap<staff, StaffApiModel>();
         CreateMap<StaffApiModel, staff>();
+
         CreateMap<ProposeAppointment, ProposeAppointmentRequestModel>();
         CreateMap<ProposeAppointmentRequestModel, ProposeAppointment>();
+
+        CreateMap<ProposeAppointment, ProposeAppointmentRespondModel>()
+        .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
+        CreateMap<ProposeAppointmentRespondModel, ProposeAppointment>();
 
         CreateMap<Treatment, TreatmentApiRequestModel>();
         CreateMap<TreatmentApiRequestModel, Treatment>();

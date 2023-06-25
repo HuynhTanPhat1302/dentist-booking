@@ -13,7 +13,6 @@ namespace DentistBooking.API.ApiModels
         [NotMoreThanOneMonth]
         public DateTime? Datetime { get; set; }
 
-
         [Required]
         [StringLength(150)]
         public string? Name { get; set; }
@@ -26,5 +25,9 @@ namespace DentistBooking.API.ApiModels
 
         [StringLength(int.MaxValue)]
         public string? Note { get; set; }
+
+        public int? PatientId { get; set; }
     }
 }
+
+

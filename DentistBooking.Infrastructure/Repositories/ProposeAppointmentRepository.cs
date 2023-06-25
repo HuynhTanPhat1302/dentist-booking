@@ -18,9 +18,13 @@ namespace DentistBooking.Infrastructure.Repositories
 
         public async Task<List<ProposeAppointment>> SearchProposeAppointmentsAsync(string searchQuery)
         {
-            var proposeAppointments = await DbSet.Where(s => (s.Name != null && s.Name.Contains(searchQuery)) || (s.PhoneNumber != null && s.PhoneNumber.Contains(searchQuery))).ToListAsync();
+            var proposeAppointments = await DbSet.Where(s => (s.Name != null && s.Name.Contains(searchQuery)) || (s.PhoneNumber != null && s.PhoneNumber.Contains(searchQuery)))
+            .OrderBy(s => s.Name)
+            .ToListAsync();
             return proposeAppointments;
         }
+
+
 
 
 
