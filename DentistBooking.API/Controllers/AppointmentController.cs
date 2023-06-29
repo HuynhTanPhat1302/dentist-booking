@@ -35,7 +35,7 @@ namespace DentistBooking.API.Controllers
             {
                 return NotFound();
             }
-            var appointmentRespondModel = _mapper.Map<AppointmentRespondModel>(appointment);
+            var appointmentRespondModel = _mapper.Map<AppointmentApiModel>(appointment);
             return Ok(appointmentRespondModel);
         }
 

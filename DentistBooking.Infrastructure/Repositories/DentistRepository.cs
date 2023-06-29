@@ -17,5 +17,26 @@ namespace DentistBooking.Infrastructure.Repositories
         {
             return DbSet.FirstOrDefault(s => s.Email == email);
         }
+
+        public async Task<List<Dentist>> SearchDentistsAsync(string searchQuery)
+        {
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                IQueryable<Dentist> query = DbSet.Where(p => p.DentistName != null && p.DentistName.Contains(searchQuery));
+            }
+
+            var dentists = await DbSet.OrderBy(p => p.DentistName).ToListAsync();
+
+            return dentists;
+        }
+
+        public async Task<List<Dentist>> GetDentistAsync()
+        {
+            var dentist = await DbSet
+                .OrderBy(p => p.DentistName)
+                .ToListAsync();
+
+            return dentist;
+        }
     }
 }

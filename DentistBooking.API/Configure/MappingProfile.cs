@@ -61,7 +61,8 @@ public class MappingProfile : Profile
         CreateMap<Appointment, AppointmentApiModel>()
             .ForMember(m => m.DentistName, opt => opt.MapFrom(src => src.Dentist.DentistName))
             .ForMember(m => m.StaffName, opt => opt.MapFrom(src => src.Staff.StaffName))
-            .ForMember(m => m.PatientName, opt => opt.MapFrom(src => src.Patient.PatientName));
+            .ForMember(m => m.PatientName, opt => opt.MapFrom(src => src.Patient.PatientName))
+            .ForMember(m => m.Status, opt => opt.MapFrom(src => src.Status.ToString()));
 
         CreateMap<AppointmentApiModel, Appointment>();
 
@@ -119,6 +120,9 @@ public class MappingProfile : Profile
 
         CreateMap<AppointmentDetail, AppointmentDetailCreateModel>();
         CreateMap<AppointmentDetailCreateModel, AppointmentDetail>();
+
+        CreateMap<RegisterRequestModel, Dentist>();
+        CreateMap<Dentist, RegisterRequestModel>();
 
     }
 }

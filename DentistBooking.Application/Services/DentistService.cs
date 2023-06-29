@@ -23,7 +23,7 @@ namespace DentistBooking.Application.Services
             return _dentistRepository.GetAll();
         }
 
-        public Dentist GetDentistById(int id)
+        public Dentist? GetDentistById(int id)
         {
             return _dentistRepository.GetById(id);
         }
@@ -79,6 +79,28 @@ namespace DentistBooking.Application.Services
             return _dentistRepository.GetDentistByEmail(email);
         }
 
+        public async Task<List<Dentist>> GetDentistsAsync(int pageSize, int pageNumber)
+        {
+            var dentists = await _dentistRepository.GetDentistAsync();
 
+            var pagedDentists = dentists
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return pagedDentists;
+        }
+
+        public async Task<List<Dentist>> SearchDentistsAsync(int pageSize, int pageNumber, string searchQuery)
+        {
+            var dentists = await _dentistRepository.SearchDentistsAsync(searchQuery);
+
+            var pagedDentists = dentists
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return pagedDentists;
+        }
     }
 }
