@@ -4,6 +4,7 @@ using DentistBooking.API.ApiModels.DentistBooking.API.ApiModels;
 using DentistBooking.Application.Interfaces;
 using DentistBooking.Application.Services;
 using DentistBooking.Infrastructure;
+using DentistBooking.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -78,6 +79,27 @@ namespace DentistBooking.API.Controllers
                     Data = dentistAvailabilityDTO
                 };
                 return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                var response = new
+                {
+                    ContentType = "application/json",
+                    Success = false,
+                    Message = "DentistAvailability is not existed!!!",
+                    Error = ex.Message
+                };
+                return NotFound(response);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetDateOfWeek(DateTime date)
+        {
+            try
+            {
+                var res = await _dentistAvailabilityService.GetFreeTime(date);
+                return Ok(res);
             }
             catch (Exception ex)
             {

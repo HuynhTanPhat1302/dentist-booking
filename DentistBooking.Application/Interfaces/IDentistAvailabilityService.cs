@@ -20,5 +20,7 @@ namespace DentistBooking.Application.Interfaces
         DentistAvailability GetById(int id);
 
         void DeleteDentistAvailability(int id);
+
+        Task<Dictionary<string, (int Start, int End)>> GetFreeTime(DateTime date);
     }
 }

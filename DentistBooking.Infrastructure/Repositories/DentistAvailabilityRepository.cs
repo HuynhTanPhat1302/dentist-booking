@@ -11,6 +11,7 @@ namespace DentistBooking.Infrastructure.Repositories
     {
         public DentistAvailabilityRepository(DentistBookingContext context) : base(context)
         {
+
         }
         public async Task<List<DentistAvailability>> SearchdentistAvailabilitiesAsync(string searchQuery)
         {
@@ -25,7 +26,7 @@ namespace DentistBooking.Infrastructure.Repositories
 
             return dentistAvailabilities;
         }
-        
+
         public DentistAvailability? GetById(int id)
         {
             return DbSet.Include(d => d.Dentist).SingleOrDefault(d => d.AvailabilityId == id);
@@ -40,5 +41,20 @@ namespace DentistBooking.Infrastructure.Repositories
 
             return dentistAvailabilities;
         }
+
+        public async Task<List<DentistAvailability>> GetAllDentistAvailability()
+        {
+            var res = await DbSet.Include(d => d.Dentist).ToListAsync();
+            return res;
+        }
+
+        public async Task<List<DentistAvailability>> GetDentistAvailabilitiesByDayOfWeek(DateTime date)
+        {
+            var dayOfWeekString = date.DayOfWeek.ToString();
+            var availabilities = await DbSet.Include(d => d.Dentist).ToListAsync();
+
+            return availabilities.Where(d => d.DayOfWeek == dayOfWeekString).ToList();
+        }
+
     }
 }
