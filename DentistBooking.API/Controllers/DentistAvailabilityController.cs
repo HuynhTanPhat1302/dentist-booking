@@ -179,5 +179,37 @@ namespace DentistBooking.API.Controllers
                 return NotFound(response);
             }
         }
+
+        // GET api/<DentistAvailabilityController>/5
+        [HttpGet("dentist-freeTime/{date}")]
+        public async Task<IActionResult> GetDentistTimeAvailability(DateTime date)
+        {
+            try
+            {
+                var dentistAvailability = await _dentistAvailabilityService.GetDentistFreetimeAvailability(date);
+                if (dentistAvailability == null)
+                {
+                    throw new Exception("Dentist is not existed!");
+                }
+
+                var response = dentistAvailability.ToDictionary(
+                    kv => kv.Key,
+                    kv => $"{kv.Value.Start.Hours}:{kv.Value.Start.Minutes}, {kv.Value.End.Hours}:{kv.Value.End.Minutes}"
+                );
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                var response = new
+                {
+                    ContentType = "application/json",
+                    Success = false,
+                    Message = "DentistAvailability is not existed!!!",
+                    Error = ex.Message
+                };
+                return NotFound(response);
+            }
+        }
     }
 }

@@ -36,6 +36,7 @@ namespace DentistBooking.Infrastructure
     {
         NotYet,
         Finished,
-        Canceled
+        Canceled,
+        Scheduled
     }
 }
