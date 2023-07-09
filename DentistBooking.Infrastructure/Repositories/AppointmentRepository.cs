@@ -73,8 +73,24 @@ namespace DentistBooking.Infrastructure.Repositories
                     .Include(a => a.Patient)
                     .Include(a => a.Staff)
                     .Include(a => a.AppointmentDetails)
-                    .Where(a => a.StaffId == dentistId && a.Datetime.Value.Date == date.Date)
+                    .Where(a => a.DentistId == dentistId && a.Datetime.Value.Date == date.Date)
                     .ToListAsync();
+
+                return appointments;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+
+            }
+        }
+
+        public List<Appointment> GetAppointmentsByDentistIdAndDateTime(int dentistId, DateTime date)
+        {
+            try
+            {
+                List<Appointment> appointments = DbSet
+                    .Where(a => a.DentistId == dentistId && a.Datetime.Equals(date)).ToList();
 
                 return appointments;
             }

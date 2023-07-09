@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using DentistBooking.API.Validation;
+using DentistBooking.Infrastructure;
+
 namespace DentistBooking.API.ApiModels
 {
     public class AppointmentUpdateModel
@@ -24,7 +26,7 @@ namespace DentistBooking.API.ApiModels
         [TreatmentDurationIsExistedOrNot]
         public double? Duration { get; set; }
         [Required]
-        public string? Status { get; set; }
+        public string Status { get; set; }
 
 
     }
