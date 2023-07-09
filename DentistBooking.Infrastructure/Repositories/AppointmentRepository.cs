@@ -65,6 +65,26 @@ namespace DentistBooking.Infrastructure.Repositories
             }
         }
 
+        public async Task<List<Appointment>> GetAppointmentsByDentistIdAndDateTimeAsync(int dentistId, DateTime date)
+        {
+            try
+            {
+                List<Appointment> appointments = await DbSet
+                    .Include(a => a.Patient)
+                    .Include(a => a.Staff)
+                    .Include(a => a.AppointmentDetails)
+                    .Where(a => a.StaffId == dentistId && a.Datetime.Value.Date == date.Date)
+                    .ToListAsync();
+
+                return appointments;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+
+            }
+        }
+
         public async Task<List<Appointment>> GetAppointmentsByPatientIdAsync(int patientId)
         {
             try

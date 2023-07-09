@@ -40,5 +40,13 @@ namespace DentistBooking.Infrastructure.Repositories
 
             return dentistAvailabilities;
         }
+
+        public async Task<List<DentistAvailability>> GetByDayOfWeekAsync(DateTime dateRequest)
+        {
+            var dayOfweek = dateRequest.DayOfWeek.ToString();
+            var availabilities = await DbSet.Include(d => d.Dentist).Where(D => D.DayOfWeek.Equals(dayOfweek)).ToListAsync();
+
+            return availabilities;
+        }
     }
 }
