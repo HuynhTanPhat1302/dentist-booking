@@ -25,7 +25,7 @@ namespace DentistBooking.Application.Interfaces
 
         Appointment? GetAppointmentByStaffId(int id);
         void CreateAppointment(Appointment appointment);
-        void UpdateAppointment(Appointment appointment);
+        Appointment UpdateAppointment(Appointment appointment);
         void DeleteAppointment(int id);
         List<Appointment> GetAppointmentsByPatientEmail(string email);
 
