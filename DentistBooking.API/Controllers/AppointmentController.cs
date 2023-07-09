@@ -99,7 +99,7 @@ namespace DentistBooking.API.Controllers
 
             try
             {
-                _appointmentService.CreateAppointment(appointment);
+                _appointmentService.CreateAnAppointment(appointment);
             }
             catch (Exception ex)
             {

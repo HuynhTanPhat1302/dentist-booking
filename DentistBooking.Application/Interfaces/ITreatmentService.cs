@@ -21,6 +21,6 @@ namespace DentistBooking.Application.Interfaces
         void UpdateTreatment(Treatment Treatment);
         void DeleteTreatment(int id);
 
-
+        Treatment GetTreatmentByEstimatedTime(double treatmentTime);
     }
 }
