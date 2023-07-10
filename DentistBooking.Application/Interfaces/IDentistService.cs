@@ -16,6 +16,7 @@ namespace DentistBooking.Application.Interfaces
         void DeleteDentist(int id);
         Dentist? GetDentistByEmail(string email);
 
+        bool IsEmailUnique(string email);
 
     }
 }

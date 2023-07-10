@@ -100,51 +100,64 @@ namespace DentistBooking.API.Controllers
             try
             {
                 _appointmentService.CreateAnAppointment(appointment);
+                var createdAppointment = _appointmentService.GetAppointmentById(appointment.AppointmentId);
+                var appointmentRespondModel = _mapper.Map<AppointmentRespondModel>(createdAppointment);
+
+
+                return CreatedAtAction(nameof(GetAppointmentById), new { id = appointment.AppointmentId }, appointmentRespondModel);
             }
             catch (Exception ex)
             {
-                // Handle any exceptions that occur during proposeAppointment creation
-                return StatusCode(500, ex);
+                var response = new
+                {
+                    ContentType = "application/json",
+                    Success = false,
+                    Message = "Create unsuccesfully",
+                    Error = ex.Message
+                };
+                return BadRequest(response);
             }
-
-            var createdAppointment = _appointmentService.GetAppointmentById(appointment.AppointmentId);
-            var appointmentRespondModel = _mapper.Map<AppointmentRespondModel>(createdAppointment);
-
-
-            return CreatedAtAction(nameof(GetAppointmentById), new { id = appointment.AppointmentId }, appointmentRespondModel);
         }
 
         [HttpPut]
         [Route("{id}")]
         public IActionResult UpdateAppointment(int id, [FromBody] AppointmentUpdateModel appointmentUpdateModel)
         {
-            if (id <= 0 || id > int.MaxValue)
+            try
             {
-                return BadRequest();
-            }
+                if (id <= 0 || id > int.MaxValue)
+                {
+                    return BadRequest();
+                }
 
-            if (appointmentUpdateModel == null)
+                if (appointmentUpdateModel == null)
+                {
+                    return BadRequest();
+                }
+
+                var existingAppointment = _appointmentService.GetAppointmentById(id);
+                if (existingAppointment == null)
+                {
+                    return NotFound();
+                }
+
+                // Update the existing appointment with the new data
+
+                var updateAppointment = _mapper.Map<Appointment>(appointmentUpdateModel);
+                updateAppointment.AppointmentId = id;
+
+                // Save the updated appointment
+                _appointmentService.UpdateAppointment(updateAppointment);
+
+                // Return the updated appointment as a response
+                var updatedAppointmentRespondModel = _mapper.Map<AppointmentRespondModel>(existingAppointment);
+                return Ok(updatedAppointmentRespondModel);
+            }
+            catch(Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.ToString());
             }
-
-            var existingAppointment = _appointmentService.GetAppointmentById(id);
-            if (existingAppointment == null)
-            {
-                return NotFound();
-            }
-
-            // Update the existing appointment with the new data
-
-            _mapper.Map(appointmentUpdateModel, existingAppointment);
-
-
-            // Save the updated appointment
-            _appointmentService.UpdateAppointment(existingAppointment);
-
-            // Return the updated appointment as a response
-            var updatedAppointmentRespondModel = _mapper.Map<AppointmentRespondModel>(existingAppointment);
-            return Ok(updatedAppointmentRespondModel);
+           
         }
 
         [HttpDelete]
@@ -166,32 +179,32 @@ namespace DentistBooking.API.Controllers
         }
 
 
-        // [HttpPost]
-        // public IActionResult CreateAnAppointment([FromBody] AppointmentApiModelRequest appointment)
-        // {
-        //     try
-        //     {
-        //         var appointmentResponse = _appointmentService.CreateAnAppointment(_mapper.Map<Appointment>(appointment));
-        //         if (appointmentResponse == null)
-        //         {
-        //             throw new Exception("Booking time is existed");
-        //         }
-        //         var res = _mapper.Map<AppointmentApiModel>(appointmentResponse);
-        //         return CreatedAtAction(nameof(GetAnAppointment), new { id = res.AppointmentId }, res);
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         var response = new
-        //         {
-        //             ContentType = "application/json",
-        //             Success = false,
-        //             Message = "Create unsuccesfully",
-        //             Error = ex.Message
-        //         };
-        //         return BadRequest(response);
-        //     }
+        /*[HttpPost]
+        public IActionResult CreateAnAppointment([FromBody] AppointmentApiModelRequest appointment)
+        {
+            try
+            {
+                var appointmentResponse = _appointmentService.CreateAnAppointment(_mapper.Map<Appointment>(appointment));
+                if (appointmentResponse == null)
+                {
+                    throw new Exception("Booking time is existed");
+                }
+                var res = _mapper.Map<AppointmentApiModel>(appointmentResponse);
+                return CreatedAtAction(nameof(GetAnAppointment), new { id = res.AppointmentId }, res);
+            }
+            catch (Exception ex)
+            {
+                var response = new
+                {
+                    ContentType = "application/json",
+                    Success = false,
+                    Message = "Create unsuccesfully",
+                    Error = ex.Message
+                };
+                return BadRequest(response);
+            }
 
-        // }
+        }*/
 
         // [HttpGet]
         // [Route("{id}")]

@@ -12,10 +12,5 @@ namespace DentistBooking.API.ApiModels
         public DateTime? Datetime { get; set; }
         public double? Duration { get; set; }
         public string? Status { get; set; }
-
-        public virtual DentistRepondModel? Dentist { get; set; }
-        public virtual PatientRespondModel? Patient { get; set; }
-        public virtual StaffRespondModel? Staff { get; set; }
-        public virtual ICollection<AppointmentDetailRespondModel>? AppointmentDetails { get; set; }
     }
 }
