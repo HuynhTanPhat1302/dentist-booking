@@ -1,11 +1,19 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using DentistBooking.API.Validation;
 
 namespace DentistBooking.API.ApiModels
 {
     public class DentistAccountApiModel
     {
         [Required]
+        [UniqueDentistEmail]
         public string? Email { get; set; }
+
+        [Required]
+        public string? Password { get; set; }
+
+        [Required]
+        public int RoleID { get; set; }
 
         [Required]
         [MinLength(5)]

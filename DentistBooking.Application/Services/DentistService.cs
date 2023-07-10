@@ -79,6 +79,9 @@ namespace DentistBooking.Application.Services
             return _dentistRepository.GetDentistByEmail(email);
         }
 
-
+        public bool IsEmailUnique(string email)
+        {
+            return _dentistRepository.GetDentistByEmail(email) != null;
+        }
     }
 }
