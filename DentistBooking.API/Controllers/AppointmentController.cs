@@ -143,11 +143,11 @@ namespace DentistBooking.API.Controllers
 
                 // Update the existing appointment with the new data
 
-                _mapper.Map(appointmentUpdateModel, existingAppointment);
-
+                var updateAppointment = _mapper.Map<Appointment>(appointmentUpdateModel);
+                updateAppointment.AppointmentId = id;
 
                 // Save the updated appointment
-                _appointmentService.UpdateAppointment(existingAppointment);
+                _appointmentService.UpdateAppointment(updateAppointment);
 
                 // Return the updated appointment as a response
                 var updatedAppointmentRespondModel = _mapper.Map<AppointmentRespondModel>(existingAppointment);
