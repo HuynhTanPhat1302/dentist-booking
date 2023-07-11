@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DentistBooking.API.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace DentistBooking.API.ApiModels
 {
@@ -13,10 +14,9 @@ namespace DentistBooking.API.ApiModels
         [Required]
         public DateTime? Datetime { get; set; }
         [Required]
-        [MinLength(1)]
+        [TreatmentDurationIsExistedOrNot]
         public double? Duration { get; set; }
         [Required]
-        [RegularExpression("^[a-zA-Z]{7}$")]
         public string? Status { get; set; }
     }
 }

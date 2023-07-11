@@ -26,6 +26,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\DentistBooking.Application\DentistBooking.Application.csproj" />
+		<ProjectReference Include="..\DentistBooking.Application\DentistBooking.Infrastructure.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

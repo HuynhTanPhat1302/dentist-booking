@@ -113,6 +113,20 @@ namespace DentistBooking.Application.Services
             }
         }
 
-        
+        public Treatment GetTreatmentByEstimatedTime(double treatmentTime)
+        {
+            try
+            {
+                var treatment = _treatmentRepository.GetAll().FirstOrDefault(t => t.EstimatedTime == treatmentTime);
+                if (treatment == null)
+                {
+                    throw new Exception("Treatment's estimated time is not existed!");
+                }
+                return treatment;
+            }catch(Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
     }
 }

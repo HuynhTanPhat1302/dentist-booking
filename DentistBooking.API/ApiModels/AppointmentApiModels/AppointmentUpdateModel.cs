@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using DentistBooking.API.Validation;
+
 
 namespace DentistBooking.API.ApiModels
 {
@@ -21,9 +23,11 @@ namespace DentistBooking.API.ApiModels
         public DateTime? Datetime { get; set; }
 
         [Required]
+        [TreatmentDurationIsExistedOrNot]
         public double? Duration { get; set; }
         [Required]
+        public string Status { get; set; }
 
-        public string? Status { get; set; }
+
     }
 }

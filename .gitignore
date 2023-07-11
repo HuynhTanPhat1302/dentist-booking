@@ -39,6 +39,9 @@ bld/
 *.VisualState.xml
 TestResult.xml
 
+# Ignore DLL files
+*.dll
+
 # Build Results of an ATL Project
 [Dd]ebugPS/
 [Rr]eleasePS/
