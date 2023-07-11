@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using DentistBooking.API.Validation;
-using DentistBooking.Infrastructure;
+
 
 namespace DentistBooking.API.ApiModels
 {

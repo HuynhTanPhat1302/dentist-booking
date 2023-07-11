@@ -44,7 +44,7 @@ namespace DentistBooking.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetTreatmentes(int pageSize = 10, int pageNumber = 1)
         {
-            if (pageSize <= 0)
+            if (pageSize <= 0 || pageSize > 200)
             {
                 var response = new
                 {
@@ -53,7 +53,7 @@ namespace DentistBooking.API.Controllers
                     Status = 400,
                     Errors = new Dictionary<string, List<string>>
     {
-        { "pageSize", new List<string> { "Page size must be greater than zero." } }
+        { "pageSize", new List<string> { "Page size must be greater than zero and smaller than 201." } }
     }
                 };
 
@@ -223,9 +223,6 @@ namespace DentistBooking.API.Controllers
             _treatmentService.DeleteTreatment(id);
             return NoContent();
         }
-
-
-
     }
 }
 
