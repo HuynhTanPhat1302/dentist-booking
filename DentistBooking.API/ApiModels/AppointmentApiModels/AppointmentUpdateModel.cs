@@ -21,12 +21,9 @@ namespace DentistBooking.API.ApiModels
         public DateTime? Datetime { get; set; }
 
         [Required]
-
         public double? Duration { get; set; }
         [Required]
 
         public string? Status { get; set; }
-
-
     }
 }

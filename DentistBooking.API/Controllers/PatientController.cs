@@ -36,55 +36,9 @@ namespace DentistBooking.API.Controllers
             {
                 return NotFound();
             }
-            return Ok(patient);
+            var patientRespondModel = _mapper.Map<PatientRespondModel>(patient);
+            return Ok(patientRespondModel);
         }
-
-        //get patient by id
-        // [HttpGet]
-        // [Route("{id}")]
-        // public IActionResult ViewPatientDetails(int id)
-        // {
-        //     if (id <= 0 || id > int.MaxValue)
-        //     {
-        //         return BadRequest();
-        //     }
-        //     var patient = _patientService.GetPatientById(id);
-        //     if (patient == null)
-        //     try
-        //     {
-        //         var patient = _patientService.GetPatientById(id);
-        //         var patientDTO = _mapper.Map<PatientApiModel>(patient);
-        //         if (patient == null)
-        //         {
-        //             throw new Exception("Patient is not existed!");
-        //         }
-        //         var response = new
-        //         {
-        //             ContentType = "application/json",
-        //             Success = true,
-        //             Message = "Patients retrieved successfully",
-        //             Data = patientDTO
-        //         };
-        //         return Ok(response);
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         var response = new
-        //         {
-        //             ContentType = "application/json",
-        //             Success = false,
-        //             Message = "Patient is not existed!!!",
-        //             Error = ex.Message
-        //         };
-        //         return NotFound(response);
-        //     }
-        // }
-
-
-        //
-        
-
-        
 
         [HttpGet]
         [Route("get-patient-by-email/{email}")]
