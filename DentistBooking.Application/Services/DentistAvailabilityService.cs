@@ -188,7 +188,15 @@ namespace DentistBooking.Application.Services
                 var listDentistAppointment = await _appointmentRepository.GetAppointmentsByDentistIdAndDateTimeAsync((int)dentistAvailability.DentistId, dateRequest);
                 if (listDentistAppointment.Count() == 0)
                 {
-                    throw new Exception($"No dentist working in {dateRequest}");
+                    if (dentistAvailability.DayOfWeek.Equals(dateRequest.DayOfWeek.ToString()))
+                    {
+                        dentistFreeTimeAvailability.Add(dentistAvailability.Dentist.DentistName + $" #1", (dentistAvailability.StartTime.Value, dentistAvailability.EndTime.Value));
+                    }
+                    else
+                    {
+                        throw new Exception($"No dentist working in {dateRequest}");
+                    }
+                    
                 }
                 for(int i = 0; i < listDentistAppointment.Count; i++)
                 {
