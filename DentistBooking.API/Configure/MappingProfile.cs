@@ -26,6 +26,10 @@ public class MappingProfile : Profile
         .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
         CreateMap<ProposeAppointmentRespondModel, ProposeAppointment>();
 
+        CreateMap<ProposeAppointment, ProposeAppointmentStatusRequestModel>()
+        .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
+        CreateMap<ProposeAppointmentStatusRequestModel, ProposeAppointment>();
+
         CreateMap<Treatment, TreatmentApiRequestModel>();
         CreateMap<TreatmentApiRequestModel, Treatment>();
 

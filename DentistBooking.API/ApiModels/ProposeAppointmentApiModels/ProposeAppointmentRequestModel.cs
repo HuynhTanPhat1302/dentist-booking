@@ -26,6 +26,7 @@ namespace DentistBooking.API.ApiModels
         [StringLength(int.MaxValue)]
         public string? Note { get; set; }
 
+        [ValidId]
         public int? PatientId { get; set; }
     }
 }

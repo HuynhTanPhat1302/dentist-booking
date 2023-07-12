@@ -9,8 +9,10 @@ namespace DentistBooking.Infrastructure.Repositories
 {
     public class AppointmentDetailRepository : RepositoryBase<AppointmentDetail>
     {
+        private readonly DentistBookingContext _context;
         public AppointmentDetailRepository(DentistBookingContext context) : base(context)
         {
+            _context = context;
         }
 
         public async Task<AppointmentDetail?> GetAppointmentDetailByIdAsync(int id)
@@ -48,6 +50,43 @@ namespace DentistBooking.Infrastructure.Repositories
                 .ToListAsync();
         }
 
+        public void AddMedicalRecordToAppointment(int medicalRecordId, int appointmentId)
+        {
+            try
+            {
+                var appointment = _context.Appointments.FirstOrDefault(a => a.AppointmentId == appointmentId);
+                var medicalRecord = _context.MedicalRecords.FirstOrDefault(mr => mr.MedicalRecordId == medicalRecordId);
+                if (appointment != null && medicalRecord != null)
+                {
+                    // Create a new appointment detail object
+                    var appointmentDetail = new AppointmentDetail
+                    {
+                        AppointmentId = appointmentId,
+                        MedicalRecordId = medicalRecordId
+                    };
+
+                    // Add the appointment detail to the database
+                    DbSet.Add(appointmentDetail);
+                    _context.SaveChanges();
+
+                    // Compute the total duration for the appointment
+                    double? totalDuration = appointment.Duration;
+                    var treatment = _context.Treatments.FirstOrDefault(t => t.TreatmentId == medicalRecord.TreatmentId);
+                    if (treatment != null)
+                    {
+                        totalDuration += treatment.EstimatedTime;
+                    }
+
+                    // Update the duration of the appointment
+                    appointment.Duration = totalDuration;
+                    _context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error adding medical record to appointment: {ex.Message}");
+            }
+        }
 
     }
 }

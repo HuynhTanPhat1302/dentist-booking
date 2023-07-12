@@ -22,5 +22,8 @@ namespace DentistBooking.Application.Interfaces
         void UpdateAppointmentDetail(AppointmentDetail appointmentDetail);
 
         void DeleteAppointmentDetail(int id);
+
+        void AddMedicalRecordToAppointment(AppointmentDetail appointmentDetail);
+
     }
 }

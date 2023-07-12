@@ -10,22 +10,29 @@ namespace DentistBooking.API.ApiModels
     public class AppointmentCreateModel
     {
         [Required]
+        [ValidId]
         public int? PatientId { get; set; }
 
         [Required]
+        [ValidId]
         public int? DentistId { get; set; }
 
         [Required]
+        [ValidId]
         public int? StaffId { get; set; }
 
         [Required]
         [NotMoreThanOneMonth]
         public DateTime? Datetime { get; set; }
 
-        [Required]
-        [TreatmentDurationIsExistedOrNot]
-        public double? Duration { get; set; }
+        public AppointmentCreateModel()
+        {
+            Duration = 0.5;// khi tao 
+        }
+        // [Required]
+        // [TreatmentDurationIsExistedOrNot]
+        private double? Duration { get; set; }
         
-        
+    
     }
 }

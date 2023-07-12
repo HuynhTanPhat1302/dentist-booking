@@ -103,6 +103,28 @@ namespace DentistBooking.API.Controllers
             return CreatedAtAction(nameof(GetAppointmentDetailById), new { id = createdAppointmentDetailRespondModel.AppointmentDetailId }, createdAppointmentDetailRespondModel);
         }
 
+        [HttpPost("add-medical-record-to-appointment")]
+        public IActionResult AddMedicalRecordToAppointment([FromBody] AppointmentDetailCreateModel appointmentDetailCreateModel)
+        {
+            if (appointmentDetailCreateModel == null)
+            {
+                return BadRequest();
+            }
+
+            var newAppointmentDetail = _mapper.Map<AppointmentDetail>(appointmentDetailCreateModel);
+
+
+            try
+            {
+                _appointmentDetailService.AddMedicalRecordToAppointment(newAppointmentDetail);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+        }
+
         [HttpPut]
         [Route("{id}")]
         public IActionResult UpdateAppointmentDetail(int id, [FromBody] AppointmentDetailCreateModel appointmentDetailCreateModel)

@@ -24,7 +24,7 @@ namespace DentistBooking.Application.Services
         {
             try
             {
-                
+
                 return _appointmentDetailRepository.GetById(id);
             }
             catch (Exception ex)
@@ -37,7 +37,7 @@ namespace DentistBooking.Application.Services
         {
             try
             {
-                
+
 
                 return await _appointmentDetailRepository.GetAppointmentDetailByIdAsync(id);
             }
@@ -52,7 +52,7 @@ namespace DentistBooking.Application.Services
         {
             try
             {
-               
+
 
                 return await _appointmentDetailRepository.GetAppointmentDetailsByMedicalRecordIdAsync(medicalRecordId);
             }
@@ -66,7 +66,7 @@ namespace DentistBooking.Application.Services
         {
             try
             {
-                
+
 
                 return await _appointmentDetailRepository.GetAppointmentDetailByAppointmentIdAsync(appointmentId);
             }
@@ -76,9 +76,21 @@ namespace DentistBooking.Application.Services
             }
         }
 
-        
+        public void AddMedicalRecordToAppointment(AppointmentDetail appointmentDetail)
+        {
+            try
+            {
+                _appointmentDetailRepository.AddMedicalRecordToAppointment(appointmentDetail.MedicalRecordId ?? 0, appointmentDetail.AppointmentId ?? 0);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error adding medical record to appointment detail: {ex.Message}");
+            }
+        }
 
-        
+
+
+
 
         //create-appointmentDetail
         public void CreateAppointmentDetail(AppointmentDetail appointmentDetail)
@@ -126,6 +138,6 @@ namespace DentistBooking.Application.Services
             }
         }
 
-       
+
     }
 }

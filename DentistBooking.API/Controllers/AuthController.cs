@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace DentistBooking.Controllers
 {
     [ApiController]
-    [Route("api/login")]
+    [Route("api")]
     [AllowAnonymous]
     public class AuthController : ControllerBase
     {
@@ -23,6 +23,7 @@ namespace DentistBooking.Controllers
         }
 
         [HttpPost]
+        [Route("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
             // Send a request to the Authentication server to get the JWT

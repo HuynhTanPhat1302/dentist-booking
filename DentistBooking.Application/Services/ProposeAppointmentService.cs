@@ -28,6 +28,27 @@ namespace DentistBooking.Application.Services
             return _proposeAppointmentRepository.GetById(id);
         }
 
+        public async Task<List<ProposeAppointment>> GetProposeAppointmentsByStatusAsync(string status, int pageSize, int pageNumber)
+        {
+            try
+            {
+                var proposeAppointments = await _proposeAppointmentRepository.GetProposeAppointmentsByStatusAsync(status);
+
+                // Apply paging
+                var pagedProposeAppointments = proposeAppointments
+                    .Skip((pageNumber - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToList();
+
+                return pagedProposeAppointments;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+
+
         public async Task<List<ProposeAppointment>> SearchProposeAppointmentsAsync(int pageSize, int pageNumber, string searchQuery)
         {
             var proposeAppointments = await _proposeAppointmentRepository.SearchProposeAppointmentsAsync(searchQuery);
@@ -67,6 +88,6 @@ namespace DentistBooking.Application.Services
             }
         }
 
-        
+
     }
 }

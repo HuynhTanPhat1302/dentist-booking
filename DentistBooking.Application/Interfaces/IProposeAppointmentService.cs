@@ -19,6 +19,9 @@ namespace DentistBooking.Application.Interfaces
 
         Task<List<ProposeAppointment>> SearchProposeAppointmentsAsync(int pageSize, int pageNumber, string searchQuery);
 
+        Task<List<ProposeAppointment>> GetProposeAppointmentsByStatusAsync(string status, int pageSize, int pageNumber);
+
+
 
 
         
