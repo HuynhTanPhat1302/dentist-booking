@@ -113,7 +113,7 @@ namespace DentistBooking.API.Controllers
                     ContentType = "application/json",
                     Success = false,
                     Message = "Create unsuccesfully",
-                    Error = ex.Message
+                    Error = ex.ToString()
                 };
                 return BadRequest(response);
             }

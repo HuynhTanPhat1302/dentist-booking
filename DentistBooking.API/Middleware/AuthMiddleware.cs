@@ -24,6 +24,7 @@ namespace DentistBooking.Middleware
             {
                 "/api/login", // Whitelisted login endpoint
                 "/api/guest", // Whitelisted guest endpoint
+                "api/propose-appointments/1",
             };
         }
 

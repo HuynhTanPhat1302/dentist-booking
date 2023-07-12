@@ -12,6 +12,7 @@ namespace DentistBooking.Infrastructure
         {
             AppointmentDetails = new HashSet<AppointmentDetail>();
             Status = AppointmentStatus.NotYet;
+            Duration = 0.5;
         }
 
         public int AppointmentId { get; set; }

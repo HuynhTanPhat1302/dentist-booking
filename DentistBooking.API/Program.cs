@@ -21,18 +21,13 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddHttpClient();
 
-
 // Configure AutoMapper
 builder.Services.AddAutoMapper(typeof(Program));
 
 //Configure Json
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
-    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
-
-    // options.JsonSerializerOptions.MaxDepth = 32;
-    //options.JsonSerializerOptions.Converters.Add(new MaxDepthJsonConverter(2));
-    
+    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;    
 });
 
 
@@ -63,8 +58,6 @@ builder.Services.AddScoped<IAppointmentService, AppointmentService>();
 
 builder.Services.AddScoped<AppointmentDetailRepository>();
 builder.Services.AddScoped<IAppointmentDetailService, AppointmentDetailService>();
-
-builder.Services.AddScoped<DentistRepository>();
 
 builder.Services.AddScoped<DentistAvailabilityRepository>();
 builder.Services.AddScoped<IDentistAvailabilityService, DentistAvailabilityService>();
@@ -103,6 +96,21 @@ builder.Services.AddAuthorization(options =>
        policy.RequireRole("staff");
    });
 });
+builder.Services.AddAuthorization(options =>
+{
+   options.AddPolicy("PatientOnly", policy =>
+   {
+       policy.RequireRole("patient");
+   });
+});
+builder.Services.AddAuthorization(options =>
+{
+   options.AddPolicy("DentistOnly", policy =>
+   {
+       policy.RequireRole("dentist");
+   });
+});
+
 
 // Add HttpContextAccessor
 builder.Services.AddHttpContextAccessor();
@@ -110,26 +118,22 @@ builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseDeveloperExceptionPage();
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+  
+app.UseSwagger();
+app.UseSwaggerUI();
 
-app.UseMiddleware<AuthMiddleware>();
 
-app.UseHttpsRedirection();
+//app.UseMiddleware<AuthMiddleware>();
+
+//app.UseHttpsRedirection();
+
 
 app.UseRouting();
 
 app.UseAuthentication();
-
 app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
-
 // Run the application
-await app.RunAsync();
+app.Run();

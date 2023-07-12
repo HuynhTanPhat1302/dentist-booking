@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using DentistBooking.API.Validation;
 
 namespace DentistBooking.API.ApiModels
 {
@@ -8,18 +9,22 @@ namespace DentistBooking.API.ApiModels
     {
         
         [Required]
+        [ValidId]
         public int? PatientId { get; set; }
 
         [Required]
+        [ValidId]
         public int? DentistId { get; set; }
 
         [Required]
         public int? TeethNumber { get; set; }
 
         [Required]
+        [ValidId]
         public int? IllnessId { get; set; }
 
         [Required]
+        [ValidId]
         public int? TreatmentId { get; set; }
 
         [Required]

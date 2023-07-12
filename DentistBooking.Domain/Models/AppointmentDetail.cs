@@ -11,5 +11,7 @@ namespace DentistBooking.Infrastructure
 
         public virtual Appointment? Appointment { get; set; }
         public virtual MedicalRecord? MedicalRecord { get; set; }
+
+        
     }
 }

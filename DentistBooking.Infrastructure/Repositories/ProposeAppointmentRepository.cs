@@ -24,6 +24,28 @@ namespace DentistBooking.Infrastructure.Repositories
             return proposeAppointments;
         }
 
+        public async Task<List<ProposeAppointment>> GetProposeAppointmentsByStatusAsync(string status)
+        {
+            try
+            {
+                if (!Enum.TryParse(status, true, out ProposeAppointmentStatus statusEnum))
+                {
+                    throw new ArgumentException("Invalid status value.", nameof(status));
+                }
+
+                var proposeAppointments = await DbSet
+                    .Where(s => s.Status == statusEnum)
+                    .OrderBy(s => s.Datetime)
+                    .ToListAsync();
+
+                return proposeAppointments;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+
 
 
 

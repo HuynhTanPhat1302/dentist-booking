@@ -11,12 +11,15 @@ namespace DentistBooking.API.ApiModels
     public class AppointmentUpdateModel
     {
         [Required]
+        [ValidId]
         public int? PatientId { get; set; }
 
         [Required]
+        [ValidId]
         public int? DentistId { get; set; }
 
         [Required]
+        [ValidId]
         public int? StaffId { get; set; }
 
         [Required]
@@ -26,7 +29,7 @@ namespace DentistBooking.API.ApiModels
         [TreatmentDurationIsExistedOrNot]
         public double? Duration { get; set; }
         [Required]
-        public string Status { get; set; }
+        public string? Status { get; set; }
 
 
     }

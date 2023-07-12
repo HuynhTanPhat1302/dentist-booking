@@ -269,7 +269,7 @@ namespace DentistBooking.Application.Services
             if (listAppointmentOfDentis.Count > 0)
             {
                 TimeSpan timeStartAppointment = appointment.Datetime.Value.TimeOfDay;
-                TimeSpan timeEndAppointment = timeStartAppointment.Add(TimeSpan.FromHours((double)appointment.Duration));
+                TimeSpan timeEndAppointment = timeStartAppointment.Add(TimeSpan.FromHours((double?)appointment.Duration ?? 0.5));
                 foreach (var dentistAppointment in listAppointmentOfDentis)
                 {
                     TimeSpan timeStart = dentistAppointment.Datetime.Value.TimeOfDay;
