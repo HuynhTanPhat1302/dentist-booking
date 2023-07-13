@@ -108,14 +108,7 @@ namespace DentistBooking.API.Controllers
             }
             catch (Exception ex)
             {
-                var response = new
-                {
-                    ContentType = "application/json",
-                    Success = false,
-                    Message = "Create unsuccesfully",
-                    Error = ex.ToString()
-                };
-                return BadRequest(response);
+                return BadRequest(ex.Message);
             }
         }
 
@@ -155,7 +148,7 @@ namespace DentistBooking.API.Controllers
             }
             catch(Exception ex)
             {
-                return BadRequest(ex.ToString());
+                return BadRequest(ex.Message);
             }
            
         }

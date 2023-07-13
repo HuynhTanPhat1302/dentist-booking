@@ -151,6 +151,12 @@ namespace DentistBooking.Application.Services
                 throw new Exception("Dentist is not existed!!!");
             }
 
+            var checkDateTimeIsExistedInDentistWorkingTime = _dentistAvailabilityRepository.GetByDayOfWeek((DateTime)appointment.Datetime, (int) appointment.DentistId);
+            if (checkDateTimeIsExistedInDentistWorkingTime.Count == 0)
+            {
+                throw new Exception($"Dentist is not working in {appointment.Datetime}!!!");
+            }
+
             //Check dentist time is busy or not
             var listAppointmentOfDentis = _appointmentRepository.GetAll().Where(a => a.DentistId == appointment.DentistId && a.Datetime.Value.Date == appointment.Datetime.Value.Date).ToList();
             if (listAppointmentOfDentis.Count > 0)
@@ -262,6 +268,12 @@ namespace DentistBooking.Application.Services
             if (denstisIsExisted == null)
             {
                 throw new Exception("Dentist is not existed!!!");
+            }
+
+            var checkDateTimeIsExistedInDentistWorkingTime = _dentistAvailabilityRepository.GetByDayOfWeek((DateTime)appointment.Datetime, (int)appointment.DentistId);
+            if (checkDateTimeIsExistedInDentistWorkingTime.Count == 0)
+            {
+                throw new Exception($"Dentist is not working in {appointment.Datetime}!!!");
             }
 
             //Check dentist time is busy or not
