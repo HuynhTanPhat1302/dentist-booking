@@ -5,6 +5,7 @@ using DentistBooking.API.ApiModels.DentistBooking.API.ApiModels;
 using DentistBooking.Application.Interfaces;
 using DentistBooking.Application.Services;
 using DentistBooking.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -104,6 +105,7 @@ namespace DentistBooking.API.Controllers
         }
 
         [HttpPost("add-medical-record-to-appointment")]
+        [Authorize(Policy = "DentistOrStaff")]
         public IActionResult AddMedicalRecordToAppointment([FromBody] AppointmentDetailCreateModel appointmentDetailCreateModel)
         {
             if (appointmentDetailCreateModel == null)

@@ -25,10 +25,7 @@ namespace DentistBooking.API.ApiModels
         [NotMoreThanOneMonth]
         public DateTime? Datetime { get; set; }
 
-        public AppointmentCreateModel()
-        {
-            Duration = 0.5;// khi tao 
-        }
+        
         // [Required]
         // [TreatmentDurationIsExistedOrNot]
         private double? Duration { get; set; }

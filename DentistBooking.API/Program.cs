@@ -15,6 +15,7 @@ builder.Configuration.AddJsonFile("appsettings.json");
 
 // Add services to the container.
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -110,6 +111,16 @@ builder.Services.AddAuthorization(options =>
        policy.RequireRole("dentist");
    });
 });
+builder.Services.AddAuthorization(options =>
+{
+   options.AddPolicy("DentistOrStaff", policy =>
+   {
+       policy.RequireAssertion(context =>
+       {
+           return context.User.IsInRole("dentist") || context.User.IsInRole("staff");
+       });
+   });
+});
 
 
 // Add HttpContextAccessor
@@ -123,7 +134,7 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 
-//app.UseMiddleware<AuthMiddleware>();
+app.UseMiddleware<AuthMiddleware>();
 
 //app.UseHttpsRedirection();
 

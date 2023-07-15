@@ -53,6 +53,10 @@ public class MappingProfile : Profile
         CreateMap<MedicalRecord, MedicalRecordUpdatedModel>();
         CreateMap<MedicalRecordUpdatedModel, MedicalRecord>();
 
+        CreateMap<MedicalRecord, MedicalRecordtStatusRequestModel>()
+        .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
+        CreateMap<MedicalRecordtStatusRequestModel, MedicalRecord>();
+
         CreateMap<Appointment, AppointmentApiRequestModel>();
         CreateMap<AppointmentApiRequestModel, Appointment>();
         CreateMap<Appointment, AppointmentApiRequestModel>()

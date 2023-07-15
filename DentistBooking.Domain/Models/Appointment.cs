@@ -26,7 +26,6 @@ namespace DentistBooking.Infrastructure
         [JsonConverter(typeof(JsonStringEnumConverter))]
 
         public AppointmentStatus Status { get; set; }
-
         public virtual Dentist? Dentist { get; set; }
         public virtual Patient? Patient { get; set; }
         public virtual staff? Staff { get; set; }

@@ -3,6 +3,7 @@ using DentistBooking.API.ApiModels;
 using DentistBooking.API.ApiModels.DentistBooking.API.ApiModels;
 using DentistBooking.Application.Interfaces;
 using DentistBooking.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -123,6 +124,7 @@ namespace DentistBooking.API.Controllers
         
         // HTTP POST - Create a new illness
         [HttpPost]
+        [Authorize(Policy = "DentistOnly")]
         public IActionResult CreateMedicalRecord(MedicalRecordCreatedModel medicalRecordCreatedModel)
         {
             if (!ModelState.IsValid)
@@ -147,6 +149,42 @@ namespace DentistBooking.API.Controllers
 
 
             return CreatedAtAction(nameof(GetMedicalRecordById), new { id = medicalRecord.MedicalRecordId }, medicalRecordRespondModel);
+        }
+
+
+        [HttpPatch("{id}/status")]
+        [Authorize(Policy = "DentistOrStaff")]
+        public IActionResult ChangeProposeMedicalRecordStatus(int id, [FromBody] MedicalRecordtStatusRequestModel requestModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var medicalRecord = _medicalRecordService.GetMedicalRecordById(id);
+            if (medicalRecord == null)
+            {
+                return NotFound();
+            }
+
+            // Update the status of the propose appointment
+            _mapper.Map(requestModel, medicalRecord);
+
+
+            try
+            {
+                _medicalRecordService.UpdateMedicalRecord(medicalRecord);
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that occur during propose appointment update
+                return StatusCode(500, ex);
+            }
+
+            // Return the updated propose appointment in the response
+            var updatedMedicalRecord = _medicalRecordService.GetMedicalRecordById(id);
+            var respondModel = _mapper.Map<NestedMedicalRecordRespondModel>(updatedMedicalRecord);
+            return Ok(respondModel);
         }
 
         [HttpPut("{id}")]

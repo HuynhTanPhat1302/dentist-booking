@@ -171,15 +171,6 @@ namespace DentistBooking.Application.Services
                     {
                         throw new Exception("Dentist is busy now");
                     }
-                    if (timeStartAppointment <= timeStart && timeEndAppointment <= timeEnd)
-                    {
-                        throw new Exception("Dentist is busy now");
-                    }
-
-                    if (timeStartAppointment >= timeStart && timeEndAppointment >= timeEnd)
-                    {
-                        throw new Exception("Dentist is busy now");
-                    }
                 }
             }
             var appointmentDentist = _dentistRepository.GetAll().Where(d => d.DentistId == appointment.DentistId).FirstOrDefault();
@@ -287,15 +278,6 @@ namespace DentistBooking.Application.Services
                     TimeSpan timeStart = dentistAppointment.Datetime.Value.TimeOfDay;
                     TimeSpan timeEnd = timeStart.Add(TimeSpan.FromHours((double) dentistAppointment.Duration));
                     if (timeStartAppointment >= timeStart && timeEndAppointment <= timeEnd)
-                    {
-                        throw new Exception("Dentist is busy now");
-                    }
-                    if (timeStartAppointment <= timeStart && timeEndAppointment <= timeEnd)
-                    {
-                        throw new Exception("Dentist is busy now");
-                    }
-
-                    if (timeStartAppointment >= timeStart && timeEndAppointment >= timeEnd)
                     {
                         throw new Exception("Dentist is busy now");
                     }

@@ -1,10 +1,12 @@
-﻿ using System.Text;
+﻿using System.Security.Claims;
+using System.Text;
 using AutoMapper;
 using DentistBooking.API.ApiModels;
 using DentistBooking.API.ApiModels.DentistBooking.API.ApiModels;
 using DentistBooking.Application.Interfaces;
 using DentistBooking.Application.Services;
 using DentistBooking.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -41,13 +43,16 @@ namespace DentistBooking.API.Controllers
         }
 
         [HttpGet]
-        [Route("get-patient-by-email/{email}")]
-        public IActionResult GetPatientByEmail(string email)
+        [Route("get-own-patient")]
+        [Authorize(Policy = "PatientOnly")]
+        public IActionResult GetPatientByEmail()
         {
-            if (email.Length <= 4 || email.Length >= 255)
+            var email = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
+            if (string.IsNullOrEmpty(email))
             {
-                return BadRequest();
+                return BadRequest("Invalid token, email not found.");
             }
+            
             var patient = _patientService.GetPatientByEmail(email);
             if (patient == null)
             {
@@ -63,7 +68,7 @@ namespace DentistBooking.API.Controllers
         {
             // Validation parameter
 
-            if (pageSize <= 0)
+            if (pageSize <= 0 || pageSize > 200)
             {
                 var response = new
                 {
@@ -72,7 +77,7 @@ namespace DentistBooking.API.Controllers
                     Status = 400,
                     Errors = new Dictionary<string, List<string>>
     {
-        { "pageSize", new List<string> { "Page size must be greater than zero." } }
+        { "pageSize", new List<string> { "Page size must be greater than zero and smaller than 201" } }
     }
                 };
 

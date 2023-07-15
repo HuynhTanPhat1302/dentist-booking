@@ -5,8 +5,12 @@ namespace DentistBooking.Infrastructure.Repositories
 {
     public class ProposeAppointmentRepository : RepositoryBase<ProposeAppointment>
     {
+
+        private readonly DentistBookingContext _context;
+
         public ProposeAppointmentRepository(DentistBookingContext context) : base(context)
         {
+            _context = context;
         }
 
 
@@ -36,6 +40,23 @@ namespace DentistBooking.Infrastructure.Repositories
                 var proposeAppointments = await DbSet
                     .Where(s => s.Status == statusEnum)
                     .OrderBy(s => s.Datetime)
+                    .ToListAsync();
+
+                return proposeAppointments;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+        }
+
+        public async Task<List<ProposeAppointment>> GetProposeAppointmentsByEmailAsync(string email)
+        {
+            try
+            {
+                var proposeAppointments = await _context.ProposeAppointments
+                    .Include(pa => pa.Patient)
+                    .Where(pa => pa.Patient != null && pa.Patient.Email == email)
                     .ToListAsync();
 
                 return proposeAppointments;

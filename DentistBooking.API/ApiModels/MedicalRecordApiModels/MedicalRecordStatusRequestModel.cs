@@ -3,9 +3,9 @@ using DentistBooking.API.Validation;
 
 namespace DentistBooking.API.ApiModels
 {
-    public class ProposeAppointmentStatusRequestModel
+    public class MedicalRecordtStatusRequestModel
     {
-        [StatusOfProposeAppointment]
+        [StatusOfMedicalRecord]
         [Required]
         public string? Status { get; set; }
     }

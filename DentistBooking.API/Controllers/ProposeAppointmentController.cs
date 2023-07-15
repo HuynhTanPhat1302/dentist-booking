@@ -6,7 +6,7 @@ using DentistBooking.Application.Services;
 using DentistBooking.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-
+using System.Security.Claims;
 
 namespace DentistBooking.API.Controllers
 {
@@ -39,6 +39,34 @@ namespace DentistBooking.API.Controllers
             return Ok(proposeAppointmentRespondModel);
         }
 
+        // [HttpGet]
+        // [Route("email/{email}")]
+        // public async Task<IActionResult> GetProposeAppointmentsByEmail(string email)
+        // {
+        //     var proposeAppointments = await _proposeAppointmentService.GetProposeAppointmentsByEmailAsync(email);
+        //     var respondModels = _mapper.Map<List<ProposeAppointmentRespondModel>>(proposeAppointments);
+
+        //     return Ok(respondModels);
+        // }
+
+        [HttpGet]
+        [Route("email")]
+        [Authorize(Policy = "PatientOnly")]
+        public async Task<IActionResult> GetProposeAppointmentsForYourSelf()
+        {
+            // Get the email address from the token
+            var email = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
+            if (string.IsNullOrEmpty(email))
+            {
+                return BadRequest("Invalid token, email not found.");
+            }
+
+            var proposeAppointments = await _proposeAppointmentService.GetProposeAppointmentsByEmailAsync(email);
+            var respondModels = _mapper.Map<List<ProposeAppointmentRespondModel>>(proposeAppointments);
+
+            return Ok(respondModels);
+        }
+
         //search-proposeAppointment (paging, sort alphabalet)
         [HttpGet]
         [Route("search")]
@@ -46,7 +74,7 @@ namespace DentistBooking.API.Controllers
         {
             // Validation parameter
 
-            if (pageSize <= 0 && pageSize <= 200)
+            if (pageSize <= 0 || pageSize > 200)
             {
                 return BadRequest("Page size must be greater than zero and smaller 201");
             }
@@ -96,6 +124,7 @@ namespace DentistBooking.API.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Policy = "PatientOnly")] //chi co patient moi update propose appointment cua chinh minh
         public IActionResult UpdateProposeAppointment(int id, [FromBody] ProposeAppointmentRequestModel proposeAppointmentRequestModel)
         {
             if (!ModelState.IsValid)
@@ -134,6 +163,7 @@ namespace DentistBooking.API.Controllers
 
         [HttpGet]
         [Route("status")]
+        [Authorize(Policy = "StaffOnly")]
         public async Task<IActionResult> GetProposeAppointmentsByStatus(string status, int pageSize = 10, int pageNumber = 1)
         {
 
@@ -142,11 +172,11 @@ namespace DentistBooking.API.Controllers
             var respondModels = _mapper.Map<List<ProposeAppointmentRespondModel>>(proposeAppointments);
 
             return Ok(respondModels);
-
         }
 
 
         [HttpPatch("{id}/status")]
+        [Authorize(Policy = "StaffOnly")]
         public IActionResult ChangeProposeAppointmentStatus(int id, [FromBody] ProposeAppointmentStatusRequestModel requestModel)
         {
             if (!ModelState.IsValid)

@@ -171,6 +171,41 @@ namespace DentistBooking.API.Controllers
             return NoContent();
         }
 
+        // [HttpPatch("{id}/status")]
+        // [Authorize(Policy = "DentistOrStaff")]
+        // public IActionResult ChangeProposeMedicalRecordStatus(int id, [FromBody] MedicalRecordtStatusRequestModel requestModel)
+        // {
+        //     if (!ModelState.IsValid)
+        //     {
+        //         return BadRequest(ModelState);
+        //     }
+
+        //     var medicalRecord = _medicalRecordService.GetMedicalRecordById(id);
+        //     if (medicalRecord == null)
+        //     {
+        //         return NotFound();
+        //     }
+
+        //     // Update the status of the propose appointment
+        //     _mapper.Map(requestModel, medicalRecord);
+
+
+        //     try
+        //     {
+        //         _medicalRecordService.UpdateMedicalRecord(medicalRecord);
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         // Handle any exceptions that occur during propose appointment update
+        //         return StatusCode(500, ex);
+        //     }
+
+        //     // Return the updated propose appointment in the response
+        //     var updatedMedicalRecord = _medicalRecordService.GetMedicalRecordById(id);
+        //     var respondModel = _mapper.Map<NestedMedicalRecordRespondModel>(updatedMedicalRecord);
+        //     return Ok(respondModel);
+        // }
+
 
         /*[HttpPost]
         public IActionResult CreateAnAppointment([FromBody] AppointmentApiModelRequest appointment)

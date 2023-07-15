@@ -15,25 +15,26 @@ namespace DentistBooking.Middleware
     public class AuthMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly List<string> _whitelistedPaths;
+        private readonly List<(string Path, string HttpMethod)> _whitelistedRoutes;
 
         public AuthMiddleware(RequestDelegate next)
         {
             _next = next;
-            _whitelistedPaths = new List<string>
-            {
-                "/api/login", // Whitelisted login endpoint
-                "/api/guest", // Whitelisted guest endpoint
-                "api/propose-appointments/1",
-            };
+            _whitelistedRoutes = new List<(string, string)>
+        {
+            // Whitelisted routes and methods
+            ("/api/login", "POST"),
+            ("/api/propose-appointments", "POST")
+        };
         }
 
-        public async Task InvokeAsync(HttpContext context, IStaffService staffService, IPatientService patientService)
+        public async Task InvokeAsync(HttpContext context, IStaffService staffService, IPatientService patientService, IDentistService dentistService)
         {
             var requestPath = context.Request.Path.Value;
+            var requestMethod = context.Request.Method;
 
-            // Check if the request path is in the whitelist
-            if (requestPath != null && _whitelistedPaths.Contains(requestPath))
+            // Check if the request path and method are in the whitelist
+            if (_whitelistedRoutes.Any(x => x.Path == requestPath && x.HttpMethod == requestMethod))
             {
                 // Pass the request to the next middleware without performing authentication
                 await _next(context);

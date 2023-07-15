@@ -31,7 +31,7 @@ namespace DentistBooking.API.ApiModels
         public string? PatientName { get; set; }
 
         [Required]
-        [RegularExpression("^(?:\\+?84|0)(?:1\\d{9}|3\\d{8}|5\\d{8}|7\\d{8}|8\\d{8}|9\\d{8})$")]
+        [RegularExpression(@"^\d{10}$")]
         public string? PhoneNumber { get; set; }
 
         [Required]

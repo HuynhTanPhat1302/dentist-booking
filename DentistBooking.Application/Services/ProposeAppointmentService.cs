@@ -49,6 +49,24 @@ namespace DentistBooking.Application.Services
         }
 
 
+        public async Task<List<ProposeAppointment>> GetProposeAppointmentsByEmailAsync(string email)
+        {
+            try
+            {
+                var proposeAppointments = await _proposeAppointmentRepository.GetProposeAppointmentsByEmailAsync(email);
+
+                return proposeAppointments;
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception here as needed
+                throw new Exception(ex.ToString());
+            }
+
+        }
+
+
+
         public async Task<List<ProposeAppointment>> SearchProposeAppointmentsAsync(int pageSize, int pageNumber, string searchQuery)
         {
             var proposeAppointments = await _proposeAppointmentRepository.SearchProposeAppointmentsAsync(searchQuery);

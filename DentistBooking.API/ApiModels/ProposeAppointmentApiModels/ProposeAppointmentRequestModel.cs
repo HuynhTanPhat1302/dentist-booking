@@ -15,6 +15,7 @@ namespace DentistBooking.API.ApiModels
 
         [Required]
         [StringLength(150)]
+        [RegularExpression(@"^[a-zA-Z\s]+$")]
         public string? Name { get; set; }
 
         [Required]
