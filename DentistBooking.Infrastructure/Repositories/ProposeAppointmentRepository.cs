@@ -67,6 +67,19 @@ namespace DentistBooking.Infrastructure.Repositories
             }
         }
 
+        public ProposeAppointment? GetByIdV2(int id)
+        {
+            try
+            {
+                var proposeAppointment = DbSet.Find(id);
+                return proposeAppointment;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error occurred while retrieving ProposeAppointment with ID {id}: {ex.Message}");
+            }
+        }
+
 
 
 

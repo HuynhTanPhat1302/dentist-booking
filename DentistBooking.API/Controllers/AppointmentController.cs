@@ -2,6 +2,7 @@
 using DentistBooking.API.ApiModels;
 using DentistBooking.Application.Interfaces;
 using DentistBooking.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -40,6 +41,7 @@ namespace DentistBooking.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "DentistOrStaff")]
         public async Task<IActionResult> GetAppointmentes(int pageSize = 10, int pageNumber = 1)
         {
             if (pageSize <= 0)
@@ -88,6 +90,7 @@ namespace DentistBooking.API.Controllers
 
         // HTTP POST - Create a new appointment
         [HttpPost]
+        [Authorize(Policy = "DentistOrStaff")]
         public IActionResult CreateAppointment(AppointmentCreateModel appointmentCreateModel)
         {
             if (!ModelState.IsValid)
@@ -146,11 +149,11 @@ namespace DentistBooking.API.Controllers
                 var updatedAppointmentRespondModel = _mapper.Map<AppointmentRespondModel>(existingAppointment);
                 return Ok(updatedAppointmentRespondModel);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-           
+
         }
 
         [HttpDelete]
@@ -171,40 +174,36 @@ namespace DentistBooking.API.Controllers
             return NoContent();
         }
 
-        // [HttpPatch("{id}/status")]
-        // [Authorize(Policy = "DentistOrStaff")]
-        // public IActionResult ChangeProposeMedicalRecordStatus(int id, [FromBody] MedicalRecordtStatusRequestModel requestModel)
-        // {
-        //     if (!ModelState.IsValid)
-        //     {
-        //         return BadRequest(ModelState);
-        //     }
+        [HttpPatch("{id}/status")]
+        [Authorize(Policy = "StaffOnly")]
+        public IActionResult ChangeAppointmentStatus(int id, [FromBody] AppointmentStatusRequestModel requestModel)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
 
-        //     var medicalRecord = _medicalRecordService.GetMedicalRecordById(id);
-        //     if (medicalRecord == null)
-        //     {
-        //         return NotFound();
-        //     }
+                var appointment = _appointmentService.GetAppointmentById(id);
+                if (appointment == null)
+                {
+                    return NotFound();
+                }
 
-        //     // Update the status of the propose appointment
-        //     _mapper.Map(requestModel, medicalRecord);
+                _mapper.Map(requestModel, appointment);
 
+                _appointmentService.UpdateAppointmentV1(appointment);
 
-        //     try
-        //     {
-        //         _medicalRecordService.UpdateMedicalRecord(medicalRecord);
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         // Handle any exceptions that occur during propose appointment update
-        //         return StatusCode(500, ex);
-        //     }
-
-        //     // Return the updated propose appointment in the response
-        //     var updatedMedicalRecord = _medicalRecordService.GetMedicalRecordById(id);
-        //     var respondModel = _mapper.Map<NestedMedicalRecordRespondModel>(updatedMedicalRecord);
-        //     return Ok(respondModel);
-        // }
+                var updatedAppointment = _appointmentService.GetAppointmentById(id);
+                var respondModel = _mapper.Map<AppointmentRespondModel>(updatedAppointment);
+                return Ok(respondModel);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex);
+            }
+        }
 
 
         /*[HttpPost]

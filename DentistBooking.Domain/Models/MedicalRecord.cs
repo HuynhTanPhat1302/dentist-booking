@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
@@ -22,7 +20,7 @@ namespace DentistBooking.Infrastructure
         public int? TreatmentId { get; set; }
 
         [Column(TypeName = "nvarchar(20)")]
-        [EnumDataType(typeof(ProposeAppointmentStatus))]
+        [EnumDataType(typeof(MedicalRecordStatus))]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public MedicalRecordStatus Status { get; set; }
 

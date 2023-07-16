@@ -28,7 +28,9 @@ namespace DentistBooking.API.ApiModels
         [Required]
         [TreatmentDurationIsExistedOrNot]
         public double? Duration { get; set; }
+        
         [Required]
+        [StatusOfAppointment]
         public string? Status { get; set; }
 
 

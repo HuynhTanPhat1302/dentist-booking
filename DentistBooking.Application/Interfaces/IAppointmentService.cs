@@ -33,6 +33,9 @@ namespace DentistBooking.Application.Interfaces
 
         Appointment? CreateAnAppointment(Appointment appointment);
 
+         void UpdateAppointmentV1(Appointment appointment);
+
+
 
     }
 }

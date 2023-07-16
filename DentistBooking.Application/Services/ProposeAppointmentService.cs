@@ -92,8 +92,22 @@ namespace DentistBooking.Application.Services
 
         public void UpdateProposeAppointment(ProposeAppointment proposeAppointment)
         {
-            _proposeAppointmentRepository.Update(proposeAppointment);
-            _proposeAppointmentRepository.SaveChanges();
+            var existing = _proposeAppointmentRepository.GetByIdV2(proposeAppointment.ProposeAppointmentId);
+            if (existing != null)
+            {
+                foreach (var propertyInfo in typeof(ProposeAppointment).GetProperties())
+                {
+                    var newValue = propertyInfo.GetValue(proposeAppointment);
+                    if (newValue != null)
+                    {
+                        propertyInfo.SetValue(proposeAppointment, newValue);
+                    }
+                }
+               
+                
+                _proposeAppointmentRepository.Update(existing);
+                _proposeAppointmentRepository.SaveChanges();
+            }
         }
 
         public void DeleteProposeAppointment(int id)

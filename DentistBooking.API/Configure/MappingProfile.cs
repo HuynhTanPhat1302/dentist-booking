@@ -30,6 +30,14 @@ public class MappingProfile : Profile
         .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
         CreateMap<ProposeAppointmentStatusRequestModel, ProposeAppointment>();
 
+        CreateMap<ProposeAppointment, ProposeAppointmentUpdateModel>();
+        CreateMap<ProposeAppointmentUpdateModel, ProposeAppointment>()
+    .ForAllMembers(opts =>
+    {
+        opts.Condition((src, dest, srcMember) =>
+            (srcMember != null || opts.DestinationMember.Name == "PatientId"));
+    });
+
         CreateMap<Treatment, TreatmentApiRequestModel>();
         CreateMap<TreatmentApiRequestModel, Treatment>();
 
@@ -70,6 +78,10 @@ public class MappingProfile : Profile
             .ForMember(m => m.DentistName, opt => opt.MapFrom(src => src.Dentist.DentistName))
             .ForMember(m => m.StaffName, opt => opt.MapFrom(src => src.Staff.StaffName))
             .ForMember(m => m.PatientName, opt => opt.MapFrom(src => src.Patient.PatientName));
+
+        CreateMap<Appointment, AppointmentStatusRequestModel>()
+        .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status));
+        CreateMap<AppointmentStatusRequestModel, Appointment>();
 
         CreateMap<AppointmentApiModel, Appointment>();
 

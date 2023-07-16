@@ -17,7 +17,6 @@ namespace DentistBooking.Infrastructure
         [Column(TypeName = "nvarchar(20)")]
         [EnumDataType(typeof(ProposeAppointmentStatus))]
         [JsonConverter(typeof(JsonStringEnumConverter))]
-
         public ProposeAppointmentStatus Status { get; set; }
 
         public Patient? Patient { get; set; }

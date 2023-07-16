@@ -21,10 +21,10 @@ namespace DentistBooking.Infrastructure
         public int? StaffId { get; set; }
         public DateTime? Datetime { get; set; }
         public double? Duration { get; set; }
-        [Column(TypeName = "nvarchar(20)")]
-        [EnumDataType(typeof(ProposeAppointmentStatus))]
-        [JsonConverter(typeof(JsonStringEnumConverter))]
 
+        [Column(TypeName = "nvarchar(20)")]
+        [EnumDataType(typeof(AppointmentStatus))]
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public AppointmentStatus Status { get; set; }
         public virtual Dentist? Dentist { get; set; }
         public virtual Patient? Patient { get; set; }

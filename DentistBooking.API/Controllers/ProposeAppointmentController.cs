@@ -125,7 +125,7 @@ namespace DentistBooking.API.Controllers
 
         [HttpPut("{id}")]
         [Authorize(Policy = "PatientOnly")] //chi co patient moi update propose appointment cua chinh minh
-        public IActionResult UpdateProposeAppointment(int id, [FromBody] ProposeAppointmentRequestModel proposeAppointmentRequestModel)
+        public IActionResult UpdateProposeAppointment(int id, [FromBody] ProposeAppointmentUpdateModel proposeAppointmentRequestModel)
         {
             if (!ModelState.IsValid)
             {
@@ -137,9 +137,15 @@ namespace DentistBooking.API.Controllers
             {
                 return NotFound();
             }
+            
+             
 
             // Use AutoMapper to map the properties from proposeAppointmentApiRequestModel to proposeAppointment
             _mapper.Map(proposeAppointmentRequestModel, proposeAppointment);
+
+            
+
+
 
             try
             {

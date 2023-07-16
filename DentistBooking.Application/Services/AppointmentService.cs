@@ -129,6 +129,21 @@ namespace DentistBooking.Application.Services
 
         }
 
+        public void UpdateAppointmentV1(Appointment appointment)
+        {
+            try
+            {
+                _appointmentRepository.Update(appointment);
+                _appointmentRepository.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+                
+            }
+
+        }
+
         public Appointment UpdateAppointment(Appointment appointment)
         {
             var bookingTimeIsExisted = _appointmentRepository.GetAll().Where(a => a.Datetime == appointment.Datetime).ToList();
@@ -151,7 +166,7 @@ namespace DentistBooking.Application.Services
                 throw new Exception("Dentist is not existed!!!");
             }
 
-            var checkDateTimeIsExistedInDentistWorkingTime = _dentistAvailabilityRepository.GetByDayOfWeek((DateTime)appointment.Datetime, (int) appointment.DentistId);
+            var checkDateTimeIsExistedInDentistWorkingTime = _dentistAvailabilityRepository.GetByDayOfWeek((DateTime)appointment.Datetime, (int)appointment.DentistId);
             if (checkDateTimeIsExistedInDentistWorkingTime.Count == 0)
             {
                 throw new Exception($"Dentist is not working in {appointment.Datetime}!!!");
@@ -276,7 +291,7 @@ namespace DentistBooking.Application.Services
                 foreach (var dentistAppointment in listAppointmentOfDentis)
                 {
                     TimeSpan timeStart = dentistAppointment.Datetime.Value.TimeOfDay;
-                    TimeSpan timeEnd = timeStart.Add(TimeSpan.FromHours((double) dentistAppointment.Duration));
+                    TimeSpan timeEnd = timeStart.Add(TimeSpan.FromHours((double)dentistAppointment.Duration));
                     if (timeStartAppointment >= timeStart && timeEndAppointment <= timeEnd)
                     {
                         throw new Exception("Dentist is busy now");
