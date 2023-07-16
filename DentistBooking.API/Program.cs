@@ -90,37 +90,37 @@ builder.Services.AddAuthentication("Bearer")
   });
 
 // Add authorization policies
-/*builder.Services.AddAuthorization(options =>
+builder.Services.AddAuthorization(options =>
 {
-   options.AddPolicy("StaffOnly", policy =>
-   {
-       policy.RequireRole("staff");
-   });
+    options.AddPolicy("StaffOnly", policy =>
+    {
+        policy.RequireRole("staff");
+    });
 });
 builder.Services.AddAuthorization(options =>
 {
-   options.AddPolicy("PatientOnly", policy =>
-   {
-       policy.RequireRole("patient");
-   });
+    options.AddPolicy("PatientOnly", policy =>
+    {
+        policy.RequireRole("patient");
+    });
 });
 builder.Services.AddAuthorization(options =>
 {
-   options.AddPolicy("DentistOnly", policy =>
-   {
-       policy.RequireRole("dentist");
-   });
+    options.AddPolicy("DentistOnly", policy =>
+    {
+        policy.RequireRole("dentist");
+    });
 });
 builder.Services.AddAuthorization(options =>
 {
-   options.AddPolicy("DentistOrStaff", policy =>
-   {
-       policy.RequireAssertion(context =>
-       {
-           return context.User.IsInRole("dentist") || context.User.IsInRole("staff");
-       });
-   });
-});*/
+    options.AddPolicy("DentistOrStaff", policy =>
+    {
+        policy.RequireAssertion(context =>
+        {
+            return context.User.IsInRole("dentist") || context.User.IsInRole("staff");
+        });
+    });
+});
 
 
 // Add HttpContextAccessor
@@ -134,15 +134,15 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 
-/*app.UseMiddleware<AuthMiddleware>();*/
+app.UseMiddleware<AuthMiddleware>();
 
 //app.UseHttpsRedirection();
 
 
 app.UseRouting();
 
-/*app.UseAuthentication();
-app.UseAuthorization();*/
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 

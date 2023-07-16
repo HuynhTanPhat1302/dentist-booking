@@ -73,7 +73,27 @@ namespace DentistBooking.Infrastructure.Repositories
                     .Include(a => a.Patient)
                     .Include(a => a.Staff)
                     .Include(a => a.AppointmentDetails)
-                    .Where(a => a.DentistId == dentistId && a.Datetime.Value.Date == date.Date)
+                    .Where(a => a.DentistId == dentistId && a.Datetime.Value.Date == date.Date).OrderBy(a => a.Datetime)
+                    .ToListAsync();
+
+                return appointments;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+
+            }
+        }
+
+        public async Task<List<Appointment>> CheckAppointmentIsExistedInWorking(int dentistId, TimeSpan startDate, TimeSpan endDate)
+        {
+            try
+            {
+                List<Appointment> appointments = await DbSet
+                    .Include(a => a.Patient)
+                    .Include(a => a.Staff)
+                    .Include(a => a.AppointmentDetails).OrderBy(a => a.Datetime)
+                    .Where(a => a.DentistId == dentistId && (a.Datetime.Value.TimeOfDay >= startDate && a.Datetime.Value.AddHours((double)a.Duration).TimeOfDay <= endDate))
                     .ToListAsync();
 
                 return appointments;
