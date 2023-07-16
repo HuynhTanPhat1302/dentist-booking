@@ -153,8 +153,15 @@ namespace DentistBooking.Application.Services
                                 }
                                 else
                                 {
-                                    TimeSpan endTime = listDentistAppointment[i].Datetime.Value.TimeOfDay;
-                                    dentistFreeTimeAvailability.Add(dentistAvailability.Dentist.DentistName + $" #{i + 1}", (dentistAvailability.StartTime.Value, endTime));
+                                    if (listDentistAppointment[i].Datetime.Value.TimeOfDay == dentistAvailability.StartTime)
+                                    {
+                                        continue;
+                                    }
+                                    else
+                                    {
+                                        TimeSpan endTime = listDentistAppointment[i].Datetime.Value.TimeOfDay;
+                                        dentistFreeTimeAvailability.Add(dentistAvailability.Dentist.DentistName + $" #{i + 1}", (dentistAvailability.StartTime.Value, endTime));
+                                    }
                                 }
                             }
                             else if (i + 1 == listDentistAppointment.Count)
