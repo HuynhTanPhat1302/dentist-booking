@@ -123,7 +123,7 @@ namespace DentistBooking.Application.Services
                     if (dentistAvailability.DentistId == listDentistAppointment[i].DentistId)
                     {
                         var endTimeAppointment = listDentistAppointment[i].Datetime.Value.Add(TimeSpan.FromHours((double)listDentistAppointment[i].Duration));
-                        if (listDentistAppointment[i].Datetime.Value.TimeOfDay > dentistAvailability.StartTime && endTimeAppointment.TimeOfDay < dentistAvailability.EndTime)
+                        if (listDentistAppointment[i].Datetime.Value.TimeOfDay >= dentistAvailability.StartTime && endTimeAppointment.TimeOfDay <= dentistAvailability.EndTime)
                         {
 
                             if (i + 1 < listDentistAppointment.Count)
@@ -190,37 +190,10 @@ namespace DentistBooking.Application.Services
                                 }
                             }
                         }
-                        else if (endTimeAppointment.TimeOfDay == dentistAvailability.EndTime)
-                        {
-                            var currentDentistAvailability = listDentistAppointment[i];
-                            TimeSpan currentEndTime = currentDentistAvailability.Datetime.Value.TimeOfDay.Add(TimeSpan.FromHours((double)currentDentistAvailability.Duration));
-                            if (i - 1 > listDentistAppointment.Count)
-                            {
-                                var prevDentistAvailability = listDentistAppointment[i - 1];
-                                TimeSpan preEndTime = prevDentistAvailability.Datetime.Value.TimeOfDay.Add(TimeSpan.FromHours((double)prevDentistAvailability.Duration));
-                                if (preEndTime.Equals(currentDentistAvailability.Datetime.Value.TimeOfDay))
-                                {
-                                    dentistFreeTimeAvailability.Add(dentistAvailability.Dentist.DentistName + $" #{i + 1}", (currentEndTime, dentistAvailability.EndTime.Value));
-                                }
-                                else
-                                {
-                                    dentistFreeTimeAvailability.Add(dentistAvailability.Dentist.DentistName + $" #{i + 1}", (preEndTime, currentDentistAvailability.Datetime.Value.TimeOfDay));
-                                    //dentistFreeTimeAvailability.Add(dentistAvailability.Dentist.DentistName + $" #{i + 2}", (currentEndTime, dentistAvailability.EndTime.Value));*/
-                                }
-                            }
-                            else
-                            {
-                                dentistFreeTimeAvailability.Add(dentistAvailability.Dentist.DentistName + $" #{i + 2}", (dentistAvailability.StartTime.Value, currentDentistAvailability.Datetime.Value.TimeOfDay));
-                            }
-                        }
-                        else if (listDentistAppointment[i].Datetime.Value.TimeOfDay == dentistAvailability.StartTime)
-                        {
-                            TimeSpan endTime = listDentistAppointment[i].Datetime.Value.TimeOfDay.Add(TimeSpan.FromHours((double)listDentistAppointment[i].Duration));
-                            dentistFreeTimeAvailability.Add(dentistAvailability.Dentist.DentistName + $" #{i + 1}", (endTime, dentistAvailability.EndTime.Value));
-                        }
                         else
                         {
-                            dentistFreeTimeAvailability.Add(dentistAvailability.Dentist.DentistName + $" #{i + 1}", (dentistAvailability.StartTime.Value, dentistAvailability.EndTime.Value));
+                            dentistFreeTimeAvailability.Add(dentistAvailability.Dentist.DentistName, (dentistAvailability.StartTime.Value, dentistAvailability.EndTime.Value));
+                            break;
                         }
                     }
                 }
