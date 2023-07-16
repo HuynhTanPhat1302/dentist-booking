@@ -90,7 +90,7 @@ builder.Services.AddAuthentication("Bearer")
   });
 
 // Add authorization policies
-builder.Services.AddAuthorization(options =>
+/*builder.Services.AddAuthorization(options =>
 {
    options.AddPolicy("StaffOnly", policy =>
    {
@@ -120,7 +120,7 @@ builder.Services.AddAuthorization(options =>
            return context.User.IsInRole("dentist") || context.User.IsInRole("staff");
        });
    });
-});
+});*/
 
 
 // Add HttpContextAccessor
@@ -134,15 +134,15 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 
-app.UseMiddleware<AuthMiddleware>();
+/*app.UseMiddleware<AuthMiddleware>();*/
 
 //app.UseHttpsRedirection();
 
 
 app.UseRouting();
 
-app.UseAuthentication();
-app.UseAuthorization();
+/*app.UseAuthentication();
+app.UseAuthorization();*/
 
 app.MapControllers();
 
