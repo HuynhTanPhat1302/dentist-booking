@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
 using DentistBooking.API.ApiModels;
+using DentistBooking.API.ApiModels.DentistAvailability;
 using DentistBooking.API.ApiModels.DentistBooking.API.ApiModels;
 using DentistBooking.Application.Interfaces;
 using DentistBooking.Application.Services;
 using DentistBooking.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -186,18 +189,35 @@ namespace DentistBooking.API.Controllers
         {
             try
             {
-                var dentistAvailability = await _dentistAvailabilityService.GetDentistFreetimeAvailability(date);
+                var dentistAvailability = await _dentistAvailabilityService.GetDentistFreeTimeAvailability(date);
                 if (dentistAvailability == null)
                 {
                     throw new Exception("Dentist is not existed!");
                 }
-
-                var response = dentistAvailability.ToDictionary(
+                /*var response = dentistAvailability.ToDictionary(
                     kv => kv.Key,
-                    kv => $"{kv.Value.Start.Hours}:{kv.Value.Start.Minutes}, {kv.Value.End.Hours}:{kv.Value.End.Minutes}"
-                );
+                    //kv => $"{kv.Value.Start.Hours}:{kv.Value.Start.Minutes}, {kv.Value.End.Hours}:{kv.Value.End.Minutes}"
+                    kv => kv.Value
+                ); 
 
-                return Ok(response);
+                return Ok(response);*/
+                var convert = ConvertDictionary(dentistAvailability);
+                var settings = new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                    PreserveReferencesHandling = PreserveReferencesHandling.None,
+                    TypeNameHandling = TypeNameHandling.None, // Don't include type names in JSON
+                    ContractResolver = new DefaultContractResolver
+                    {
+                        NamingStrategy = new CamelCaseNamingStrategy()
+                    },
+                    Formatting = Formatting.None // Remove indentation for compact format
+                };
+                var responseJson = JsonConvert.SerializeObject(convert, settings);
+
+                // Return the response with status code 200
+                return Content(responseJson, "application/json");
+
             }
             catch (Exception ex)
             {
@@ -210,6 +230,21 @@ namespace DentistBooking.API.Controllers
                 };
                 return NotFound(response);
             }
+        }
+        private Dictionary<string, List<TimeSlot>> ConvertDictionary(Dictionary<string, List<(TimeSpan Start, TimeSpan End)>> originalDictionary)
+        {
+            var convertedDictionary = new Dictionary<string, List<TimeSlot>>();
+
+            foreach (var kvp in originalDictionary)
+            {
+                var dentistName = kvp.Key;
+                var timeSlots = kvp.Value;
+
+                var timeSlotList = timeSlots.Select(ts => new TimeSlot(ts.Start, ts.End)).ToList();
+                convertedDictionary.Add(dentistName, timeSlotList);
+            }
+
+            return convertedDictionary;
         }
     }
 }
