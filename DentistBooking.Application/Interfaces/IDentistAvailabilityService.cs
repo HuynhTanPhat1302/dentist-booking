@@ -19,8 +19,8 @@ namespace DentistBooking.Application.Interfaces
 
         DentistAvailability GetById(int id);
 
-        Task<Dictionary<string, (TimeSpan Start, TimeSpan End)>> GetDentistFreetimeAvailability(DateTime dateRequest);
-
+        //Task<Dictionary<string, (TimeSpan Start, TimeSpan End)>> GetDentistFreetimeAvailability(DateTime dateRequest);
+        Task<Dictionary<string, List<(TimeSpan Start, TimeSpan End)>>> GetDentistFreeTimeAvailability(DateTime dateRequest);
         void DeleteDentistAvailability(int id);
     }
 }

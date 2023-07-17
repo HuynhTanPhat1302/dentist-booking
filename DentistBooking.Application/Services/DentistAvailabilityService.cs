@@ -95,7 +95,7 @@ namespace DentistBooking.Application.Services
             return _dentistAvailabilityRepository.GetById(id);
         }
 
-        public async Task<Dictionary<string, (TimeSpan Start, TimeSpan End)>> GetDentistFreetimeAvailability(DateTime dateRequest)
+        /*public async Task<Dictionary<string, (TimeSpan Start, TimeSpan End)>> GetDentistFreetimeAvailability(DateTime dateRequest)
         {
             Dictionary<string, (TimeSpan Start, TimeSpan End)> dentistFreeTimeAvailability = new Dictionary<string, (TimeSpan Start, TimeSpan End)>();
             var listDentistAvailability = await _dentistAvailabilityRepository.GetByDayOfWeekAsync(dateRequest);
@@ -251,7 +251,7 @@ namespace DentistBooking.Application.Services
                 }
                 index++;
             }
-            /*if (dentistFreeTimeAvailability.Count > 0)
+            *//*if (dentistFreeTimeAvailability.Count > 0)
             {
                 int newIndex = 0;
                 int slot = 1;
@@ -265,7 +265,66 @@ namespace DentistBooking.Application.Services
                     newIndex++;
                     slot++;
                 }
-            }*/
+            }*//*
+
+            return dentistFreeTimeAvailability;
+        }*/
+        public async Task<Dictionary<string, List<(TimeSpan Start, TimeSpan End)>>> GetDentistFreeTimeAvailability(DateTime dateRequest)
+        {
+            var dentistFreeTimeAvailability = new Dictionary<string, List<(TimeSpan Start, TimeSpan End)>>();
+
+            var listDentistAvailability = await _dentistAvailabilityRepository.GetByDayOfWeekAsync(dateRequest);
+            if (listDentistAvailability.Count == 0)
+            {
+                throw new Exception($"No dentist working on {dateRequest.DayOfWeek}");
+            }
+
+            foreach (var dentistAvailability in listDentistAvailability)
+            {
+                var dentistName = dentistAvailability.Dentist.DentistName;
+                var startTime = dentistAvailability.StartTime.Value;
+                var endTime = dentistAvailability.EndTime.Value;
+
+                var listDentistAppointments = await _appointmentRepository.GetAppointmentsByDentistIdAndDateTimeAsync((int)dentistAvailability.DentistId, dateRequest);
+
+                var freeTimeSlots = new List<(TimeSpan Start, TimeSpan End)>();
+
+                if (listDentistAppointments.Count == 0)
+                {
+                    freeTimeSlots.Add((startTime, endTime));
+                }
+                else
+                {
+                    // Sort the appointments by start time
+                    listDentistAppointments.Sort((a, b) => a.Datetime.Value.TimeOfDay.CompareTo(b.Datetime.Value.TimeOfDay));
+
+                    // Check if there's any free time before the first appointment
+                    if (startTime < listDentistAppointments[0].Datetime.Value.TimeOfDay)
+                    {
+                        freeTimeSlots.Add((startTime, listDentistAppointments[0].Datetime.Value.TimeOfDay));
+                    }
+
+                    // Check for free time between appointments
+                    for (int i = 0; i < listDentistAppointments.Count - 1; i++)
+                    {
+                        var currentAppointmentEndTime = listDentistAppointments[i].Datetime.Value.TimeOfDay.Add(TimeSpan.FromHours((double)listDentistAppointments[i].Duration));
+                        var nextAppointmentStartTime = listDentistAppointments[i + 1].Datetime.Value.TimeOfDay;
+
+                        if (currentAppointmentEndTime < nextAppointmentStartTime)
+                        {
+                            freeTimeSlots.Add((currentAppointmentEndTime, nextAppointmentStartTime));
+                        }
+                    }
+
+                    // Check if there's any free time after the last appointment
+                    if (endTime > listDentistAppointments[listDentistAppointments.Count - 1].Datetime.Value.TimeOfDay.Add(TimeSpan.FromHours((double)listDentistAppointments[listDentistAppointments.Count - 1].Duration)))
+                    {
+                        freeTimeSlots.Add((listDentistAppointments[listDentistAppointments.Count - 1].Datetime.Value.TimeOfDay.Add(TimeSpan.FromHours((double)listDentistAppointments[listDentistAppointments.Count - 1].Duration)), endTime));
+                    }
+                }
+
+                dentistFreeTimeAvailability.Add(dentistName, freeTimeSlots);
+            }
 
             return dentistFreeTimeAvailability;
         }
