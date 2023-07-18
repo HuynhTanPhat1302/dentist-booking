@@ -5,6 +5,7 @@ using DentistBooking.API.ApiModels.DentistBooking.API.ApiModels;
 using DentistBooking.Application.Interfaces;
 using DentistBooking.Application.Services;
 using DentistBooking.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -26,6 +27,7 @@ namespace DentistBooking.API.Controllers
         //get treatment by id
         [HttpGet]
         [Route("{id}")]
+        [Authorize(Policy = "DentistOnly")]
         public IActionResult GetTreatmentById(int id)
         {
             if (id <= 0 || id > int.MaxValue)
@@ -42,6 +44,7 @@ namespace DentistBooking.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "DentistOnly")]
         public async Task<IActionResult> GetTreatmentes(int pageSize = 10, int pageNumber = 1)
         {
             if (pageSize <= 0 || pageSize > 200)
@@ -89,6 +92,7 @@ namespace DentistBooking.API.Controllers
 
         [HttpGet]
         [Route("search")]
+        [Authorize(Policy = "DentistOnly")]
         public async Task<ActionResult<List<TreatmentRespondModel>>> SearchPatients(string searchQuery, int pageSize = 10, int pageNumber = 1)
         {
             // Validation parameter
@@ -155,6 +159,7 @@ namespace DentistBooking.API.Controllers
 
         // HTTP POST - Create a new treatment
         [HttpPost]
+        [Authorize(Policy = "DentistOnly")]
         public IActionResult CreateTreatment([FromBody] TreatmentRequestModel treatmentRequestModel)
         {
             if (treatmentRequestModel == null)
@@ -175,6 +180,7 @@ namespace DentistBooking.API.Controllers
 
         [HttpPut]
         [Route("{id}")]
+        [Authorize(Policy = "DentistOnly")]
         public IActionResult UpdateTreatment(int id, [FromBody] TreatmentRequestModel treatmentRequestModel)
         {
             if (id <= 0 || id > int.MaxValue)
@@ -208,6 +214,7 @@ namespace DentistBooking.API.Controllers
 
         [HttpDelete]
         [Route("{id}")]
+        [Authorize(Policy = "DentistOnly")]
         public IActionResult DeleteTreatment(int id)
         {
             if (id <= 0 || id > int.MaxValue)

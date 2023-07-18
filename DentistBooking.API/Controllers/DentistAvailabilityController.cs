@@ -4,6 +4,7 @@ using DentistBooking.API.ApiModels.DentistBooking.API.ApiModels;
 using DentistBooking.Application.Interfaces;
 using DentistBooking.Application.Services;
 using DentistBooking.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -25,6 +26,7 @@ namespace DentistBooking.API.Controllers
 
         [HttpGet]
         [Route("search")]
+        [Authorize(Policy = "DentistOrStaff")]
         public async Task<ActionResult<List<DentistAvailabilityModel>>> SearchDentistAvailability(int pageSize, int pageNumber, string? searchQuery)
         {
             // Validation parameter
@@ -60,6 +62,7 @@ namespace DentistBooking.API.Controllers
 
         // GET api/<DentistAvailabilityController>/5
         [HttpGet("{id}")]
+        [Authorize(Policy = "DentistOrStaff")]
         public IActionResult Get(int id)
         {
             try
@@ -94,6 +97,7 @@ namespace DentistBooking.API.Controllers
 
         // POST api/<DentistAvailabilityController>
         [HttpPost]
+        [Authorize(Policy = "DentistOrStaff")]
         public IActionResult Post([FromBody] DentistAvailabilityRequestModel dentistAvailabilityRequestModel)
         {
             try
@@ -124,6 +128,7 @@ namespace DentistBooking.API.Controllers
 
         // PUT api/<DentistAvailabilityController>/5
         [HttpPut("{id}")]
+        [Authorize(Policy = "DentistOrStaff")]
         public IActionResult Put(int id, [FromBody] DentistAvailabilityRequestModel dentistAvailabilityRequestModel)
         {
             try
@@ -154,6 +159,7 @@ namespace DentistBooking.API.Controllers
 
         // DELETE api/<DentistAvailabilityController>/5
         [HttpDelete("{id}")]
+        [Authorize(Policy = "DentistOrStaff")]
         public IActionResult Delete(int id)
         {
             try

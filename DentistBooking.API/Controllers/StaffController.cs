@@ -54,17 +54,24 @@ namespace DentistBooking.API.Controllers
         //}
 
         [HttpGet("{id}")]
+        [Authorize(Policy = "StaffOnly")]
         public IActionResult GetStaffById(int id)
         {
-           var staff = _staffService.GetStaffById(id);
-           if (staff == null)
-           {
-               return NotFound();
-           }
-           return Ok(staff);
+            if (id <= 0 || id > int.MaxValue)
+            {
+                return BadRequest();
+            }
+            var existingStaff = _staffService.GetStaffById(id);
+            if (existingStaff == null)
+            {
+                return NotFound();
+            }
+            var staffRespondModel = _mapper.Map<StaffRespondModel>(existingStaff);
+            return Ok(staffRespondModel);
         }
 
         [HttpPost]
+        [Authorize(Policy = "StaffOnly")]
         public IActionResult CreateStaff(StaffApiModel staffApiModel)
         {
            var staff = _mapper.Map<staff>(staffApiModel);
@@ -74,20 +81,45 @@ namespace DentistBooking.API.Controllers
 
 
         [HttpPut("{id}")]
-        public IActionResult UpdateStaff(int id, staff staff)
+        [Authorize(Policy = "StaffOnly")]
+        public IActionResult UpdateStaff(int id, [FromBody] StaffRespondModel staffRespondModel)
         {
-           if (id != staff.StaffId)
-           {
-               return BadRequest();
-           }
-           _staffService.UpdateStaff(staff);
-           return NoContent();
+            if (id != staffRespondModel.StaffId)
+            {
+                return BadRequest();
+            }
+
+            var existingStaff = _staffService.GetStaffById(id);
+            if (existingStaff == null)
+            {
+                return NotFound();
+            }
+
+            // Update the existing staff with the new data
+            _mapper.Map(staffRespondModel, existingStaff);
+
+            // Save the updated staff
+            _staffService.UpdateStaff(existingStaff);
+
+            var updatedStaffRespondModel = _mapper.Map<StaffRespondModel>(existingStaff);
+            return Ok(updatedStaffRespondModel);
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "StaffOnly")]
         public IActionResult DeleteStaff(int id)
         {
-           _staffService.DeleteStaff(id);
+            if (id <= 0 || id > int.MaxValue)
+            {
+                return BadRequest();
+            }
+            var existingStaff = _staffService.GetStaffById(id);
+            if (existingStaff == null)
+            {
+                return NotFound();
+            }
+            //Delete staff
+            _staffService.DeleteStaff(id);
            return NoContent();
         }
     }

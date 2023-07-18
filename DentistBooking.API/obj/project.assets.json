@@ -11412,23 +11412,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Nguyen\\.nuget\\packages\\": {},
+    "C:\\Users\\hoang\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\FPT_Hoc\\SEM8\\PRN231\\DentistBookingProject\\MainProject\\DentistBooking.API\\DentistBooking.API.csproj",
+      "projectUniqueName": "D:\\Prn231\\Dentist\\DentistBooking.API\\DentistBooking.API.csproj",
       "projectName": "DentistBooking.API",
-      "projectPath": "D:\\FPT_Hoc\\SEM8\\PRN231\\DentistBookingProject\\MainProject\\DentistBooking.API\\DentistBooking.API.csproj",
-      "packagesPath": "C:\\Users\\Nguyen\\.nuget\\packages\\",
-      "outputPath": "D:\\FPT_Hoc\\SEM8\\PRN231\\DentistBookingProject\\MainProject\\DentistBooking.API\\obj\\",
+      "projectPath": "D:\\Prn231\\Dentist\\DentistBooking.API\\DentistBooking.API.csproj",
+      "packagesPath": "C:\\Users\\hoang\\.nuget\\packages\\",
+      "outputPath": "D:\\Prn231\\Dentist\\DentistBooking.API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Nguyen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\hoang\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -11437,14 +11437,15 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\FPT_Hoc\\SEM8\\PRN231\\DentistBookingProject\\MainProject\\DentistBooking.Application\\DentistBooking.Application.csproj": {
-              "projectPath": "D:\\FPT_Hoc\\SEM8\\PRN231\\DentistBookingProject\\MainProject\\DentistBooking.Application\\DentistBooking.Application.csproj"
+            "D:\\Prn231\\Dentist\\DentistBooking.Application\\DentistBooking.Application.csproj": {
+              "projectPath": "D:\\Prn231\\Dentist\\DentistBooking.Application\\DentistBooking.Application.csproj"
             }
           }
         }
@@ -11529,7 +11530,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
       }
     }
   }
