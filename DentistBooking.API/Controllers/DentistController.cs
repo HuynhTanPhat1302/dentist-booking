@@ -3,6 +3,7 @@ using DentistBooking.API.ApiModels;
 using DentistBooking.Application.Interfaces;
 using DentistBooking.Application.Services;
 using DentistBooking.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Text;
@@ -26,6 +27,7 @@ namespace DentistBooking.API.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        [Authorize(Policy = "DentistOrStaff")]
         public IActionResult GetDentistAccountById(int id)
         {
             try
@@ -60,6 +62,7 @@ namespace DentistBooking.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "DentistOrStaff")]
         public IActionResult CreateDentistAccount([FromBody] DentistAccountApiModel dentistAccount)
         {
             using (var httpClient = new HttpClient())
@@ -104,7 +107,8 @@ namespace DentistBooking.API.Controllers
         }
 
         [HttpPut("{email}")]
-        public IActionResult UpdateDentistAccount(string email,[FromBody] DentistAccountApiModel dentistAccount)
+        [Authorize(Policy = "DentistOrStaff")]
+        public IActionResult UpdateDentistAccount(string email, [FromBody] DentistAccountApiModel dentistAccount)
         {
             if (!ModelState.IsValid)
             {
@@ -151,7 +155,7 @@ namespace DentistBooking.API.Controllers
 
             try
             {
-                _dentistService.UpdateDentist(patient.DentistId ,patient);
+                _dentistService.UpdateDentist(patient.DentistId, patient);
             }
             catch (Exception ex)
             {
@@ -188,6 +192,7 @@ namespace DentistBooking.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "DentistOrStaff")]
         public IActionResult DeleteDentistAccount(int id)
         {
             try

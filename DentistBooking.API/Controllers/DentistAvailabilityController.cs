@@ -1,10 +1,12 @@
-﻿using AutoMapper;
+﻿using System.Net;
+using AutoMapper;
 using DentistBooking.API.ApiModels;
 using DentistBooking.API.ApiModels.DentistAvailability;
 using DentistBooking.API.ApiModels.DentistBooking.API.ApiModels;
 using DentistBooking.Application.Interfaces;
 using DentistBooking.Application.Services;
 using DentistBooking.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -15,6 +17,7 @@ namespace DentistBooking.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Policy = "DentistOrStaff")]
     public class DentistAvailabilityController : ControllerBase
     {
         private readonly IDentistAvailabilityService _dentistAvailabilityService;
@@ -126,6 +129,7 @@ namespace DentistBooking.API.Controllers
         }
 
         // PUT api/<DentistAvailabilityController>/5
+        // day of week not changed
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] DentistAvailabilityRequestModel dentistAvailabilityRequestModel)
         {
@@ -185,6 +189,7 @@ namespace DentistBooking.API.Controllers
 
         // GET api/<DentistAvailabilityController>/5
         [HttpGet("dentist-freeTime/{date}")]
+        [Authorize(Policy = "StaffOnly")]
         public async Task<IActionResult> GetDentistTimeAvailability(DateTime date)
         {
             try
@@ -216,7 +221,15 @@ namespace DentistBooking.API.Controllers
                 var responseJson = JsonConvert.SerializeObject(convert, settings);
 
                 // Return the response with status code 200
-                return Content(responseJson, "application/json");
+                //return Content(responseJson, "application/json");
+                var contentResult = new ContentResult
+        {
+            Content = responseJson,
+            ContentType = "application/json",
+            StatusCode = (int)HttpStatusCode.OK
+        };
+
+        return contentResult;
 
             }
             catch (Exception ex)

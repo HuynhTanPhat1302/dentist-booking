@@ -9,6 +9,8 @@ using DentistBooking.Infrastructure.Repositories;
 using DentistBooking.Application.Interfaces;
 using DentistBooking.Application.Services;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace DentistBooking.Middleware
 {
@@ -42,6 +44,15 @@ namespace DentistBooking.Middleware
             }
 
             // Continue with the authentication process for other routes
+            var authResult = await context.AuthenticateAsync(JwtBearerDefaults.AuthenticationScheme);
+            if (!authResult.Succeeded || authResult.Failure != null && authResult.Failure.GetType() == typeof(SecurityTokenExpiredException))
+            {
+                string responseMessage = "Invalid/Null token or Expired token"; // Your custom message
+                context.Response.StatusCode = 401; // Unauthorized
+                context.Response.ContentType = "application/json";
+                await context.Response.WriteAsync(JsonConvert.SerializeObject(new { Message = responseMessage }));
+                return;
+            }
 
             // Check if the request contains a valid JWT token
             if (!context.Request.Headers.ContainsKey("Authorization"))

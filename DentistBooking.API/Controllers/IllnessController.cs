@@ -5,6 +5,7 @@ using DentistBooking.API.ApiModels.DentistBooking.API.ApiModels;
 using DentistBooking.Application.Interfaces;
 using DentistBooking.Application.Services;
 using DentistBooking.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -12,6 +13,7 @@ namespace DentistBooking.API.Controllers
 {
     [Route("api/illnesses")]
     [ApiController]
+    [Authorize(Policy = "DentistOnly")]
     public class IllnessController : ControllerBase
     {
         private readonly IIllnessService _illnessService;
@@ -25,7 +27,7 @@ namespace DentistBooking.API.Controllers
 
         //get illness by id
         [HttpGet]
-        [Route("{id}")]
+        [Route("{id}")]        
         public IActionResult GetIllnessById(int id)
         {
             if (id <= 0 || id > int.MaxValue)

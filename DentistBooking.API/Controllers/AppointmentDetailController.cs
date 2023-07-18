@@ -27,6 +27,7 @@ namespace DentistBooking.API.Controllers
         //get appointmentDetail by id
         [HttpGet]
         [Route("{id}")]
+        [Authorize(Policy = "DentistOrStaff")]
         public IActionResult GetAppointmentDetailById(int id)
         {
             if (id <= 0 || id > int.MaxValue)
@@ -43,6 +44,7 @@ namespace DentistBooking.API.Controllers
             return Ok(appointmentDetailRespondModel);
         }
 
+        [Authorize(Policy = "DentistOrStaff")]
         [HttpGet("get-by-medical-record-id/{medicalRecordId}")]
         public async Task<IActionResult> GetAppointmentDetailsByMedicalRecordIdAsync(int medicalRecordId)
         {
@@ -65,6 +67,7 @@ namespace DentistBooking.API.Controllers
         }
 
         [HttpGet("get-by-appointment-id/{appointmentId}")]
+        [Authorize(Policy = "DentistOrStaff")]
         public async Task<IActionResult> GetAppointmentDetailsByAppointmentIdAsync(int appointmentId)
         {
             try
@@ -86,6 +89,7 @@ namespace DentistBooking.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "DentistOrStaff")]
         public IActionResult CreateAppointmentDetail([FromBody] AppointmentDetailCreateModel appointmentDetailCreateModel)
         {
             if (appointmentDetailCreateModel == null)
@@ -119,7 +123,8 @@ namespace DentistBooking.API.Controllers
             try
             {
                 _appointmentDetailService.AddMedicalRecordToAppointment(newAppointmentDetail);
-                return Ok();
+                var createdAppointmentDetail = _appointmentDetailService.GetAppointmentDetailById(newAppointmentDetail.AppointmentDetailId);
+                return CreatedAtAction(nameof(GetAppointmentDetailById), new { id = newAppointmentDetail.AppointmentDetailId }, createdAppointmentDetail);
             }
             catch (Exception ex)
             {
@@ -129,6 +134,7 @@ namespace DentistBooking.API.Controllers
 
         [HttpPut]
         [Route("{id}")]
+        [Authorize(Policy = "DentistOrStaff")]
         public IActionResult UpdateAppointmentDetail(int id, [FromBody] AppointmentDetailCreateModel appointmentDetailCreateModel)
         {
             if (id <= 0 || id > int.MaxValue)
@@ -162,6 +168,7 @@ namespace DentistBooking.API.Controllers
 
         [HttpDelete]
         [Route("{id}")]
+        [Authorize(Policy = "DentistOrStaff")]
         public IActionResult DeleteAppointmentDetail(int id)
         {
             if (id <= 0 || id > int.MaxValue)

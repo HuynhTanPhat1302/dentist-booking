@@ -1,4 +1,5 @@
 using DentistBooking.API.Validation;
+using PatientBooking.API.Validation;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.CompilerServices;
 
@@ -28,6 +29,7 @@ namespace DentistBooking.API.ApiModels
         public string? Note { get; set; }
 
         [ValidId]
+        [ExistedPatientId]
         public int? PatientId { get; set; }
     }
 }

@@ -70,7 +70,7 @@ namespace DentistBooking.API.Controllers
         //search-proposeAppointment (paging, sort alphabalet)
         [HttpGet]
         [Route("search")]
-        public async Task<ActionResult<List<ProposeAppointmentRequestModel>>> SearchProposeAppointments(string searchQuery, int pageSize = 10, int pageNumber = 1)
+        public async Task<ActionResult<List<ProposeAppointmentRespondModel>>> SearchProposeAppointments(string searchQuery, int pageSize = 10, int pageNumber = 1)
         {
             // Validation parameter
 
@@ -91,7 +91,7 @@ namespace DentistBooking.API.Controllers
 
             List<ProposeAppointment> proposeAppointments;
             proposeAppointments = await _proposeAppointmentService.SearchProposeAppointmentsAsync(pageSize, pageNumber, searchQuery);
-            var proposeAppointmentApiRequestModels = _mapper.Map<List<ProposeAppointmentRequestModel>>(proposeAppointments);
+            var proposeAppointmentApiRequestModels = _mapper.Map<List<ProposeAppointmentRespondModel>>(proposeAppointments);
             return proposeAppointmentApiRequestModels;
         }
 
@@ -172,7 +172,11 @@ namespace DentistBooking.API.Controllers
         [Authorize(Policy = "StaffOnly")]
         public async Task<IActionResult> GetProposeAppointmentsByStatus(string status, int pageSize = 10, int pageNumber = 1)
         {
+            
 
+            if (!(status == "Seen" || status == "NotSeen" )) {
+                return BadRequest("Status must either 'Seen' or 'NotSeen'");
+            }
             var proposeAppointments = await _proposeAppointmentService.GetProposeAppointmentsByStatusAsync(status, pageSize, pageNumber);
 
             var respondModels = _mapper.Map<List<ProposeAppointmentRespondModel>>(proposeAppointments);

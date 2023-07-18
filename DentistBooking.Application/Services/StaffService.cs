@@ -52,6 +52,19 @@ namespace DentistBooking.Application.Services
             }
         }
 
+        //check duplicated email
+        public async Task<bool> IsEmailUnique(string email)
+        {
+            bool isUnique = false;
+
+            if (!string.IsNullOrEmpty(email))
+            {
+                isUnique = await _StaffRepository.IsEmailUnique(email);
+            }
+
+            return isUnique;
+        }
+
         public staff? GetStaffByEmail(string email)
         {
             return _StaffRepository.GetStaffByEmail(email);

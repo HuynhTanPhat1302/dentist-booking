@@ -147,8 +147,6 @@ app.UseSwaggerUI();
 app.UseMiddleware<AuthMiddleware>();
 
 //app.UseHttpsRedirection();
-
-
 app.UseRouting();
 
 app.UseAuthentication();
