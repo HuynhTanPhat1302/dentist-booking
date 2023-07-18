@@ -11,6 +11,7 @@ namespace DentistBooking.API.ApiModels
     {
         [Required]
         [ValidId]
+        [PatientIdIsNotExisted]
         public int? PatientId { get; set; }
 
         [Required]
