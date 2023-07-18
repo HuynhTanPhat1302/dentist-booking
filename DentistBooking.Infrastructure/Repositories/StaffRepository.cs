@@ -24,6 +24,12 @@ namespace DentistBooking.Infrastructure.Repositories
             return isUnique;
         }
 
+        public async Task<bool> IsIdExisted(int id)
+        {
+            // Check if there is any patient with the provided email in the database
+            bool isUnique = !await DbSet.AnyAsync(p => p.StaffId == id);
+            return isUnique;
+        }
 
     }
 }

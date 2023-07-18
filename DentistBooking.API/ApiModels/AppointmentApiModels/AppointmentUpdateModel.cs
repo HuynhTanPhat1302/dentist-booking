@@ -16,13 +16,16 @@ namespace DentistBooking.API.ApiModels
 
         [Required]
         [ValidId]
+        [DentistIdIsExisted]
         public int? DentistId { get; set; }
 
         [Required]
         [ValidId]
+        [UniqueStaffId]
         public int? StaffId { get; set; }
 
         [Required]
+        [AppointmentTimeMustBeInDentistWorkingTime]
         public DateTime? Datetime { get; set; }
 
         [Required]

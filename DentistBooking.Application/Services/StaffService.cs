@@ -69,5 +69,10 @@ namespace DentistBooking.Application.Services
         {
             return _StaffRepository.GetStaffByEmail(email);
         }
+
+        public Task<bool> IsIdExisted(int id)
+        {
+            return _StaffRepository.IsIdExisted(id);
+        }
     }
 }
