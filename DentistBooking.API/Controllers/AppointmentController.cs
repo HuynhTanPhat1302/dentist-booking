@@ -25,6 +25,7 @@ namespace DentistBooking.API.Controllers
         //get appointment by id
         [HttpGet]
         [Route("{id}")]
+        [Authorize(Policy = "DentistOrStaff")]
         public IActionResult GetAppointmentById(int id)
         {
             if (id <= 0 || id > int.MaxValue)
@@ -90,7 +91,7 @@ namespace DentistBooking.API.Controllers
 
         // HTTP POST - Create a new appointment
         [HttpPost]
-        [Authorize(Policy = "DentistOrStaff")]
+        [Authorize(Policy = "StaffOnly")]
         public IActionResult CreateAppointment(AppointmentCreateModel appointmentCreateModel)
         {
             if (!ModelState.IsValid)
@@ -117,6 +118,7 @@ namespace DentistBooking.API.Controllers
 
         [HttpPut]
         [Route("{id}")]
+        [Authorize(Policy = "StaffOnly")]
         public IActionResult UpdateAppointment(int id, [FromBody] AppointmentUpdateModel appointmentUpdateModel)
         {
             try
@@ -158,6 +160,7 @@ namespace DentistBooking.API.Controllers
 
         [HttpDelete]
         [Route("{id}")]
+        [Authorize(Policy = "StaffOnly")]
         public IActionResult DeleteAppointment(int id)
         {
             if (id <= 0 || id > int.MaxValue)

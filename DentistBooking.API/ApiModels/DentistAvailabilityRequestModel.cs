@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DentistBooking.API.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace DentistBooking.API.ApiModels
 {
@@ -7,6 +8,7 @@ namespace DentistBooking.API.ApiModels
         [Required]
         public int DentistId { get; set; }
         [Required]
+        [ValidDayOfWeekOfDentistAvailability]
         public string? DayOfWeek { get; set; }
         [Required]
         public string? StartTime { get; set; }

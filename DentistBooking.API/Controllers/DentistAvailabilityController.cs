@@ -199,13 +199,6 @@ namespace DentistBooking.API.Controllers
                 {
                     throw new Exception("Dentist is not existed!");
                 }
-                /*var response = dentistAvailability.ToDictionary(
-                    kv => kv.Key,
-                    //kv => $"{kv.Value.Start.Hours}:{kv.Value.Start.Minutes}, {kv.Value.End.Hours}:{kv.Value.End.Minutes}"
-                    kv => kv.Value
-                ); 
-
-                return Ok(response);*/
                 var convert = ConvertDictionary(dentistAvailability);
                 var settings = new JsonSerializerSettings
                 {

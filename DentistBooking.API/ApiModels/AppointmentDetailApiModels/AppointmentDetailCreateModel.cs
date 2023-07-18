@@ -5,6 +5,7 @@ using DentistBooking.API.Validation;
 
 namespace DentistBooking.API.ApiModels
 {
+    [ValidAppointmentDetail]
     public partial class AppointmentDetailCreateModel
     {
         

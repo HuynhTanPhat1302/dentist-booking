@@ -14,7 +14,7 @@ namespace DentistBooking.Application.Interfaces
         void CreateStaff(staff staff);
         void UpdateStaff(staff staff);
         void DeleteStaff(int id);
-
+        Task<bool> IsIdExisted(int id);
         staff? GetStaffByEmail(string email);
         Task<bool> IsEmailUnique(string email);
 
