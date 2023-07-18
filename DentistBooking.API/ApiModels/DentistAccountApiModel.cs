@@ -7,6 +7,7 @@ namespace DentistBooking.API.ApiModels
     {
         [Required]
         [UniqueDentistEmail]
+        [EmailAddress]
         public string? Email { get; set; }
 
         [Required]
