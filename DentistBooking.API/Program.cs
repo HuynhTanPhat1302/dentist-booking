@@ -121,6 +121,16 @@ builder.Services.AddAuthorization(options =>
        });
    });
 });
+builder.Services.AddAuthorization(options =>
+{
+   options.AddPolicy("PatientOrStaff", policy =>
+   {
+       policy.RequireAssertion(context =>
+       {
+           return context.User.IsInRole("patient") || context.User.IsInRole("staff");
+       });
+   });
+});
 
 
 // Add HttpContextAccessor
