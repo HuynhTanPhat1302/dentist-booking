@@ -152,26 +152,6 @@ namespace DentistBooking.Application.Services
                 throw new Exception("Your appointment time is busy!!!");
             }
 
-            //Check user is a new user or not. If he/she is a new user, he/she will have only 30 minutes
-            var patientsIsExisted = _appointmentRepository.GetAll().Where(a => a.PatientId == appointment.PatientId).ToList();
-            if (patientsIsExisted.Count == 0)
-            {
-                appointment.Duration = 30;
-            }
-
-            //Check dentist is existed or not
-            var denstisIsExisted = _dentistAvailabilityRepository.GetAll().Where(d => d.DentistId == appointment.DentistId).FirstOrDefault();
-            if (denstisIsExisted == null)
-            {
-                throw new Exception("Dentist is not existed!!!");
-            }
-
-            var checkDateTimeIsExistedInDentistWorkingTime = _dentistAvailabilityRepository.GetByDayOfWeek((DateTime)appointment.Datetime, (int)appointment.DentistId);
-            if (checkDateTimeIsExistedInDentistWorkingTime.Count == 0)
-            {
-                throw new Exception($"Dentist is not working in {appointment.Datetime}!!!");
-            }
-
             //Check dentist time is busy or not
             var listAppointmentOfDentis = _appointmentRepository.GetAll().Where(a => a.DentistId == appointment.DentistId && a.Datetime.Value.Date == appointment.Datetime.Value.Date).ToList();
             if (listAppointmentOfDentis.Count > 0)
@@ -182,7 +162,7 @@ namespace DentistBooking.Application.Services
                 {
                     TimeSpan timeStart = dentistAppointment.Datetime.Value.TimeOfDay;
                     TimeSpan timeEnd = timeStart + TimeSpan.FromHours(dentistAppointment.Duration.Value);
-                    if (timeStartAppointment >= timeStart && timeEndAppointment <= timeEnd)
+                    if (timeStartAppointment >= timeStart && timeStartAppointment <= timeEnd || timeEndAppointment >= timeStart && timeEndAppointment <= timeEnd)
                     {
                         throw new Exception("Dentist is busy now");
                     }
@@ -206,9 +186,24 @@ namespace DentistBooking.Application.Services
             appointment.Staff = appointmentStaff;
             appointment.Patient = appointmentPatient;
             appointment.Dentist = appointmentDentist;
-            _appointmentRepository.Update(appointment);
-            _appointmentRepository.SaveChanges();
-            return appointment;
+            var existing = _appointmentRepository.GetById(appointment.AppointmentId);
+            if (existing != null)
+            {
+                existing.AppointmentId = appointment.AppointmentId;
+                existing.PatientId = existing.PatientId;
+                existing.Patient = appointment.Patient;
+                existing.StaffId = appointment.StaffId;
+                existing.Staff = appointment.Staff;
+                existing.Dentist = appointment.Dentist;
+                existing.DentistId = appointment.DentistId;
+                existing.Datetime = appointment.Datetime;
+                existing.Duration = appointment.Duration;
+                existing.Status = appointment.Status;
+                _appointmentRepository.Update(existing);
+                _appointmentRepository.SaveChanges();
+            }
+            
+            return existing;
         }
 
         public void DeleteAppointment(int id)
@@ -292,7 +287,7 @@ namespace DentistBooking.Application.Services
                 {
                     TimeSpan timeStart = dentistAppointment.Datetime.Value.TimeOfDay;
                     TimeSpan timeEnd = timeStart.Add(TimeSpan.FromHours((double)dentistAppointment.Duration));
-                    if (timeStartAppointment >= timeStart && timeEndAppointment <= timeEnd)
+                    if (timeStartAppointment >= timeStart && timeStartAppointment <= timeEnd || timeEndAppointment >= timeStart && timeEndAppointment <= timeEnd)
                     {
                         throw new Exception("Dentist is busy now");
                     }
