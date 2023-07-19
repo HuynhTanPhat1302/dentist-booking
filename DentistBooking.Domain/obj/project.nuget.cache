@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "k4LMLsX9mEGJzbXjcPwcgit9yVsm1tVHAT/Whey0DuWn4ENLRCUhPfFZCC3Bg9UDsUhgV7XeGr124IQiheuKRQ==",
+  "dgSpecHash": "Z+QVQGDY3EyM/kXSQo1QsTeZxYAurwoZw45cpSoyg8o8dK/QLNllDg2MuGFFIsTKOgb36tn08d3H9Tc8ZRQ8rg==",
   "success": true,
-  "projectFilePath": "D:\\learn-space\\c#\\DentistBooking\\DentistBooking.Domain\\DentistBooking.Domain.csproj",
+  "projectFilePath": "D:\\Prn231\\dentist1\\DentistBooking.Domain\\DentistBooking.Domain.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
