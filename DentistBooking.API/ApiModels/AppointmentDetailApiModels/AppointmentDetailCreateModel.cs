@@ -12,10 +12,12 @@ namespace DentistBooking.API.ApiModels
 
         [Required]
         [ValidId]
+        [ExistedAppointmentId]
         public int? AppointmentId { get; set; }
 
         [Required]
         [ValidId]
+        [ExistedmedicalRecordId]
         public int? MedicalRecordId { get; set; }        
     }
 }

@@ -64,7 +64,7 @@ namespace DentistBooking.API.Controllers
         //search-patient (paging, sort alphabalet)
         [HttpGet]
         [Route("search")]
-        public async Task<ActionResult<List<PatientApiRequestModel>>> SearchPatients(int pageSize, int pageNumber, string searchQuery)
+        public async Task<ActionResult<List<PatientRespondModel>>> SearchPatients(int pageSize, int pageNumber, string searchQuery)
         {
             // Validation parameter
 
@@ -124,7 +124,7 @@ namespace DentistBooking.API.Controllers
                 patients = await _patientService.SearchPatientsAsync(pageSize, pageNumber, searchQuery);
             }
 
-            var patientApiRequestModels = _mapper.Map<List<PatientApiRequestModel>>(patients);
+            var patientApiRequestModels = _mapper.Map<List<PatientRespondModel>>(patients);
             return patientApiRequestModels;
         }
 
@@ -274,130 +274,6 @@ namespace DentistBooking.API.Controllers
             return NoContent();
         }
 
-
-
-
-
-
-
-
-
-
-
-
-        //[HttpPut("{id}")]
-        //public IActionResult UpdatePatient(int id, staff staff)
-        //{
-        //    if (id != staff.StaffId)
-        //    {
-        //        return BadRequest();
-        //    }
-        //    _staffService.UpdateStaff(staff);
-        //    return NoContent();
-        //}
-
-        //[HttpDelete("{id}")]
-        //public IActionResult DeleteStaff(int id)
-        //{
-        //    _staffService.DeleteStaff(id);
-        //    return NoContent();
-        //}
-
-
-
-        //get all patients
-        //[HttpGet("GetPatients")]
-
-        //public IActionResult GetAllPatients()
-        //{
-        //    var patients = _patientService.GetAllPatients();
-        //    return Ok(patients);
-        //}
-
-        //get all treatments and its price
-        //[HttpGet("GetTreatments")]
-        //public IActionResult GetAllTreatments()
-        //{
-        //    var treatments = _treatmentService.GetAllTreatments();
-        //    var treatmentApiRequestModel = _mapper.Map<List<TreatmentApiRequestModel>>(treatments);
-        //    return Ok(treatmentApiRequestModel);
-        //}
-
-
-
-        //create new patient
-        //[HttpPost("CreatePatient")]
-        //public IActionResult CreatePatient(PatientApiModel patientApiModel)
-        //{
-        //    var patient = _mapper.Map<Patient>(patientApiModel);
-        //    _patientService.CreatePatient(patient);
-        //    return CreatedAtAction(nameof(GetPatientById), new { id = patient.PatientId }, patient);
-        //}
-
-        //[HttpGet("GetProposeAppointmentById/{id}")]
-        //public IActionResult GetProposeAppointmentById(int id)
-        //{
-        //    var proposeAppointment = _proposeAppointmentService.GetProposeAppointmentById(id);
-        //    if (proposeAppointment == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return Ok(proposeAppointment);
-        //}
-
-        //[HttpPost("CreateProposeAppointment")]
-        //public IActionResult CreateProposeAppointment(ProposeAppointmentRequestModel proposeAppointmentRequestModel)
-        //{
-        //    var proposeAppointment = _mapper.Map<ProposeAppointment>(proposeAppointmentRequestModel);
-        //    _proposeAppointmentService.CreateProposeAppointment(proposeAppointment);
-
-        //    return CreatedAtAction(nameof(GetProposeAppointmentById), new { id = proposeAppointment.ProposeAppointmentId }, proposeAppointment);
-        //}
-
-        //[HttpGet("GetMedicalRecordByPatientEmail/{email}")]
-        //public IActionResult GetMedicalRecordByEmail(string email)
-        //{
-        //        var medicalRecords = _medicalRecordService.GetMedicalRecordsByPatientEmail(email);
-
-        //        if (medicalRecords == null)
-        //        {
-
-        //            return NotFound();
-        //        }
-
-        //        var medicalRecordApiRequestModels = _mapper.Map<List<MedicalRecordApiRequestModel>>(medicalRecords);
-
-
-        //        return Ok(medicalRecordApiRequestModels);
-        //}
-
-        //[HttpGet("GetAppointmentsByPatientEmail/{email}")]
-        //public IActionResult GetAppointmentsByPatientEmail(string email)
-        //{
-        //    var appointments = _appointmentService.GetAppointmentsByPatientEmail(email);
-
-        //    if (appointments == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var appointmentApiRequestModel = _mapper.Map<List<AppointmentApiRequestModel>>(appointments);
-
-
-        //    return Ok(appointmentApiRequestModel);
-        //}
-
-
-
-
-
-
-        //[HttpDelete("DeletePatient/{id}")]
-        //public IActionResult DeletePatient(int id)
-        //{
-        //    _patientService.DeletePatient(id);
-        //    return NoContent();
-        //}
     }
 }
 

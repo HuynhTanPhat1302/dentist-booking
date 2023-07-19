@@ -4,26 +4,26 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DentistBooking.API.Validation
 {
-    public class ExistedPatientId : ValidationAttribute
+    public class ExistedAppointmentId : ValidationAttribute
     {
         protected override ValidationResult IsValid(object? value, ValidationContext validationContext)
         {
-            var patientService = validationContext.GetService<IPatientService>();
+            var appointmentService = validationContext.GetService<IAppointmentService>();
 
-            if (patientService != null && value != null)
+            if (appointmentService != null && value != null)
             {
-                int patientId;
-                if (Int32.TryParse(value.ToString(), out patientId))
+                int appointmentId;
+                if (Int32.TryParse(value.ToString(), out appointmentId))
                 {
-                    if (!(patientId >= 1 && patientId <= int.MaxValue))
+                    if (!(appointmentId >= 1 && appointmentId <= int.MaxValue))
                     {
                         return new ValidationResult("id out of bound");
 
                     }
-                    var exists = patientService.GetPatientById(patientId);
+                    var exists = appointmentService.GetAppointmentById(appointmentId);
                     if (exists == null)
                     {
-                        return new ValidationResult("Patient ID does not exist in the database.");
+                        return new ValidationResult("Appointment ID does not exist in the database.");
                     }
                 }
             }

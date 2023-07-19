@@ -21,6 +21,7 @@ namespace DentistBooking.Application.Interfaces
         Task<List<Appointment>> GetAppointmentsByPatientIdAsync(int patientId, int pageSize, int pageNumber);
 
 
+        Appointment? CreateAnAppointmentWithZeroDuration(Appointment appointment);
 
 
         Appointment? GetAppointmentByStaffId(int id);

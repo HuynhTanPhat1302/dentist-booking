@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\FPT_Hoc\\SEM8\\PRN231\\DentistBookingProject\\MainProject\\DentistBooking.Domain\\DentistBooking.Domain.csproj": {}
+    "D:\\learn-space\\c#\\DentistBooking\\DentistBooking.Domain\\DentistBooking.Domain.csproj": {}
   },
   "projects": {
-    "D:\\FPT_Hoc\\SEM8\\PRN231\\DentistBookingProject\\MainProject\\DentistBooking.Domain\\DentistBooking.Domain.csproj": {
+    "D:\\learn-space\\c#\\DentistBooking\\DentistBooking.Domain\\DentistBooking.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\FPT_Hoc\\SEM8\\PRN231\\DentistBookingProject\\MainProject\\DentistBooking.Domain\\DentistBooking.Domain.csproj",
+        "projectUniqueName": "D:\\learn-space\\c#\\DentistBooking\\DentistBooking.Domain\\DentistBooking.Domain.csproj",
         "projectName": "DentistBooking.Domain",
-        "projectPath": "D:\\FPT_Hoc\\SEM8\\PRN231\\DentistBookingProject\\MainProject\\DentistBooking.Domain\\DentistBooking.Domain.csproj",
-        "packagesPath": "C:\\Users\\Nguyen\\.nuget\\packages\\",
-        "outputPath": "D:\\FPT_Hoc\\SEM8\\PRN231\\DentistBookingProject\\MainProject\\DentistBooking.Domain\\obj\\",
+        "projectPath": "D:\\learn-space\\c#\\DentistBooking\\DentistBooking.Domain\\DentistBooking.Domain.csproj",
+        "packagesPath": "C:\\Users\\BongU\\.nuget\\packages\\",
+        "outputPath": "D:\\learn-space\\c#\\DentistBooking\\DentistBooking.Domain\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Nguyen\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\BongU\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -59,7 +55,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }

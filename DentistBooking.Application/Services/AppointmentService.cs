@@ -139,7 +139,7 @@ namespace DentistBooking.Application.Services
             catch (Exception ex)
             {
                 throw new Exception(ex.ToString());
-                
+
             }
 
         }
@@ -202,7 +202,7 @@ namespace DentistBooking.Application.Services
                 _appointmentRepository.Update(existing);
                 _appointmentRepository.SaveChanges();
             }
-            
+
             return existing;
         }
 
@@ -262,7 +262,13 @@ namespace DentistBooking.Application.Services
             if (patientsIsExisted.Count == 0)
             {
                 appointment.Duration = 0.5;
+            } else {
+                appointment.Duration = 0;
+
             }
+
+            appointment.Duration = 0.5;
+
 
             //Check dentist is existed or not
             var denstisIsExisted = _dentistAvailabilityRepository.GetAll().Where(d => d.DentistId == appointment.DentistId).FirstOrDefault();
@@ -317,6 +323,92 @@ namespace DentistBooking.Application.Services
             return appointment;
         }
 
+
+        public Appointment? CreateAnAppointmentWithZeroDuration(Appointment appointment)
+        {
+            //Check all appointments need to book before 24 hours.
+            //DateTime currentDateTime = DateTime.Now;
+            /*DateTime minBookingDateTime = currentDateTime.AddHours(24);
+            if (appointment.Datetime < minBookingDateTime)
+            {
+                throw new Exception("Appointment must be booked at least 24 hours");
+            }*/
+            //Check can not book greater than 2 appointment of one user in the same day.
+            var appointmentList = _appointmentRepository.GetAll().Where(a => a.PatientId == appointment.PatientId && a.Datetime == appointment.Datetime).ToList();
+            if (appointmentList.Count >= 2)
+            {
+                throw new Exception("Can not create two appointments in one days");
+            }
+
+            //Check your appointment is existed by another users or not
+            var bookingTimeIsExisted = _appointmentRepository.GetAll().Where(a => a.Datetime == appointment.Datetime).ToList();
+            if (bookingTimeIsExisted.Count > 0)
+            {
+                throw new Exception("Your appointment time is busy!!!");
+            }
+
+            //Check user is a new user or not. If he/she is a new user, he/she will only 30 minutes
+            var patientsIsExisted = _appointmentRepository.GetAll().Where(a => a.PatientId == appointment.PatientId).ToList();
+            if (patientsIsExisted.Count == 0)
+            {
+                appointment.Duration = 0.5;
+            } else {
+                appointment.Duration = 0;
+
+            }
+
+            //Check dentist is existed or not
+            var denstisIsExisted = _dentistAvailabilityRepository.GetAll().Where(d => d.DentistId == appointment.DentistId).FirstOrDefault();
+            if (denstisIsExisted == null)
+            {
+                throw new Exception("Dentist is not existed!!!");
+            }
+
+            var checkDateTimeIsExistedInDentistWorkingTime = _dentistAvailabilityRepository.GetByDayOfWeek((DateTime)appointment.Datetime, (int)appointment.DentistId);
+            if (checkDateTimeIsExistedInDentistWorkingTime.Count == 0)
+            {
+                throw new Exception($"Dentist is not working in {appointment.Datetime}!!!");
+            }
+
+            //Check dentist time is busy or not
+            var listAppointmentOfDentis = _appointmentRepository.GetAll().Where(a => a.DentistId == appointment.DentistId && a.Datetime.Value.Date == appointment.Datetime.Value.Date).ToList();
+            if (listAppointmentOfDentis.Count > 0)
+            {
+                TimeSpan timeStartAppointment = appointment.Datetime.Value.TimeOfDay;
+                TimeSpan timeEndAppointment = timeStartAppointment.Add(TimeSpan.FromHours((double?)appointment.Duration ?? 0));
+                foreach (var dentistAppointment in listAppointmentOfDentis)
+                {
+                    TimeSpan timeStart = dentistAppointment.Datetime.Value.TimeOfDay;
+                    TimeSpan timeEnd = timeStart.Add(TimeSpan.FromHours((double)dentistAppointment.Duration));
+                    if (timeStartAppointment >= timeStart && timeStartAppointment <= timeEnd || timeEndAppointment >= timeStart && timeEndAppointment <= timeEnd)
+                    {
+                        throw new Exception("Dentist is busy now");
+                    }
+                }
+            }
+            var appointmentDentist = _dentistRepository.GetAll().Where(d => d.DentistId == appointment.DentistId).FirstOrDefault();
+            //Check staff is existed or not
+            var appointmentStaff = _StaffRepository.GetAll().Where(d => d.StaffId == appointment.StaffId).FirstOrDefault();
+            if (appointmentStaff == null)
+            {
+                throw new Exception("Staff is not existed");
+            }
+
+            //Check patient is existed or not
+            var appointmentPatient = _patientRepository.GetAll().Where(d => d.PatientId == appointment.PatientId).FirstOrDefault();
+            if (appointmentPatient == null)
+            {
+                throw new Exception("Patient is not existed");
+            }
+
+            appointment.Status = AppointmentStatus.Scheduled;
+            appointment.Staff = appointmentStaff;
+            appointment.Patient = appointmentPatient;
+            appointment.Dentist = appointmentDentist;
+            _appointmentRepository.Add(appointment);
+            _appointmentRepository.SaveChanges();
+            return appointment;
+        }
 
     }
 }

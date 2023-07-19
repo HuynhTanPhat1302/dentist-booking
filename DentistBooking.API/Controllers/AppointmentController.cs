@@ -116,6 +116,34 @@ namespace DentistBooking.API.Controllers
             }
         }
 
+        // HTTP POST - Create a new appointment
+        [HttpPost]
+        [Route("create-with-zero-duration")]
+        [Authorize(Policy = "StaffOnly")]
+        public IActionResult CreateAppointmentWithZeroDuration(AppointmentCreateModel appointmentCreateModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var appointment = _mapper.Map<Appointment>(appointmentCreateModel);
+
+            try
+            {
+                _appointmentService.CreateAnAppointmentWithZeroDuration(appointment);
+                var createdAppointment = _appointmentService.GetAppointmentById(appointment.AppointmentId);
+                var appointmentRespondModel = _mapper.Map<AppointmentRespondModel>(createdAppointment);
+
+
+                return CreatedAtAction(nameof(GetAppointmentById), new { id = appointment.AppointmentId }, appointmentRespondModel);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPut]
         [Route("{id}")]
         [Authorize(Policy = "StaffOnly")]

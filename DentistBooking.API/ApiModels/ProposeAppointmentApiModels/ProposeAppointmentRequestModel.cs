@@ -1,5 +1,4 @@
 ﻿using DentistBooking.API.Validation;
-using PatientBooking.API.Validation;
 using System.ComponentModel.DataAnnotations;
 
 
