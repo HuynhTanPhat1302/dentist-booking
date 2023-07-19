@@ -67,7 +67,7 @@ namespace DentistBooking.API.Controllers
         {
             using (var httpClient = new HttpClient())
             {
-                var createAccountUrl = "https://localhost:7214/api/auth/create-account";
+                var createAccountUrl = "http://user-management:80/api/auth/create-account";
 
                 // Create an instance of the RegisterRequestModel based on the patient data
                 var source1Model = new
@@ -127,7 +127,7 @@ namespace DentistBooking.API.Controllers
                 // Make an HTTP request to update the account in the authentication source
                 using (var httpClient = new HttpClient())
                 {
-                    var updateAccountUrl = $"https://localhost:7214/api/auth/update-account/{email}";
+                    var updateAccountUrl = $"http://user-management:80/api/auth/update-account/{email}";
 
                     // Create an instance of the RegisterRequestModel based on the patient data
                     var updateAccountModel = new

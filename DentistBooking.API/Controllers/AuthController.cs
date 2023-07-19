@@ -27,7 +27,7 @@ namespace DentistBooking.Controllers
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
             // Send a request to the Authentication server to get the JWT
-            var authenticationServerUrl = "https://localhost:7214/api/auth/login";
+            var authenticationServerUrl = "http://user-management:80/api/auth/login";
             var response = await _httpClient.PostAsJsonAsync(authenticationServerUrl, model);
 
             if (response.IsSuccessStatusCode)
