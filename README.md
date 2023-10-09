@@ -97,13 +97,15 @@ The project was created to manage the time schedule of dentists and patients, li
 
 ### Prerequisites
 
-To run this project, you need to install the <a href = "https://github.com/HuynhTanPhat1302/authentication-server">Authentication Project</a> first
+To run this project, you need to clone the <a href = "https://github.com/HuynhTanPhat1302/authentication-server">Authentication Project</a> first
 
 Then you need to run the included docker file in this project
  
   ```sh
   docker run
   ```
+
+After that, clone the db from the following <a href = "https://hub.docker.com/repository/docker/bongu1302/dentist-db/general">dockerhub</a> first 
 
 ### Installation
 
