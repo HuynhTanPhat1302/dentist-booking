@@ -96,44 +96,19 @@ The project was created to manage the time schedule of dentists and patients, li
 
 
 ### Prerequisites
+This project uses other authentication projects to do the authentication function, and this project only does its own business. Therefore, you need to install both of them to run the project correctly.
 
-To run this project, you need to clone the <a href = "https://github.com/HuynhTanPhat1302/authentication-server">Authentication Project</a> first
+1. To run this project, you need to clone the <a href = "https://github.com/HuynhTanPhat1302/authentication-server">Authentication Project</a> first
 
-Then you need to run the included docker file in this project
+2. Then you need to run the included docker file in this project
  
   ```sh
   docker run
   ```
 
-After that, clone the db from the following <a href = "https://hub.docker.com/repository/docker/bongu1302/dentist-db/general">dockerhub</a> first 
-
-### Installation
-
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/your_username_/Project-Name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- USAGE EXAMPLES -->
-## Usage
-
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p> -->
+3. After that, clone the DB from the following <a href = "https://hub.docker.com/repository/docker/bongu1302/dentist-db/general">dockerhub</a> first, and then run the container that you just cloned
+4. Clone this project (dentist project) and run the docker file.
+5. Connect to the port of dentist project (The port is stored in docker file) - default port: 80
 
 
 
@@ -150,9 +125,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
-
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+Huynh Tan Phat  - huynhtanphat130201@gmail.com - https://www.linkedin.com/in/ph%C3%A1t-hu%E1%BB%B3nh-1a2814263/
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
