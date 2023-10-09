@@ -84,7 +84,7 @@
 ## About The Project
 
 
-The project is created to manage the time schedule of dentists and patients, like a platform where patients can connect with staff to book an appointment.
+The project was created to manage the time schedule of dentists and patients, like a platform where patients can connect with staff to book an appointment.
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -93,12 +93,11 @@ The project is created to manage the time schedule of dentists and patients, lik
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-
-
 * C#/ .NET core
 * Entity Framework Core
 * Amazon S3
+* Docker
+* EKS/EKR to Deploy on AWS
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
